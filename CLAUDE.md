@@ -4,25 +4,84 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a personal website repository hosted on GitHub Pages at dustinniles.github.io. The project is in its initial setup phase.
+Personal website and portfolio for Dustin Niles, hosted on GitHub Pages at https://dustinniles.github.io. Built with Next.js 14+ (App Router), TypeScript, and Tailwind CSS. The site features a fixed sidebar layout with scrolling content area, emphasizing a sparse and minimal design aesthetic focused on large photography and portfolio work.
 
-## Repository Structure
+## Commands
 
-Currently minimal - the project structure has not yet been established. This is a GitHub Pages repository, which typically supports:
-- Static HTML/CSS/JavaScript sites
-- Jekyll-based sites (Ruby)
-- Modern static site generators (Hugo, Next.js, Gatsby, etc.)
+```bash
+# Development
+npm run dev          # Start development server at http://localhost:3000
 
-## Development Workflow
+# Build & Deploy
+npm run build        # Build static site to /out directory
+npm run start        # Start production server (not used for GitHub Pages)
 
-The project structure and tooling will be determined based on the chosen static site approach. Once established, this section should be updated with:
-- Build commands
-- Local development server commands
-- Deployment process (GitHub Pages typically auto-deploys from the main branch or gh-pages branch)
+# Code Quality
+npm run lint         # Run ESLint
+```
 
-## GitHub Pages Notes
+## Architecture
 
-- Repository name format (username.github.io) indicates this is a User Pages site
-- Will be published at https://dustinniles.github.io
-- GitHub Actions can be used for custom build workflows if needed
-- Default branch deployments or gh-pages branch are common patterns
+### Layout System
+
+The site uses a two-column layout defined in `app/layout.tsx`:
+- **Fixed sidebar** (left, 256px width): Contains navigation and branding, stays fixed while content scrolls
+- **Scrolling content area** (right): Takes remaining width, contains page content
+
+The sidebar component is located at `components/Sidebar.tsx` and is rendered in the root layout, wrapping all pages.
+
+### Tech Stack
+
+- **Next.js 14+** with App Router and static export (`output: 'export'`)
+- **TypeScript** for type safety
+- **Tailwind CSS 4** for styling (configured via postcss)
+- **Inter font** from Google Fonts
+
+### Directory Structure
+
+```
+app/
+  layout.tsx        # Root layout with sidebar
+  page.tsx          # Home page (portfolio grid)
+  globals.css       # Global styles and Tailwind imports
+components/
+  Sidebar.tsx       # Fixed navigation sidebar
+.github/workflows/
+  deploy.yml        # GitHub Actions deployment workflow
+```
+
+## Deployment
+
+The site is configured for static export to GitHub Pages:
+- **Build output**: Static HTML/CSS/JS generated in `/out` directory
+- **Deployment**: Automatic via GitHub Actions on push to `main` branch
+- **Workflow**: `.github/workflows/deploy.yml` builds and deploys using GitHub Pages actions
+- **Images**: Unoptimized to support static export
+
+To deploy manually:
+1. Run `npm run build` to generate static files
+2. Push to `main` branch to trigger automatic deployment
+
+## Adding Content
+
+### New Pages
+
+Create new route files in the `app/` directory following Next.js App Router conventions:
+- `app/about/page.tsx` creates `/about` route
+- `app/contact/page.tsx` creates `/contact` route
+
+Update `components/Sidebar.tsx` to add navigation links.
+
+### Portfolio Items
+
+Portfolio items are currently defined as an array in `app/page.tsx`. To add real images:
+1. Place images in `public/` directory
+2. Update the `portfolioItems` array with image paths
+3. Replace placeholder divs with Next.js `Image` components
+
+## Design Principles
+
+- **Minimal and sparse**: Emphasize whitespace and large imagery
+- **Fixed sidebar**: Navigation remains accessible while scrolling content
+- **Typography**: Light font weights, subtle colors (gray-600, gray-900)
+- **Grid layout**: Two-column responsive grid for portfolio items
