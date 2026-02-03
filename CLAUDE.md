@@ -35,7 +35,7 @@ The sidebar component is located at `components/Sidebar.tsx` and is rendered in 
 - **Next.js 14+** with App Router and static export (`output: 'export'`)
 - **TypeScript** for type safety
 - **Tailwind CSS 4** for styling (configured via postcss)
-- **Inter font** from Google Fonts
+- **System fonts** for fast loading and minimal aesthetic
 
 ### Directory Structure
 
