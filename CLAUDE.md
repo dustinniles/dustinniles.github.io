@@ -6,6 +6,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Personal website and portfolio for Dustin Niles, hosted on GitHub Pages at https://dustinniles.github.io. Built with Next.js 14+ (App Router), TypeScript, and Tailwind CSS. The site features a fixed sidebar layout with scrolling content area, emphasizing a sparse and minimal design aesthetic focused on large photography and portfolio work.
 
+## Getting Started
+
+```bash
+# Clone the repository
+git clone https://github.com/dustinniles/dustinniles.github.io.git
+cd dustinniles.github.io
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
 ## Commands
 
 ```bash
