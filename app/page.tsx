@@ -10,7 +10,7 @@ export default function Home() {
 
   return (
     <div className="p-12">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-8">
         {portfolioItems.map((item) => (
           <div key={item.id} className="group cursor-pointer">
             <div className="aspect-[4/3] bg-gray-100 mb-3 overflow-hidden">
