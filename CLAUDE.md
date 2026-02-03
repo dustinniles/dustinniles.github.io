@@ -98,4 +98,4 @@ Portfolio items are currently defined as an array in `app/page.tsx`. To add real
 - **Minimal and sparse**: Emphasize whitespace and large imagery
 - **Fixed sidebar**: Navigation remains accessible while scrolling content
 - **Typography**: Light font weights, subtle colors (gray-600, gray-900)
-- **Grid layout**: Two-column responsive grid for portfolio items
+- **Grid layout**: Single-column layout for portfolio items
