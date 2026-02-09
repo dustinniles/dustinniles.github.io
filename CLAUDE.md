@@ -99,3 +99,10 @@ Portfolio items are currently defined as an array in `app/page.tsx`. To add real
 - **Fixed sidebar**: Navigation remains accessible while scrolling content
 - **Typography**: Light font weights, subtle colors (gray-600, gray-900)
 - **Grid layout**: Single-column layout for portfolio items
+
+## Active Technologies
+- TypeScript 5.x with React 19+ (current: 19.2.3) + Next.js 16.1.6 (App Router), Tailwind CSS 4.x via PostCSS, IBM Plex font family (001-website-frontend)
+- Static JSON/array data structures for navigation menus and portfolio items (file-based, no database) (001-website-frontend)
+
+## Recent Changes
+- 001-website-frontend: Added TypeScript 5.x with React 19+ (current: 19.2.3) + Next.js 16.1.6 (App Router), Tailwind CSS 4.x via PostCSS, IBM Plex font family
