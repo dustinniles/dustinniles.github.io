@@ -1,15 +1,14 @@
 <!--
 Sync Impact Report:
-- Version change: 1.0.0 → 1.1.0
+- Version change: 1.1.0 → 1.2.0
 - Modified principles: None
-- Added principles:
-  6. Security & Content Integrity (NEW) - Critical principle to protect personal content from third-party tampering
-- Added sections: Security Standards section added under Technical Standards
+- Added principles: None
+- Modified sections:
+  - Development Workflow updated for solo-developer (no PR reviews required)
+  - Security Standards updated to remove PR review requirement (solo developer context)
 - Removed sections: None
-- Templates requiring updates:
-  ✅ spec-template.md - Updated with Security Requirements section (SR-001 through SR-007)
-  ✅ plan-template.md - Updated with Security Verification checklist in Constitution Check
-  ✅ tasks-template.md - Updated with mandatory Security Review phase (Phase N+1)
+- Rationale: Solo developer project - PR review overhead removed while maintaining security controls
+- Templates requiring updates: None (workflow change only)
 - Follow-up TODOs: None
 -->
 
@@ -131,14 +130,14 @@ This site displays personal views and content that MUST be protected against una
 ### Security Standards
 
 **Repository Security:**
-- GitHub branch protection enabled on `main`:
-  - Require pull request reviews before merging
-  - Require status checks to pass before merging
-  - Prohibit force pushes
-  - Prohibit deletions
+- GitHub branch protection on `main` (recommended but optional for solo developer):
+  - Require status checks to pass before merging (if CI/CD configured)
+  - Prohibit force pushes (recommended)
+  - Prohibit deletions (recommended)
 - Dependabot alerts enabled for dependency vulnerabilities
 - Secret scanning enabled (GitHub Advanced Security if available)
 - Two-factor authentication (2FA) required for repository access
+- **Note**: PR reviews not required for solo developer project
 
 **Dependency Management:**
 - Run `npm audit` before every deployment
@@ -182,18 +181,29 @@ Content-Security-Policy:
 
 ## Development Workflow
 
-### Making Changes
+### Making Changes (Solo Developer Workflow)
 
+**Option 1: Direct to main** (simplest, for small changes)
+1. Make changes on `main` branch
+2. Test locally with `npm run dev`
+3. Run `npm run lint` and `npm audit`
+4. Run `npm run build` to verify static export
+5. Commit with descriptive message
+6. Push to `main` - triggers automatic deployment
+
+**Option 2: Feature branch** (recommended, for larger features)
 1. Create feature branch from `main`
 2. Make changes locally and test with `npm run dev`
 3. Run `npm run lint` to verify code quality
 4. Run `npm audit` to check for security vulnerabilities
 5. Run `npm run build` to verify static export
 6. Commit with descriptive message
-7. Push to branch and create PR
-8. Review build status in GitHub Actions
-9. Verify no new security warnings or vulnerabilities
-10. Merge to `main` to deploy
+7. Switch to `main`: `git checkout main`
+8. Merge feature branch: `git merge <feature-branch>`
+9. Push to `main`: `git push` - triggers automatic deployment
+10. Delete feature branch: `git branch -d <feature-branch>`
+
+**Note**: No pull request or review required for solo developer project.
 
 ### Adding Portfolio Content
 
@@ -237,4 +247,4 @@ This constitution supersedes all other development practices and documentation f
 3. **Specification artifacts** - Feature-specific details within constitutional bounds
 4. **Code comments** - Implementation notes for specific edge cases
 
-**Version**: 1.1.0 | **Ratified**: 2026-02-09 | **Last Amended**: 2026-02-09
+**Version**: 1.2.0 | **Ratified**: 2026-02-09 | **Last Amended**: 2026-02-09
