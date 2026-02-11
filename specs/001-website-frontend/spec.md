@@ -1,259 +1,264 @@
-# Feature Specification: Interactive Portfolio Website Frontend
+# Feature Specification: Apply Apple HIG Amendments to Portfolio Website Frontend
 
-**Feature Branch**: `001-website-frontend`
-**Created**: 2026-02-09
-**Status**: Draft
-**Input**: User description: "Build website frontend with sliding menu navigation, landing page, and content pages for portfolio sections"
+**Feature Branch**: `002-apply-hig-amendments`  
+**Created**: 2026-02-11  
+**Status**: Draft  
+**Input**: User description: "Revise specification to reflect Apple HIG amendments to constitution"
+
+**Context**: The project constitution was amended on 2026-02-11 to establish Apple Human Interface Guidelines (HIG) as the primary design authority for the portfolio website. This specification defines how the existing 001-website-frontend feature must be revised to comply with HIG Principle I and ensures all current and future design decisions align with HIG standards.
+
+## Clarifications
+
+### Session 2026-02-11
+
+- Q: Should the feature start with a baseline audit of the current design state, or assume all violations need fixing? → A: Conduct a full baseline audit first—review current design, document compliance gaps per HIG section, then create a prioritized fix list
+- Q: What is the current typographic baseline in the existing codebase? → A: Inspect existing code first to determine if codebase uses px or rem units and base font size (will be determined during plan phase)
+- Q: For dark mode color mapping approach? → A: Dual palette approach—maintain two separate, independently designed palettes (one light, one dark) each adhering to HIG principles
+- Q: Which accessibility testing tools are mandatory vs. optional? → A: Defer testing strategy to implementation plan—let implementation team scope testing based on findings during development
 
 ## User Scenarios & Testing *(mandatory)*
 
-### User Story 1 - Landing Page and Initial Navigation (Priority: P1)
+### User Story 1 - Design Review Against HIG Foundations (Priority: P1)
 
-A visitor arrives at dustinniles.github.io and sees a centered menu with profile photo, name (Dustin Niles), and main navigation items (Work, Play, Contact, About). When they click any menu item, the menu smoothly slides to the left side of the screen while content appears on the right, establishing the core layout and navigation pattern.
+The portfolio website's visual design, layout, and typography must be reviewed and revised to ensure compliance with Apple's HIG Foundations standards. This includes layout spacing, color usage and contrast, dark mode support, and accessibility features. Visitors should experience a design that feels professional, consistent with Apple's design language, and accessible to all users.
 
-**Why this priority**: This is the first impression and core navigation mechanism. Without this, no other features can be accessed or tested.
+**Why this priority**: HIG Foundations form the visual and interaction foundation of the entire site. Without this baseline review and correction, all subsequent design decisions will be misaligned with the constitution's primary principle.
 
-**Independent Test**: Can be fully tested by loading the homepage, verifying the centered menu displays correctly, and clicking a menu item to confirm the slide-to-left animation works and layout transitions to the two-column design. Delivers the foundational user experience.
+**Independent Test**: Can be fully tested by conducting a comprehensive design review against each HIG Foundations section (Layout, Color, Typography, Dark Mode, Accessibility, Inclusion, Writing), documenting any deviations, and verifying that corrected designs conform to HIG standards before being deployed.
 
 **Acceptance Scenarios**:
 
-1. **Given** I visit dustinniles.github.io, **When** the page loads, **Then** I see a centered menu with profile photo, "Dustin Niles" name, and navigation items (Work, Play, Contact, About) with no content area visible
-2. **Given** I'm on the landing page, **When** I click "Work" in the menu, **Then** the menu slides left to the left quarter of the screen and takes its fixed position while content area appears on the right
-3. **Given** I'm on the landing page, **When** I click "Play", **Then** the same slide-left animation occurs with smooth timing around 300 milliseconds
-4. **Given** the menu has slid to the left, **When** viewing the layout, **Then** the profile photo and "Dustin Niles" name remain visible at the top of the left sidebar
+1. **Given** the portfolio website layout is reviewed against HIG Layout principles, **When** examining spacing, margins, and safe areas, **Then** all spacing must follow HIG spacing standards (8px base unit, multiples thereof)
+2. **Given** the color palette is reviewed, **When** checking text contrast ratios, **Then** all text must meet WCAG 4.5:1 for normal text and 3:1 for large text (HIG requirement)
+3. **Given** the Typography section is reviewed, **When** examining font sizes and hierarchy, **Then** font sizing must follow HIG typography hierarchy (using relative scaling where appropriate)
+4. **Given** dark mode support is implemented, **When** users enable system dark mode, **Then** the site must display in a dark appearance with sufficient contrast maintained
+5. **Given** accessibility features are verified, **When** testing keyboard navigation and screen reader compatibility, **Then** all interactive elements must be discoverable and operable via keyboard only
+6. **Given** the About section contains writing content, **When** reviewing tone and clarity, **Then** all copy must follow HIG writing principles: clear, concise, direct language without jargon
 
 ---
 
-### User Story 2 - Sub-Menu Navigation (Priority: P2)
+### User Story 2 - Component and Navigation Pattern Alignment (Priority: P2)
 
-When viewing a top-level section (Work or Play), a visitor can click to see sub-sections. For example, clicking "Work" reveals Resume, Photography, and Video options. The visitor can navigate back to the main menu using a back arrow, and the profile photo and name always stay visible.
+The navigation structure, menu interactions, and content presentation patterns must be reviewed to ensure they align with HIG Components standards. This includes sidebar navigation patterns, menu item affordances, feedback mechanisms, and content hierarchy. Visitors should understand how to navigate intuitively without confusion.
 
-**Why this priority**: Enables hierarchical content organization and deeper navigation, essential for accessing actual portfolio content.
+**Why this priority**: Navigation and component patterns directly impact user experience and discoverability. HIG compliance ensures navigation feels native and intuitive to Apple device users.
 
-**Independent Test**: Can be tested by clicking "Work" from main menu, verifying sub-menu items appear (Resume, Photography, Video), clicking a sub-item to load content, and using the back arrow to return. Delivers complete navigation experience.
+**Independent Test**: Can be fully tested by comparing the current navigation structure against HIG Components: Navigation and Search guidelines, verifying that menu items have clear affordances (visual indicators of clickability), that feedback is provided for user interactions (hover states, active states), and that the information hierarchy follows HIG standards.
 
 **Acceptance Scenarios**:
 
-1. **Given** I'm viewing the main menu on the left sidebar, **When** I click "Work", **Then** the menu items (Work, Play, Contact, About) slide left off-screen and are replaced by sub-items (Resume, Photography, Video)
-2. **Given** I'm viewing a sub-menu, **When** I look at the menu, **Then** I see a back arrow positioned top-left of the sub-menu headers
-3. **Given** I'm viewing a sub-menu, **When** I click the back arrow, **Then** the sub-menu slides right and the main menu slides back into view
-4. **Given** I'm navigating between menus, **When** any menu change occurs, **Then** the profile photo and "Dustin Niles" name remain fixed and visible throughout
-5. **Given** I'm viewing the "Play" menu, **When** I click it, **Then** I see sub-items for Cycling, Tech, and Volunteering
-6. **Given** I click a leaf menu item like "Photography", **When** the content loads, **Then** the menu remains visible on the left while content appears on the right
-7. **Given** I'm viewing content from a leaf menu item, **When** content changes, **Then** it fades in smoothly rather than appearing instantly
+1. **Given** the sidebar navigation is reviewed, **When** examining menu items, **Then** each menu item must have a clear affordance indicating it is clickable (sufficient visual weight, color contrast, or interactive indicator)
+2. **Given** menu animations are reviewed, **When** users click menu items, **Then** animations must provide appropriate feedback and follow HIG motion principles (no jarring movements, appropriate timing)
+3. **Given** the content hierarchy is reviewed, **When** examining page layouts, **Then** the visual hierarchy must clearly distinguish primary content, secondary content, and supporting information
+4. **Given** information architecture is evaluated, **When** reviewing the menu structure and page organization, **Then** the structure must be intuitive and follow HIG patterns for organizing information
+5. **Given** the Photography gallery is reviewed, **When** examining interaction patterns, **Then** the scroll-snap behavior must provide appropriate feedback and follow HIG scrolling patterns
 
 ---
 
-### User Story 3 - Photography Gallery Experience (Priority: P3)
+### User Story 3 - Dark Mode Implementation (Priority: P3)
 
-A visitor viewing the Photography section sees large, full-screen photos that they scroll through vertically. Each scroll action advances to the next complete image with snap-to-position behavior, ensuring no photo is ever partially visible. A scroll indicator helps visitors understand the interaction.
+The portfolio website must support both light and dark appearances with full visual fidelity in both modes. Colors, typography, images, and all interactive elements must be carefully considered for dark mode viewing. Users with dark mode enabled should experience no readability issues or broken layouts.
 
-**Why this priority**: Photography is a primary portfolio showcase, and the scroll-snap behavior creates a professional, polished viewing experience.
+**Why this priority**: Dark mode support is mandatory per HIG Foundations: Dark Mode. While less critical than basic HIG compliance, it's essential for accessibility and modern user expectations.
 
-**Independent Test**: Can be tested by navigating to Photography section, scrolling down, and verifying each scroll action snaps to show exactly one complete photo with no partial images visible. Arrow indicator should appear to guide interaction. Delivers core portfolio viewing experience.
+**Independent Test**: Can be fully tested by enabling system dark mode on test devices/browsers, navigating through all pages, and verifying that colors maintain sufficient contrast, images remain visible and appropriately tonally adjusted, and the layout remains intact without any visual breaking.
 
 **Acceptance Scenarios**:
 
-1. **Given** I navigate to the Photography section, **When** the page loads, **Then** I see one large photo filling the right content area with no partial images visible
-2. **Given** I'm viewing a photo, **When** I scroll down, **Then** the current photo slides up and the next complete photo snaps into view
-3. **Given** I'm scrolling through photos, **When** I stop scrolling, **Then** the display automatically snaps to show exactly one complete photo
-4. **Given** I'm viewing the first photo, **When** the page loads or after a brief moment, **Then** an arrow indicator fades in below the photo to indicate scroll functionality
-5. **Given** I'm on a touch device, **When** I swipe up on a photo, **Then** the next photo slides into view with snap-to-position behavior
-6. **Given** I'm viewing photos, **When** transitioning between images, **Then** the scroll feels smooth and natural without jarring jumps
+1. **Given** the site is loaded with system dark mode enabled, **When** the page renders, **Then** all background colors must be dark (not pure black to reduce eye strain per HIG)
+2. **Given** text is displayed in dark mode, **When** reading content, **Then** text contrast must remain ≥ 4.5:1 with dark backgrounds
+3. **Given** the sidebar and header are displayed in dark mode, **When** examining colors, **Then** any accent colors must remain visually distinct against dark backgrounds
+4. **Given** images are displayed in dark mode, **When** viewing Photography gallery content, **Then** images must remain visible and properly visible without color degradation
+5. **Given** interactive elements are displayed in dark mode, **When** hovering over or focusing on elements, **Then** hover and focus states must be clearly visible in dark appearance
 
 ---
 
-### User Story 4 - Content Pages (About, Resume, Contact) (Priority: P4)
+### User Story 4 - Accessibility Compliance Review (Priority: P4)
 
-Visitors can access information about Dustin through dedicated pages: Resume shows formatted career information, Contact provides a mailto: link to send messages, and About displays biographical text and possibly a timeline.
+The portfolio website must meet WCAG 2.1 Level AA accessibility standards as required by HIG Foundations: Accessibility. This includes keyboard navigation, screen reader compatibility, color contrast, motion accessibility, and semantic HTML structure. Visitors with disabilities or different abilities should be able to access all content without barriers.
 
-**Why this priority**: Essential for portfolio completeness and visitor engagement, but can be developed after core navigation and gallery are working.
+**Why this priority**: Accessibility is both an ethical requirement and a HIG mandate. This ensures the portfolio is inclusive to all visitors.
 
-**Independent Test**: Each page can be tested independently—Resume by viewing formatted text, Contact by verifying the mailto: link, About by reading bio content. Each delivers standalone value.
+**Independent Test**: Can be fully tested using automated accessibility scanners (Lighthouse, axe DevTools) for contrast and semantic issues, manual keyboard navigation testing, and screen reader testing on at least one screen reader (NVDA, JAWS, or VoiceOver).
 
 **Acceptance Scenarios**:
 
-1. **Given** I navigate to the Resume section, **When** the content loads, **Then** I see formatted text displaying career information
-2. **Given** I navigate to the Contact section, **When** the page loads, **Then** I see a mailto: link that opens my email client pre-addressed to Dustin
-3. **Given** I navigate to the About section, **When** the content loads, **Then** I see biographical text about Dustin
-4. **Given** I'm viewing the About page, **When** scrolling through content, **Then** I may see a timeline visualization of key events or milestones
+1. **Given** keyboard navigation is tested, **When** navigating using Tab and Enter keys only, **Then** all interactive elements must be reachable and operable
+2. **Given** focus indicators are evaluated, **When** using keyboard navigation, **Then** focus indicators must be clearly visible with sufficient contrast (not just relying on default browser outlines)
+3. **Given** semantic HTML is reviewed, **When** examining page structure, **Then** headings must use proper hierarchy (h1, h2, h3 in order), landmarks must be used appropriately (nav, main, footer), and form elements must have associated labels
+4. **Given** screen reader testing is performed, **When** using a screen reader to navigate, **Then** all page content, navigation, and interactive elements must be properly announced
+5. **Given** motion-based interactions are reviewed, **When** users have reduced-motion preference enabled, **Then** animations and transitions must be disabled or significantly reduced per HIG Accessibility guidelines
+6. **Given** color is used to convey information, **When** examining the design, **Then** color alone must not be the only way to convey information—alternative visual indicators or text must be provided
 
 ---
 
-### User Story 5 - Blog-Style Content Pages (Cycling, Tech, Volunteering) (Priority: P5)
+### User Story 5 - IBM Plex Font Implementation and Typography Verification (Priority: P5)
 
-Visitors exploring the Play section can read blog-style posts about Dustin's interests in Cycling, Tech, and Volunteering. Each section presents articles or updates in a readable format.
+The portfolio website must use IBM Plex Sans (SIL OFL 1.1) as the sole font family per the constitutional font exception, while ensuring all HIG typography hierarchy and readability standards are met. Font sizing, weights, line heights, and letter spacing must follow HIG guidelines. Users should experience clear, readable typography that maintains the minimal aesthetic while being fully accessible.
 
-**Why this priority**: Adds personality and depth to the portfolio, but is supplementary to core professional content.
+**Why this priority**: Typography directly impacts readability and professional presentation. While the font choice is fixed, ensuring HIG-compliant sizing and hierarchy is essential.
 
-**Independent Test**: Can be tested by navigating to any Play sub-section and verifying blog posts display with proper formatting and readability. Delivers additional content discovery value.
+**Independent Test**: Can be tested by verifying IBM Plex Sans is the only font loaded, checking that font sizes follow HIG sizing standards (using relative units like rem), confirming line heights are ≥ 1.5 for body text per WCAG, and validating that text remains readable across all screen sizes.
 
 **Acceptance Scenarios**:
 
-1. **Given** I navigate to the Cycling section, **When** the content loads, **Then** I see blog-style posts about cycling activities and interests
-2. **Given** I navigate to the Tech section, **When** the content loads, **Then** I see blog-style posts about technology topics
-3. **Given** I navigate to the Volunteering section, **When** the content loads, **Then** I see blog-style posts about volunteer work and community involvement
-4. **Given** I'm reading a blog post, **When** viewing the content, **Then** the text is well-formatted and easy to read with appropriate typography
+1. **Given** the site loads, **When** examining network requests, **Then** only IBM Plex Sans fonts must be loaded (no external CDN fonts, no fallback to system fonts)
+2. **Given** body text is displayed, **When** measuring font size, **Then** body text must be ≥ 16px (or equivalent in rem) for readability per HIG
+3. **Given** headings are displayed, **When** examining hierarchy, **Then** heading sizes must use a clear scaling hierarchy (h1 > h2 > h3 with visible size differences)
+4. **Given** line height is measured, **When** examining text readability, **Then** line height must be ≥ 1.5x font size for body text to ensure readability
+5. **Given** text is displayed on small screens, **When** resizing the viewport to mobile dimensions, **Then** font sizes must remain readable without horizontal scrolling (no font size smaller than 16px)
 
 ---
 
-### User Story 6 - Video Portfolio Gallery (Priority: P6)
+### User Story 6 - Inclusion and Diverse User Support (Priority: P6)
 
-Visitors can view a small collection of video work through embedded players in the Video section, showcasing multimedia portfolio pieces.
+The portfolio website must be designed to be inclusive and welcoming to visitors from diverse backgrounds. This includes ensuring the design doesn't perpetuate biases, uses inclusive language, and supports diverse input methods and abilities. Content and design should reflect and respect diversity.
 
-**Why this priority**: Important for complete portfolio representation, but fewer videos means less critical than photo gallery.
+**Why this priority**: HIG Foundations: Inclusion requires consideration of diverse users. This ensures the portfolio is welcoming to all visitors and demonstrates values of inclusivity.
 
-**Independent Test**: Can be tested by navigating to Video section and verifying embedded players load and play correctly. Delivers video portfolio showcase.
-
-**Acceptance Scenarios**:
-
-1. **Given** I navigate to the Video section, **When** the content loads, **Then** I see embedded video players displaying Dustin's video work
-2. **Given** I'm viewing the Video section, **When** I click play on a video, **Then** the video plays smoothly within the embedded player
-3. **Given** there are multiple videos, **When** viewing the page, **Then** I can see all available videos without overwhelming the layout
-
----
-
-### User Story 7 - Social Media Platform Links (Priority: P7)
-
-At the bottom of the left sidebar, visitors can click icons to visit Dustin's profiles on other platforms, serving as a hub for social media and professional network connections.
-
-**Why this priority**: Nice-to-have for extending reach, but not critical for core portfolio functionality.
-
-**Independent Test**: Can be tested by viewing the bottom of the sidebar, clicking each icon, and verifying correct external links open. Delivers social media integration value.
+**Independent Test**: Can be tested by reviewing copy for inclusive language (avoiding gendered or biased terms), ensuring imagery (if any) represents diversity, and verifying that the design doesn't assume user abilities or backgrounds.
 
 **Acceptance Scenarios**:
 
-1. **Given** I'm viewing any page, **When** I look at the bottom of the left sidebar, **Then** I see icons for various social media and professional platforms
-2. **Given** I see social media icons, **When** I click on an icon, **Then** it opens Dustin's profile on that platform in a new tab
-3. **Given** I'm viewing the icons, **When** looking at the design, **Then** the icons are visually clear and consistent with the minimal aesthetic
+1. **Given** all copy on the site is reviewed, **When** examining language used, **Then** language must be inclusive and avoid gendered, biased, or exclusionary terms
+2. **Given** images and photography are displayed, **When** reviewing visual content, **Then** imagery must not perpetuate stereotypes or biases (if applicable to portfolio content)
+3. **Given** interaction design is reviewed, **When** examining how users interact with the site, **Then** the design must accommodate diverse input methods (touch, keyboard, mouse, voice if applicable)
+4. **Given** the About or biographical content is reviewed, **When** examining information presented, **Then** content should provide context about background and values without making assumptions about user backgrounds
 
 ---
 
 ### Edge Cases
 
-- What happens when a visitor tries to scroll past the last photo in the Photography gallery? (Should prevent further scrolling or loop back to first photo)
-- How does the contact form handle submission failures or network errors? (Should display user-friendly error messages and preserve form data)
-- What happens when a visitor uses keyboard navigation instead of mouse clicks? (All interactive elements should be keyboard accessible)
-- How does the scroll-snap behavior work if the browser window is resized while viewing photos? (Should recalculate snap positions and maintain current photo in view)
-- What happens when a visitor presses the browser back button after navigating through sub-menus? (Should respect browser history and navigate back through menu levels)
-- How does content handle extremely long text in blog posts or About section? (Should scroll smoothly within the content area without breaking layout)
-- What happens when embedded videos fail to load? (Should display placeholder or error message without breaking layout)
-- How does the site behave on very small mobile screens (< 320px width)? (Should maintain readability and navigation functionality)
+- What happens when a user has system dark mode enabled but the browser doesn't support CSS media queries? (Should display light mode as safe fallback)
+- How does the site behave when JavaScript is disabled? (Should maintain core navigation functionality with HTML-only fallbacks)
+- What happens when a user with reduced-motion preference loads the site? (Should disable animations and transitions per HIG)
+- How does text rendering appear on high-DPI displays? (Should remain crisp and readable, fonts should scale appropriately)
+- What happens when extended Latin characters or diacritics are needed in names or content? (IBM Plex Sans should support these correctly)
+- How does the Photography gallery handle high-resolution images on dark mode? (Images should render appropriately without color shift)
 
 ## Requirements *(mandatory)*
 
 ### Functional Requirements
 
-#### Landing Page & Core Layout
-- **FR-001**: System MUST display a centered menu on initial page load with no content area visible
-- **FR-002**: Centered menu MUST include profile photo, name "Dustin Niles", and navigation items (Work, Play, Contact, About)
-- **FR-003**: System MUST transition from centered menu to left-sidebar layout when any menu item is clicked
-- **FR-004**: Profile photo and name MUST remain visible and fixed in position throughout all navigation
-- **FR-005**: Left sidebar MUST occupy approximately one-quarter of the screen width when in sidebar mode
-- **FR-006**: Content area MUST occupy remaining screen width to the right of the sidebar
+#### Design Review and HIG Compliance
+- **FR-001**: System MUST conduct a comprehensive baseline audit of current design state, documenting which HIG Foundations standards (Layout, Color, Typography, Dark Mode, Accessibility, Inclusion, Writing) are currently met, which have gaps, and prioritizing fixes accordingly
+- **FR-002**: All spacing and layout MUST conform to HIG spacing standards using 8px base units and multiples thereof
+- **FR-003**: All text MUST have sufficient color contrast per WCAG standards (4.5:1 for normal text, 3:1 for large text) in both light and dark modes
+- **FR-004**: All typography MUST follow HIG typography hierarchy with clearly distinct sizing levels
+- **FR-005**: Typography MUST use IBM Plex Sans exclusively, sourced from @fontsource with no external CDN dependencies
+- **FR-006**: Body text MUST be ≥ 16px (or equivalent in rem) for core readability
+- **FR-007**: Line height for body text MUST be ≥ 1.5x font size for optimal readability
 
-#### Navigation & Menu Behavior
-- **FR-007**: Main menu items (Work, Play) MUST reveal sub-menus when clicked
-- **FR-008**: Sub-menu MUST replace main menu items with slide-left animation when activated
-- **FR-009**: System MUST display a back arrow positioned top-left of sub-menu headers when viewing sub-menus
-- **FR-010**: Back arrow MUST restore the previous menu level when clicked with slide-right animation
-- **FR-011**: Menu slide animations MUST complete in approximately 300 milliseconds
-- **FR-012**: Work sub-menu MUST include items: Resume, Photography, Video
-- **FR-013**: Play sub-menu MUST include items: Cycling, Tech, Volunteering
-- **FR-014**: Contact and About MUST be accessible from main menu as direct links
-- **FR-015**: Clicking a leaf menu item (e.g., Photography) MUST load content in right area while keeping menu visible
+#### Navigation and Component Patterns
+- **FR-008**: Navigation structure MUST align with HIG Components: Navigation and Search patterns
+- **FR-009**: All menu items and interactive elements MUST have clear affordances indicating interactivity
+- **FR-010**: Menu animations MUST provide appropriate user feedback and follow HIG motion principles
+- **FR-011**: Content hierarchy MUST be visually distinct and follow HIG information architecture patterns
+- **FR-012**: The Photography gallery scroll-snap behavior MUST provide appropriate feedback per HIG patterns
 
-#### Content Transitions & Animations
-- **FR-016**: Content MUST fade in when appearing rather than instantly displaying
-- **FR-017**: Content MUST fade out when changing rather than instantly disappearing
-- **FR-018**: All animations MUST feel smooth and natural without jank or stuttering
+#### Dark Mode Support
+- **FR-013**: System MUST support both light and dark appearances using CSS media query `prefers-color-scheme` with two independently designed color palettes (light and dark)
+- **FR-014**: Dark mode palette MUST be designed as a separate, intentional palette (not inverted from light) with backgrounds using dark grays (not pure black #000 per HIG to reduce eye strain) and all colors meeting WCAG 4.5:1 contrast requirements
+- **FR-015**: All interactive elements MUST remain visually distinct and properly afforded in both light and dark modes, with affordances tested in each palette
+- **FR-016**: Images MUST remain visible and properly displayed in dark mode without color degradation; images must be tested in both light and dark appearances
 
-#### Photography Gallery
-- **FR-019**: Photography section MUST display one complete photo at a time filling the content area
-- **FR-020**: System MUST implement scroll-snap behavior so scrolling advances to the next complete photo
-- **FR-021**: System MUST prevent partial photos from being visible when scrolling stops
-- **FR-022**: System MUST display a scroll indicator (arrow) below photos to guide visitor interaction
-- **FR-023**: Scroll indicator MUST fade in after page load or brief delay
-- **FR-024**: Photos MUST be large and prominent, emphasizing visual impact
-- **FR-025**: Swipe gestures on touch devices MUST advance to next/previous photo with snap-to-position
+#### Accessibility Requirements (WCAG 2.1 Level AA)
+- **FR-017**: All interactive elements MUST be keyboard accessible (Tab, Enter, Escape navigation)
+- **FR-018**: Focus indicators MUST be clearly visible with adequate contrast ratio (≥ 3:1)
+- **FR-019**: Heading hierarchy MUST be semantic and properly structured (h1 → h2 → h3 in order)
+- **FR-020**: Page landmarks MUST be properly implemented (nav, main, footer elements)
+- **FR-021**: All form labels (including mailto: links) MUST be properly associated or described
+- **FR-022**: Screen reader compatibility MUST be verified (all content and navigation discoverable via screen readers)
+- **FR-023**: Images MUST have descriptive alt text (Photography gallery images MUST have alt text)
+- **FR-024**: Motion-based interactions MUST respond to `prefers-reduced-motion` preference and disable/reduce animations
+- **FR-025**: Color MUST not be the sole means of conveying information (use text labels, patterns, or icons in addition to color)
+- **FR-026**: Skip links or equivalent navigation must be available to bypass repetitive content
 
-#### Video Section
-- **FR-026**: Video section MUST display embedded video players
-- **FR-027**: Videos MUST be playable directly within the embedded players
-- **FR-028**: Video layout MUST accommodate multiple videos without overwhelming the design
+#### Inclusion and Diverse User Support
+- **FR-027**: All copy on the site MUST use inclusive language avoiding biased or exclusionary terms
+- **FR-028**: Design patterns MUST accommodate diverse input methods and abilities
+- **FR-029**: If imagery is used (beyond portfolio content), it MUST not perpetuate stereotypes or biases
 
-#### Resume Section
-- **FR-029**: Resume section MUST display formatted text presenting career information
-- **FR-030**: Resume content MUST be readable and well-organized
+#### Content and Security
+- **FR-030**: Feature MUST NOT introduce third-party JavaScript or external scripts without explicit HIG and constitutional review
+- **FR-031**: All external links MUST include `rel="noopener noreferrer"` attributes
+- **FR-032**: Feature MUST maintain Content Security Policy compliance with no unsafe-inline or unsafe-eval directives
 
-#### Contact Section
-- **FR-031**: Contact section MUST display a mailto: link that opens the visitor's email client pre-addressed to Dustin's email address
+### Apple HIG Compliance Requirements *(mandatory for design/UI features)*
 
-#### About Section
-- **FR-036**: About section MUST display biographical text
-- **FR-037**: About section MAY include a timeline visualization of key events or milestones
+- **HIG-001**: Feature MUST comply with HIG Foundations: Layout for spatial organization, margins, and alignment (https://developer.apple.com/design/human-interface-guidelines/foundations/layout)
+- **HIG-002**: Feature MUST comply with HIG Foundations: Color for color usage, contrast, and semantic colors (https://developer.apple.com/design/human-interface-guidelines/foundations/color)
+- **HIG-003**: Feature MUST comply with HIG Foundations: Typography for font sizing and hierarchy (with IBM Plex Sans exception) (https://developer.apple.com/design/human-interface-guidelines/foundations/typography)
+- **HIG-004**: Feature MUST support HIG Foundations: Dark Mode with full visual fidelity in dark appearance (https://developer.apple.com/design/human-interface-guidelines/foundations/dark-mode)
+- **HIG-005**: Feature MUST comply with HIG Foundations: Accessibility for keyboard navigation, screen reader support, and WCAG 2.1 Level AA (https://developer.apple.com/design/human-interface-guidelines/foundations/accessibility)
+- **HIG-006**: Feature MUST comply with HIG Foundations: Inclusion for diverse user support and representation (https://developer.apple.com/design/human-interface-guidelines/foundations/inclusion)
+- **HIG-007**: Feature MUST use HIG Foundations: Writing principles for clear, concise, direct language (https://developer.apple.com/design/human-interface-guidelines/foundations/writing)
+- **HIG-008**: Feature MUST comply with HIG Components: Layout and Organization for page structure and information architecture (https://developer.apple.com/design/human-interface-guidelines/components/layout-and-organization)
+- **HIG-009**: Navigation patterns MUST align with HIG Components: Navigation and Search (https://developer.apple.com/design/human-interface-guidelines/components/navigation-and-search)
+- **HIG-010**: Content presentation MUST follow HIG Components: Content patterns (https://developer.apple.com/design/human-interface-guidelines/components/content)
+- **HIG-011**: User feedback mechanisms MUST align with HIG Patterns: Feedback (https://developer.apple.com/design/human-interface-guidelines/patterns/feedback)
+- **HIG-012**: Loading states MUST comply with HIG Patterns: Loading if applicable (https://developer.apple.com/design/human-interface-guidelines/patterns/loading)
 
-#### Blog-Style Content (Cycling, Tech, Volunteering)
-- **FR-038**: Cycling, Tech, and Volunteering sections MUST display blog-style posts
-- **FR-039**: Blog posts MUST be formatted for readability with appropriate typography
-
-#### Social Media Links
-- **FR-040**: System MUST display social media and platform icons at the bottom of the left sidebar
-- **FR-041**: Social media icons MUST link to Dustin's profiles on external platforms
-- **FR-042**: External links MUST open in new tabs
-
-#### Typography & Design
-- **FR-043**: Entire site MUST use IBM Plex font family
-- **FR-044**: Design MUST maintain a minimal and sparse aesthetic throughout
-- **FR-045**: Layout MUST emphasize large imagery and whitespace
-
-#### Responsive & Mobile Behavior
-- **FR-046**: On mobile and tablet devices, system MUST provide navigation controls appropriate for smaller screens
-- **FR-047**: Mobile layout MUST include a small section on the left for a back button when past the landing page
-- **FR-048**: Mobile experience MUST maintain core navigation functionality
-- **FR-049**: Touch gestures (swipes) MUST work for photo gallery navigation on mobile devices
-
-#### Accessibility & Interaction
-- **FR-050**: All interactive elements MUST be keyboard accessible
-- **FR-051**: System MUST handle browser back/forward buttons appropriately
-- **FR-052**: System MUST maintain usable layout on small screens (≥ 320px width)
-
-### Security Requirements
-
-**IMPORTANT**: Review Constitution Section VI (Security & Content Integrity) for all projects. The following requirements MUST be verified:
-
-- **SR-001**: Feature MUST NOT introduce third-party JavaScript, CDNs, or external scripts without explicit approval and Subresource Integrity (SRI)
-- **SR-003**: All new dependencies MUST be from trusted sources and pass npm audit security checks
-- **SR-004**: Feature MUST NOT use code evaluation, unsafe HTML injection patterns, or other insecure code practices
-- **SR-005**: External social media links MUST include rel equals noopener noreferrer attributes
-- **SR-006**: Feature MUST maintain Content Security Policy compliance with no unsafe-inline or unsafe-eval directives
-- **SR-008**: Embedded video players MUST be from trusted sources (YouTube, Vimeo) with appropriate iframe sandboxing
-- **SR-009**: Image assets MUST be served from trusted origins with appropriate CORS headers
+*Design review checklist:*
+- [ ] Spatial conformance with HIG Layout principles (8px unit spacing, margins, safe areas)
+- [ ] Color contrast per HIG Color and Accessibility guidelines (4.5:1 normal, 3:1 large text)
+- [ ] Navigation patterns align with HIG Components: Navigation and Search
+- [ ] Interactive elements have clear affordances per HIG Patterns: Feedback
+- [ ] Dark mode support per HIG Foundations: Dark Mode (both light and dark viable)
+- [ ] Reduced-motion support per HIG Foundations: Accessibility
+- [ ] Keyboard navigation fully functional per HIG Accessibility
+- [ ] Screen reader compatibility verified per HIG Accessibility
+- [ ] Inclusive language and design per HIG Foundations: Inclusion
+- [ ] Typography uses IBM Plex Sans with HIG-compliant sizing and hierarchy
+- [ ] All visual hierarchy and affordances follow HIG standards
 
 ### Key Entities *(data involved)*
 
-- **Navigation Menu Item**: Represents a clickable navigation option with properties including display label, hierarchy level (main menu vs sub-menu), target content section, and optional children items
-- **Portfolio Photo**: Represents an image in the photography gallery with properties including image source, alt text for accessibility, display order, and dimensions for layout calculation
-- **Blog Post**: Represents a written article with properties including title, publish date, content body, category (Cycling/Tech/Volunteering), and optional featured image
-- **Video Item**: Represents a portfolio video with properties including title, video source URL (YouTube/Vimeo), embed code, thumbnail image, and duration
-- **Social Media Link**: Represents an external platform profile with properties including platform name, icon image, profile URL, and display order
+This specification focuses on design review and compliance documentation rather than data creation. Key artifacts include:
+
+- **HIG Compliance Checklist**: A comprehensive document mapping each HIG principle to the portfolio website design elements and verification status
+- **Design Review Report**: Detailed findings from comparing current design against HIG standards, including specific sections reviewed, deviations found, and corrections applied
+- **Dark Mode Design Specifications**: Color palette and design adjustments for dark appearance support
+- **Accessibility Audit Results**: Automated and manual accessibility testing results against WCAG 2.1 Level AA
 
 ## Success Criteria *(mandatory)*
 
 ### Measurable Outcomes
 
-- **SC-001**: Visitors can navigate from landing page to any content section in 3 clicks or fewer
-- **SC-002**: Menu slide animations complete in 300 milliseconds (±50ms) for smooth perception
-- **SC-003**: Photography gallery displays complete photos with no partial images visible when scrolling stops
-- **SC-004**: Page load time is under 2 seconds on standard broadband connection (10 Mbps)
-- **SC-005**: All interactive elements (menu items, buttons, links) are keyboard navigable and pass basic accessibility testing
-- **SC-006**: Contact mailto: link successfully opens the visitor's email client pre-addressed to Dustin's email address
-- **SC-007**: Site maintains functional layout and navigation on screen widths from 320px to 2560px
-- **SC-008**: Content fade-in/fade-out transitions feel smooth and intentional (no jarring instant changes)
-- **SC-009**: Visitors can identify how to scroll through photography gallery within 5 seconds (via scroll indicator)
-- **SC-010**: Social media links successfully navigate to correct external profiles in 100% of cases
-- **SC-011**: Embedded videos load and play successfully on first click 95% of the time
-- **SC-012**: Mobile touch gestures (swipe) work for photo gallery navigation with immediate visual feedback
-- **SC-013**: Browser back button correctly navigates through menu hierarchy without breaking navigation state
-- **SC-014**: Typography remains readable across all sections with no text overflow or truncation issues
-- **SC-015**: Site passes core Web Vitals thresholds (LCP < 2.5s, FID < 100ms, CLS < 0.1)
+- **SC-001**: 100% of required HIG Foundations sections (Layout, Color, Typography, Dark Mode, Accessibility, Inclusion, Writing) must be reviewed and compliance status documented
+- **SC-002**: All text elements must achieve WCAG contrast ratio requirements: 4.5:1 for normal text, 3:1 for large text in both light and dark modes
+- **SC-003**: 100% of interactive elements must be keyboard accessible (Tab, Enter, Escape) with no dead-end navigation
+- **SC-004**: All page headings must use semantic HTML heading hierarchy (h1, h2, h3) with no skipped levels
+- **SC-005**: 100% of images and media must have descriptive alt text or aria-labels
+- **SC-006**: Site must achieve Lighthouse Accessibility score of 100
+- **SC-007**: Site must support dark mode with no broken layouts or unreadable text when system dark mode is enabled
+- **SC-008**: Animations and transitions must respond to `prefers-reduced-motion` system preference
+- **SC-009**: 100% of portfolio pages must maintain usable layout on screens from 320px to 2560px width
+- **SC-010**: Body text must be ≥ 16px (or rem equivalent) for readability
+- **SC-011**: Line height for body text must be ≥ 1.5x font size
+- **SC-012**: IBM Plex Sans must be the only font loaded (verifiable via network inspection)
+- **SC-013**: No third-party JavaScript or external scripts (except for necessary functionality with SRI and constitutional review)
+- **SC-014**: All HIG design review findings must be documented with specific references to HIG sections and compliance status
+- **SC-015**: Focus indicators must have minimum 3:1 contrast ratio and be clearly visible
+- **SC-016**: All skip links or navigation mechanisms must function to bypass repetitive content
+
+## Assumptions
+
+- IBM Plex Sans is already integrated or will be integrated via @fontsource (not an external CDN)
+- Current site uses Next.js 14+ with static export (output: 'export') which is compatible with HIG compliance
+- No server-side rendering required; all compliance mechanisms can be achieved with static HTML/CSS/JavaScript
+- Dark mode will be implemented using CSS `prefers-color-scheme` media query with two independently designed color palettes
+- Current typography baseline (px vs. rem units, base font size) will be inspected during plan phase to determine unit conversion strategy
+- Accessibility testing tools (Lighthouse, axe DevTools) are available for automated validation
+- Testing strategy (balance of automated vs. manual testing, scope of manual testing) will be scoped during implementation planning based on findings from baseline audit
+- HIG violations found during baseline audit will be prioritized and corrected as part of implementation (not just documented)
+
+## Next Steps
+
+1. Execute comprehensive design review against each HIG Foundations and Components section
+2. Document all deviations and non-compliant elements
+3. Create corrected designs and specifications for each area requiring updates
+4. Implement dark mode support with proper color palette
+5. Verify keyboard navigation and screen reader compatibility
+6. Run automated accessibility audits and resolve any failures
+7. Conduct final HIG compliance review before closing feature
