@@ -20,7 +20,7 @@
 **Purpose**: Install dependencies and prepare the project environment for new components.
 
 - [ ] T001 Install @fontsource/ibm-plex-sans npm dependency (npm install @fontsource/ibm-plex-sans)
-- [ ] T002 [P] Configure Tailwind CSS with IBM Plex font family in tailwind.config.ts (fontFamily.sans: ['IBM Plex Sans', 'system-ui', 'sans-serif'])
+- [ ] T002 [P] Add IBM Plex Sans font family to app/globals.css using Tailwind CSS v4 @theme directive: @theme { --font-sans: 'IBM Plex Sans', system-ui, sans-serif; } (CSS-first configuration — no tailwind.config.ts exists in Tailwind v4; postcss.config.mjs already configured)
 - [ ] T003 [P] Create public/images/ subdirectories: public/images/portfolio/, public/images/profile/, public/images/blog/
 
 ---
@@ -31,7 +31,7 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T004 [P] Create app/types/index.ts with TypeScript interfaces for NavigationMenuItem, PortfolioPhoto, BlogPost, VideoItem, SocialMediaLink, and ContactFormSubmission (per data-model.md entity definitions)
+- [ ] T004 [P] Create app/types/index.ts with TypeScript interfaces for NavigationMenuItem, PortfolioPhoto, BlogPost, VideoItem, and SocialMediaLink (per data-model.md entity definitions; ContactFormSubmission excluded — contact is a static mailto: link per plan.md FR-031 decision, no form exists)
 - [ ] T005 [P] Update app/globals.css with @fontsource/ibm-plex-sans imports for 300 and 400 weights, CSS transition utility classes (.slide-menu using transform/translateX, .content-fade using opacity), and prefers-reduced-motion media query (transition-duration: 0.01ms for all elements)
 - [ ] T006 Create app/data/navigation.ts with NavigationMenuItem[] mainMenu array: Work (children: Resume, Photography, Video), Play (children: Cycling, Tech, Volunteering), Contact (direct link), About (direct link)
 - [ ] T007 [P] Create app/hooks/useReducedMotion.ts React hook using window.matchMedia('(prefers-reduced-motion: reduce)') with addEventListener change handler and cleanup
@@ -162,7 +162,7 @@
 
 - [ ] T033 [P] Add keyboard accessibility to components/MenuSlider.tsx: onKeyDown handlers for Escape key to navigate back from sub-menus (sets activeMenu to 'main'), ensure all menu items are focusable (tabIndex=0 on interactive divs or use button elements), add visible focus styles (focus-visible:ring-2 Tailwind class)
 - [ ] T034 [P] Add responsive mobile layout to app/globals.css and app/layout.tsx: media query breakpoint at max-width 640px (sm:) with single-column layout, MenuSlider collapsible or minimal sidebar mode per FR-046 to FR-049 (small back button on left when navigated past landing page)
-- [ ] T035 [P] Update next.config.ts with async headers() function returning Content-Security-Policy header: form-action 'none' (no form on site), frame-src directive including <https://www.youtube-nocookie.com> and <https://player.vimeo.com>
+- [ ] T035 [P] Add CSP meta tag to app/layout.tsx inside the html head element using `httpEquiv="Content-Security-Policy"` with `content="form-action 'none'"` (GitHub Pages static export cannot serve HTTP headers — async headers() in next.config.ts is ignored by the static build; frame-src cannot be enforced via meta tag, so video iframe security relies entirely on sandbox attributes per contracts/video-embeds.md)
 - [ ] T036 [P] Run npm audit to verify no critical or high severity security vulnerabilities in installed dependencies
 - [ ] T037 Run npm run lint && npm run build to validate zero ESLint errors and confirm successful static export generation in /out directory
 
