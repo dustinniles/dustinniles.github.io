@@ -38,7 +38,7 @@ A visitor on the landing page clicks any of the four navigation links (Work, Pla
 3. **Given** a visitor is on the landing page, **When** they click the "Contact" navigation link, **Then** they are taken to the Contact page without errors
 4. **Given** a visitor is on the landing page, **When** they click the "About" navigation link, **Then** they are taken to the About page without errors
 5. **Given** a visitor lands directly on any subpage URL (e.g., `/work`), **When** the page loads, **Then** it displays correctly without errors
-6. **Given** a visitor is on any subpage, **When** they view the page, **Then** there is a clear way to return to the landing page (via navigation or branding)
+6. **Given** a visitor is on any subpage, **When** they view the page, **Then** the sidebar displays the site owner's name as a link that navigates to the landing page
 
 ---
 
@@ -52,12 +52,12 @@ A visitor on the Work page sees three clear navigation links — Resume, Photogr
 
 **Acceptance Scenarios**:
 
-1. **Given** a visitor is on the Work page, **When** they view the page, **Then** they see navigation links to Resume, Photography, and Video sub-sections
-2. **Given** a visitor clicks the "Resume" link from the Work page, **When** the page loads, **Then** they see the Resume page with a title and placeholder content
-3. **Given** a visitor clicks the "Photography" link from the Work page, **When** the page loads, **Then** they see the Photography page with a title and placeholder content
-4. **Given** a visitor clicks the "Video" link from the Work page, **When** the page loads, **Then** they see the Video page with a title and placeholder content
-5. **Given** a visitor is on any Work sub-page (Resume, Photography, or Video), **When** they view the page, **Then** there is a clear path back to the Work section page
-6. **Given** a visitor navigates directly to a Work sub-page URL (e.g., `/resume`), **When** the page loads, **Then** it displays correctly without errors
+1. **Given** a visitor is on the Work page, **When** they view the page, **Then** the sidebar displays navigation links to Resume, Photography, and Video sub-sections
+2. **Given** a visitor clicks the "Resume" link from the sidebar on the Work page, **When** the page loads, **Then** they see the Resume page with a title and placeholder content
+3. **Given** a visitor clicks the "Photography" link from the sidebar on the Work page, **When** the page loads, **Then** they see the Photography page with a title and placeholder content
+4. **Given** a visitor clicks the "Video" link from the sidebar on the Work page, **When** the page loads, **Then** they see the Video page with a title and placeholder content
+5. **Given** a visitor is on any Work sub-page (Resume, Photography, or Video), **When** they view the page, **Then** the sidebar displays a clear path back to the Work section page
+6. **Given** a visitor navigates directly to a Work sub-page URL (e.g., `/resume`), **When** the page loads, **Then** it displays correctly without errors and the sidebar shows the Work sub-navigation
 
 ---
 
@@ -71,12 +71,12 @@ A visitor on the Play page sees three navigation links — Cycling, Tech, and Vo
 
 **Acceptance Scenarios**:
 
-1. **Given** a visitor is on the Play page, **When** they view the page, **Then** they see navigation links to Cycling, Tech, and Volunteering sub-sections
-2. **Given** a visitor clicks the "Cycling" link from the Play page, **When** the page loads, **Then** they see the Cycling page with a title and placeholder content
-3. **Given** a visitor clicks the "Tech" link from the Play page, **When** the page loads, **Then** they see the Tech page with a title and placeholder content
-4. **Given** a visitor clicks the "Volunteering" link from the Play page, **When** the page loads, **Then** they see the Volunteering page with a title and placeholder content
-5. **Given** a visitor is on any Play sub-page (Cycling, Tech, or Volunteering), **When** they view the page, **Then** there is a clear path back to the Play section page
-6. **Given** a visitor navigates directly to a Play sub-page URL (e.g., `/cycling`), **When** the page loads, **Then** it displays correctly without errors
+1. **Given** a visitor is on the Play page, **When** they view the page, **Then** the sidebar displays navigation links to Cycling, Tech, and Volunteering sub-sections
+2. **Given** a visitor clicks the "Cycling" link from the sidebar on the Play page, **When** the page loads, **Then** they see the Cycling page with a title and placeholder content
+3. **Given** a visitor clicks the "Tech" link from the sidebar on the Play page, **When** the page loads, **Then** they see the Tech page with a title and placeholder content
+4. **Given** a visitor clicks the "Volunteering" link from the sidebar on the Play page, **When** the page loads, **Then** they see the Volunteering page with a title and placeholder content
+5. **Given** a visitor is on any Play sub-page (Cycling, Tech, or Volunteering), **When** they view the page, **Then** the sidebar displays a clear path back to the Play section page
+6. **Given** a visitor navigates directly to a Play sub-page URL (e.g., `/cycling`), **When** the page loads, **Then** it displays correctly without errors and the sidebar shows the Play sub-navigation
 
 ---
 
@@ -99,16 +99,16 @@ A visitor on the Play page sees three navigation links — Cycling, Tech, and Vo
 - **FR-006**: An About page MUST exist and be accessible via the About navigation link, displaying placeholder content that represents the section's purpose
 - **FR-007**: All mock pages MUST display a page title identifying which section the visitor is viewing
 - **FR-008**: All mock pages MUST provide a navigational path back to the landing page
-- **FR-009**: The Work page MUST display navigation links to its three sub-sections: Resume, Photography, and Video
+- **FR-009**: When on the Work page or any Work sub-page, the sidebar MUST display navigation links to Resume, Photography, and Video sub-sections
 - **FR-010**: A Resume page MUST exist under the Work section, accessible from the Work page and via direct URL (e.g., `/resume`), displaying placeholder content
 - **FR-011**: A Photography page MUST exist under the Work section, accessible from the Work page and via direct URL (e.g., `/photography`), displaying placeholder content
 - **FR-012**: A Video page MUST exist under the Work section, accessible from the Work page and via direct URL (e.g., `/video`), displaying placeholder content
-- **FR-013**: The Play page MUST display navigation links to its three sub-sections: Cycling, Tech, and Volunteering
+- **FR-013**: When on the Play page or any Play sub-page, the sidebar MUST display navigation links to Cycling, Tech, and Volunteering sub-sections
 - **FR-014**: A Cycling page MUST exist under the Play section, accessible from the Play page and via direct URL (e.g., `/cycling`), displaying placeholder content
 - **FR-015**: A Tech page MUST exist under the Play section, accessible from the Play page and via direct URL (e.g., `/tech`), displaying placeholder content
 - **FR-016**: A Volunteering page MUST exist under the Play section, accessible from the Play page and via direct URL (e.g., `/volunteering`), displaying placeholder content
-- **FR-017**: All Work and Play sub-pages MUST provide a navigational path back to their parent section page (Work or Play respectively)
-- **FR-018**: All Work and Play sub-pages MUST provide a navigational path back to the landing page
+- **FR-017**: When on a Work or Play sub-page, the sidebar MUST provide a navigational path back to the parent section page (Work or Play respectively), implemented via the sidebar's context-aware sub-navigation — not via inline back-links in the main content area
+- **FR-018**: All Work and Play sub-pages MUST provide a navigational path back to the landing page *(complements FR-017 — FR-017 covers back to parent section; FR-018 covers back to landing)*
 
 ### Apple HIG Compliance Requirements *(mandatory for design/UI features)*
 
@@ -118,6 +118,7 @@ A visitor on the Play page sees three navigation links — Cycling, Tech, and Vo
 - **HIG-004**: Section and sub-section navigation hierarchy MUST comply with HIG Components: Navigation and Search — breadcrumb or back-navigation patterns must clearly communicate the user's location within the site hierarchy
 
 *Design review checklist:*
+
 - [ ] Spatial conformance with HIG Layout principles
 - [ ] Color contrast per HIG Color and Accessibility guidelines
 - [ ] Navigation patterns align with HIG Components: Navigation and Search
@@ -141,7 +142,8 @@ A visitor on the Play page sees three navigation links — Cycling, Tech, and Vo
 - "Centered" means horizontally centered relative to the profile/header section of the landing page, not necessarily full-page width centering
 - Mock pages require only minimal placeholder content (page title, brief description) — no real portfolio content, contact forms, or bio is needed at this stage
 - All four top-level navigation links (Work, Play, Contact, About) currently exist in the implementation but their routes are either missing or not wired correctly
-- Sub-page URLs follow a flat path convention: `/resume`, `/photography`, `/video`, `/cycling`, `/tech`, `/volunteering` (nested URL assumption superseded by routing decision documented in plan.md)
-- The existing site navigation structure will be preserved; no new global navigation patterns are introduced
-- All page layouts (section pages and sub-pages) should reflect the existing site's design language (sparse, minimal, consistent with current site chrome)
+- Sub-page URLs follow a flat path convention: `/resume`, `/photography`, `/video`, `/cycling`, `/tech`, `/volunteering`. (Earlier drafts assumed nested paths like `/work/resume`; flat paths were adopted because all six sub-pages already existed at flat routes — see URL Routing Strategy Decision in plan.md.)
+- Sub-section navigation (links to Resume/Photography/Video and Cycling/Tech/Volunteering) and all parent-section back-navigation live exclusively in the sidebar — not in the main content area of any page
+- The sidebar is context-aware: it auto-expands and displays the relevant sub-navigation based on the current pathname, without requiring the user to manually open a menu
+- All page layouts (section pages and sub-pages) should reflect the existing site's design language (sparse, minimal, consistent with current site chrome); section pages contain only a title and description with no inline navigation links
 - Contact and About remain flat pages with no sub-sections (as per WebsiteFlow.md)

@@ -5,7 +5,7 @@
 
 ## Summary
 
-Implement centered navigation alignment on the landing page and build out the full two-level navigation hierarchy (Work → Resume/Photography/Video; Play → Cycling/Tech/Volunteering; Contact; About). US1 and US2 (alignment and top-level routing) are already implemented and verified. US3 and US4 (Work and Play sub-pages) require: (1) updating section pages to display sub-navigation links, (2) adding parent-section back-navigation to each sub-page, and (3) resolving the URL structure discrepancy between the spec assumption (nested paths) and the current implementation (flat paths).
+Implement centered navigation alignment on the landing page and build out the full two-level navigation hierarchy (Work → Resume/Photography/Video; Play → Cycling/Tech/Volunteering; Contact; About). US1 and US2 (alignment and top-level routing) are already implemented and verified. US3 and US4 (Work and Play sub-pages) require: (1) making the sidebar context-aware so it auto-expands and displays sub-navigation when the user is on a section page or sub-page, (2) removing any inline navigation added in prior implementation from the main content area, and (3) resolving the URL structure discrepancy between the spec assumption (nested paths) and the current implementation (flat paths).
 
 ## Technical Context
 
@@ -17,6 +17,7 @@ Implement centered navigation alignment on the landing page and build out the fu
 **Project Type**: Web (Next.js static export, single project)
 **Performance Goals**: Lighthouse Performance ≥ 90, FCP < 1.5s on 3G (per constitution)
 **Constraints**: Static export only (`output: 'export'`), no server-side rendering, no API routes
+**Known architectural gap**: Constitution Principle VII requires strict CSP headers in production, but GitHub Pages does not support custom HTTP response headers. A `<meta http-equiv="Content-Security-Policy">` tag could partially satisfy the intent (covers script/style injection) but cannot set `frame-ancestors` or other fetch-directive-only policies. Addressing this fully would require a CDN or proxy layer (e.g., Cloudflare) — out of scope for this feature. This gap is pre-existing and not introduced by this change.
 **Scale/Scope**: Personal portfolio — 10 pages total (1 landing + 4 top-level + 6 sub-pages)
 
 ## Constitution Check
@@ -47,12 +48,12 @@ Implement centered navigation alignment on the landing page and build out the fu
 **Before proceeding with implementation:**
 
 - [x] Feature design reviewed against HIG Components: Navigation and Search — two-level hierarchy is a standard HIG pattern
-- [ ] Color contrast verified per HIG Color and Accessibility guidelines (4.5:1 for normal text, 3:1 for large text)
+- [ ] Color contrast verified per HIG Color and Accessibility guidelines (4.5:1 for normal text, 3:1 for large text) *(deferred to post-implementation — verified via T032)*
 - [x] Spatial design aligns with HIG Layout principles — sub-nav links will use consistent margins and spacing
 - [x] Navigation patterns follow HIG Components: Navigation and Search — section → sub-section with back-navigation
 - [x] Interactive elements have proper affordances per HIG Patterns: Feedback — hover/focus states inherited from existing link styles
-- [ ] Dark mode support verified — CSS custom properties already in use; verify sub-nav uses `var(--foreground)` and `var(--text-secondary)` tokens
-- [ ] Reduced-motion — no animations planned; confirm no transition is added without `prefers-reduced-motion` guard
+- [ ] Dark mode support verified — CSS custom properties already in use; verify sub-nav uses `var(--foreground)` and `var(--text-secondary)` tokens *(deferred to post-implementation — verified via T034)*
+- [ ] Reduced-motion — no animations planned; confirm no transition is added without `prefers-reduced-motion` guard *(deferred to post-implementation — verified via T035)*
 - [x] Typography hierarchy maintains WCAG 2.1 Level AA compliance — existing light-weight type scale reused
 
 ## URL Routing Strategy Decision
@@ -131,49 +132,51 @@ No constitution violations. All changes are additive to existing pages and follo
 
 *(See `research.md` for full details — covers US1 and US2. No new NEEDS CLARIFICATION items for US3/US4.)*
 
-**New finding for US3/US4**: All 6 sub-pages already exist with placeholder content. Work and Play section pages exist but lack sub-navigation links. Sub-pages have no explicit back-navigation to their parent section (back to `/work` or `/play`). The sidebar's profile name link (from US2) provides back-navigation to the landing page — satisfying FR-018 for all sub-pages without changes.
+**New finding for US3/US4 (revised)**: All 6 sub-pages already exist with placeholder content. The sidebar (`MenuSlider.tsx`) already renders an inline sub-menu for parent items (via `expandedParent` state), but `expandedParent` is initialized as `null` on every render — it is never derived from the current pathname. This means arriving at `/resume` by direct URL or page refresh shows no sub-navigation in the sidebar and no path back to `/work`.
 
-**FR-017 gap** (sub-pages → parent section): No current mechanism navigates from `/resume` back to `/work`. This must be added to each sub-page.
+A prior implementation (now to be removed) added a `SubNav.tsx` component rendered inside `app/work/page.tsx` and `app/play/page.tsx`, and added inline `← Work` / `← Play` back-links inside each sub-page's main content. Per the revised spec, all navigation must live in the sidebar only.
 
-**FR-009 / FR-013 gap** (section pages → sub-pages): `app/work/page.tsx` and `app/play/page.tsx` contain only a title and description. Sub-section links must be added.
+**FR-017 gap** (sub-pages → parent section): The sidebar must auto-expand the correct parent and display its children when the user is on a sub-page, providing navigation back to the parent section page (`/work` or `/play`).
+
+**FR-009 / FR-013 gap** (section pages → sub-pages): The sidebar must auto-expand the Work or Play sub-menu when the user is on `/work` or `/play`, displaying the sub-section links. The `app/work/page.tsx` and `app/play/page.tsx` main content areas contain only a title and description — no sub-nav should appear there.
 
 ## Phase 1: Design — Sub-page Navigation
 
-### Sub-navigation Component
+### Approach: Context-aware Sidebar
 
-A sub-nav list will appear on Work and Play section pages. Since the pattern is identical for both sections (a list of 3 child links), a single reusable component is justified (used 2+ times → meets constitution threshold).
+All sub-navigation (section → sub-pages) and back-navigation (sub-page → parent section) lives in the sidebar exclusively. The main content area of section pages and sub-pages contains only a title and placeholder description — no navigation links.
 
-**Component**: `components/SubNav.tsx`
+**Mechanism**: `MenuSlider.tsx` already renders an inline sub-menu for each parent nav item when `expandedParent === item.id`. The change required is to derive `expandedParent` from the current pathname rather than relying solely on click state.
 
-- Props: `items: { label: string; href: string }[]`
-- Renders a vertical list of links using existing link styles (font-light, `var(--text-secondary)`, hover state)
-- No new design tokens; inherits existing CSS custom properties
+**Implementation in `MenuSlider.tsx`**:
 
-### Parent-section Back-navigation
+1. Add a `useEffect` that watches `pathname` and sets `expandedParent` to the `id` of the parent nav item whose `target` or any `children[].target` matches the current pathname. This ensures the sub-menu auto-expands on direct URL access, page refresh, and programmatic navigation.
+2. The existing submenu rendering (`expandedParent === item.id`) handles display; clicking the parent item still toggles collapse as before.
+3. No new sidebar component is needed — the existing `<ul id="submenu-${item.id}">` pattern already renders child links with correct styles and `aria-current`.
 
-Each Work sub-page (`/resume`, `/photography`, `/video`) needs a link back to `/work`.
-Each Play sub-page (`/cycling`, `/tech`, `/volunteering`) needs a link back to `/play`.
+**FR-017 (sub-page → parent section)**: Satisfied automatically — when on `/resume`, the Work sub-menu is expanded in the sidebar, and the `Work` parent link (`item.target = '/work'`) is visible above the children list, serving as the path back.
 
-**Approach**: Inline back-link at the top of each page, above the `<h1>`. Pattern: `← Work` / `← Play`. Uses existing text-secondary color and light font weight. Consistent with minimal aesthetic.
+**Alternative explicitly rejected**: Inline back-links in the main content area (`← Work` / `← Play` above the `<h1>`) — violates the design principle that navigation lives in the sidebar, clutters the content area, and is redundant once the sidebar shows the correct context.
 
-**Alternative rejected**: Adding breadcrumb to sidebar — rejected; sidebar is shared global chrome; injecting per-page context into it requires prop drilling or context, over-engineering for this use case. Inline back-link on each page is simpler and more discoverable.
+**Alternative explicitly rejected**: `components/SubNav.tsx` rendered inside section page content — same issue; navigation belongs in the sidebar, not in `app/work/page.tsx` or `app/play/page.tsx`.
 
-### Work Section Page Update
+### Cleanup: Remove Prior Content-Area Navigation
 
-`app/work/page.tsx`: Add `<SubNav>` below the description with links to `/resume`, `/photography`, `/video` (labels: Resume, Photography, Video).
+Prior implementation (T008–T017) added:
 
-### Play Section Page Update
+- `components/SubNav.tsx` — to be deleted (not rendered anywhere after this change)
+- `<SubNav>` in `app/work/page.tsx` — to be removed
+- `<SubNav>` in `app/play/page.tsx` — to be removed
+- Inline `← Work` back-links in `app/resume/page.tsx`, `app/photography/page.tsx`, `app/video/page.tsx` — to be removed
+- Inline `← Play` back-links in `app/cycling/page.tsx`, `app/tech/page.tsx`, `app/volunteering/page.tsx` — to be removed
 
-`app/play/page.tsx`: Add `<SubNav>` below the description with links to `/cycling`, `/tech`, `/volunteering` (labels: Cycling, Tech, Volunteering).
+### Work and Play Section Pages
 
-### Sub-page Back-navigation
+`app/work/page.tsx` and `app/play/page.tsx`: Remove `<SubNav>` import and usage. Retain only the page title and placeholder description. The sidebar handles all sub-section navigation.
 
-Each of the 6 sub-pages gets an inline back-link above the `<h1>`:
+### Sub-pages
 
-- Resume, Photography, Video → `← Work` linking to `/work`
-- Cycling, Tech, Volunteering → `← Play` linking to `/play`
-
-The link to the landing page is already handled by the sidebar's "Dustin Niles" profile name link (FR-018 already satisfied via US2 completion).
+Each of the 6 sub-pages: Remove the inline back-link above the `<h1>`. Retain only the page title and placeholder description. The sidebar handles back-navigation to the parent section.
 
 ## Implementation Summary
 
@@ -181,12 +184,15 @@ The link to the landing page is already handled by the sidebar's "Dustin Niles" 
 | ------ | ----------- | ------ |
 | ✓ Done | FR-001: Nav links centered on landing | `MenuSlider.tsx` (US1) |
 | ✓ Done | FR-002–FR-008: Top-level routing + back to home | `SiteLayout.tsx`, `MenuSlider.tsx` (US2) |
-| Needed | FR-009: Work page shows sub-nav links | Update `app/work/page.tsx` |
-| Needed | FR-010–FR-012: Work sub-pages accessible from Work page | Update `app/work/page.tsx` |
-| Needed | FR-013: Play page shows sub-nav links | Update `app/play/page.tsx` |
-| Needed | FR-014–FR-016: Play sub-pages accessible from Play page | Update `app/play/page.tsx` |
-| Needed | FR-017: Sub-pages → parent section back-nav | Add back-link to each of 6 sub-pages |
+| Needed | FR-009: Sidebar shows Work sub-nav when on /work or Work sub-pages | `components/MenuSlider.tsx` — auto-derive `expandedParent` from pathname |
+| Needed | FR-010–FR-012: Work sub-pages accessible from sidebar | `components/MenuSlider.tsx` (same change as FR-009) |
+| Needed | FR-013: Sidebar shows Play sub-nav when on /play or Play sub-pages | `components/MenuSlider.tsx` (same change as FR-009) |
+| Needed | FR-014–FR-016: Play sub-pages accessible from sidebar | `components/MenuSlider.tsx` (same change as FR-009) |
+| Needed | FR-017: Sub-pages → parent section back-nav via sidebar | `components/MenuSlider.tsx` (same change — parent link visible when sub-menu expanded) |
 | ✓ Done | FR-018: Sub-pages → landing page back-nav | Sidebar profile name link (US2) |
+| Needed | Cleanup: Remove content-area nav from prior implementation | `app/work/page.tsx`, `app/play/page.tsx`, 6 sub-pages, delete `components/SubNav.tsx` |
 
-**New files to create**: `components/SubNav.tsx`
-**Files to modify**: `app/work/page.tsx`, `app/play/page.tsx`, and all 6 sub-pages
+**New files to create**: None
+**Files to modify**: `components/MenuSlider.tsx`
+**Files to clean up**: `app/work/page.tsx`, `app/play/page.tsx`, `app/resume/page.tsx`, `app/photography/page.tsx`, `app/video/page.tsx`, `app/cycling/page.tsx`, `app/tech/page.tsx`, `app/volunteering/page.tsx`
+**Files to delete**: `components/SubNav.tsx`

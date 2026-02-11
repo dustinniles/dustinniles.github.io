@@ -265,7 +265,7 @@ Content-Security-Policy:
 ### Navigation Updates
 
 1. Create new page in `/app/<page-name>/page.tsx`
-2. Update `/components/Sidebar.tsx` navigation links (verify HIG navigation patterns)
+2. Update `/components/MenuSlider.tsx` navigation data in `app/data/navigation.ts` (verify HIG navigation patterns)
 3. Test navigation locally
 4. Follow standard workflow above
 

@@ -42,7 +42,10 @@ The site uses a two-column layout defined in `app/layout.tsx`:
 - **Fixed sidebar** (left, 256px width): Contains navigation and branding, stays fixed while content scrolls
 - **Scrolling content area** (right): Takes remaining width, contains page content
 
-The sidebar component is located at `components/Sidebar.tsx` and is rendered in the root layout, wrapping all pages.
+The sidebar layout consists of two components rendered via `app/layout.tsx`:
+
+- **`components/SiteLayout.tsx`** — manages layout state (sidebar expanded/collapsed), initializes `isExpanded` from the current pathname
+- **`components/MenuSlider.tsx`** — renders the fixed sidebar: branding, navigation links, and context-aware sub-navigation
 
 ### Tech Stack
 
@@ -59,7 +62,8 @@ app/
   page.tsx          # Home page (portfolio grid)
   globals.css       # Global styles and Tailwind imports
 components/
-  Sidebar.tsx       # Fixed navigation sidebar
+  SiteLayout.tsx    # Root layout wrapper — sidebar expand/collapse state
+  MenuSlider.tsx    # Fixed sidebar — branding, nav links, context-aware sub-navigation
 .github/workflows/
   deploy.yml        # GitHub Actions deployment workflow
 ```

@@ -15,9 +15,30 @@ interface MenuSliderProps {
 }
 
 export default function MenuSlider({ isExpanded, setIsExpanded }: MenuSliderProps) {
-  const [expandedParent, setExpandedParent] = useState<string | null>(null);
-  const reducedMotion = useReducedMotion();
   const pathname = usePathname();
+  const reducedMotion = useReducedMotion();
+
+  // T012: Derive initial expandedParent from pathname (lazy initializer)
+  const [expandedParent, setExpandedParent] = useState<string | null>(() => {
+    const matched = mainMenu.find(
+      (item) =>
+        item.target === pathname ||
+        item.children.some((child) => child.target === pathname)
+    );
+    return matched ? matched.id : null;
+  });
+
+  // T012: Sync expandedParent when pathname changes (adjusting state during render)
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+    const matched = mainMenu.find(
+      (item) =>
+        item.target === pathname ||
+        item.children.some((child) => child.target === pathname)
+    );
+    setExpandedParent(matched ? matched.id : null);
+  }
 
   // T020: Determine if a path is the current page or a parent of the current page
   const isActivePath = (path: string): boolean => {
