@@ -3,7 +3,7 @@ import { videoGallery } from '@/app/data/videos';
 export default function VideoPage() {
   return (
     <div className="p-12">
-      <h1 className="text-3xl font-light text-gray-900 mb-12">Video</h1>
+      <h1 className="text-3xl font-light text-[var(--foreground)] mb-12">Video</h1>
 
       <div className="space-y-12 max-w-2xl">
         {videoGallery.map((video) => {
@@ -15,12 +15,13 @@ export default function VideoPage() {
           return (
             <section key={video.id} className="space-y-3">
               <div>
-                <h2 className="text-lg font-light text-gray-900 mb-1">{video.title}</h2>
+                <h2 className="text-lg font-light text-[var(--foreground)] mb-1">{video.title}</h2>
                 {video.duration && (
-                  <p className="text-xs text-gray-500">{video.duration}</p>
+                  <p className="text-xs text-[var(--text-tertiary)]">{video.duration}</p>
                 )}
               </div>
 
+              {/* bg-gray-900 kept intentionally for video player background (dark by design) */}
               <div className="relative w-full bg-gray-900 rounded" style={{ paddingBottom: '56.25%' }}>
                 <iframe
                   src={iframeSrc}
@@ -34,7 +35,7 @@ export default function VideoPage() {
               </div>
 
               {video.description && (
-                <p className="text-sm text-gray-600">{video.description}</p>
+                <p className="text-sm text-[var(--text-secondary)]">{video.description}</p>
               )}
             </section>
           );

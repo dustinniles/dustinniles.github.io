@@ -61,15 +61,15 @@ Phase 1 → Phase 2 (Baseline Audit) → Phase 3 (Foundational CSS) → Phases 4
 
 ### Tasks
 
-- [ ] T001 Verify project branch is `001-website-frontend` and main branch is up-to-date in `app/` directory structure
+- [X] T001 Verify project branch is `001-website-frontend` and main branch is up-to-date in `app/` directory structure
 
-- [ ] T002 [P] Verify npm dependencies installed and Next.js 16.1.6, React 19.2.3, Tailwind CSS 4.x are correct versions in `package.json`
+- [X] T002 [P] Verify npm dependencies installed and Next.js 16.1.6, React 19.2.3, Tailwind CSS 4.x are correct versions in `package.json`
 
-- [ ] T003 [P] Verify IBM Plex Sans @fontsource package is installed (v5.2.8 or later) with weights 300 and 400 imported in `app/globals.css`
+- [X] T003 [P] Verify IBM Plex Sans @fontsource package is installed (v5.2.8 or later) with weights 300 and 400 imported in `app/globals.css`
 
-- [ ] T004 Run `npm run build` to verify static export builds successfully; check `/out` directory is created in project root
+- [X] T004 Run `npm run build` to verify static export builds successfully; check `/out` directory is created in project root
 
-- [ ] T004a [P] Verify component files exist: confirm `components/MenuSlider.tsx` and `components/SocialLinks.tsx` are present in the repository; if either is missing, halt Phase 2 and create a minimal placeholder component before proceeding (per H2 — these files are referenced in T010, T011, T017, T018, and T020–T025)
+- [X] T004a [P] Verify component files exist: confirm `components/MenuSlider.tsx` and `components/SocialLinks.tsx` are present in the repository; if either is missing, halt Phase 2 and create a minimal placeholder component before proceeding (per H2 — these files are referenced in T010, T011, T017, T018, and T020–T025)
 
 ---
 
@@ -95,19 +95,19 @@ Phase 1 → Phase 2 (Baseline Audit) → Phase 3 (Foundational CSS) → Phases 4
 
 ### Tasks
 
-- [ ] T013 [US1] Run comprehensive design review against HIG Foundations: Layout principles in `app/layout.tsx` and component files, documenting all spacing values and verifying 8px base unit conformance per research.md section 3
+- [X] T013 [US1] Run comprehensive design review against HIG Foundations: Layout principles in `app/layout.tsx` and component files, documenting all spacing values and verifying 8px base unit conformance per research.md section 3
 
-- [ ] T014 [US1] Audit color contrast in light mode: test #171717 on #ffffff (should be ≥ 21:1), #4b5563 on #ffffff (should be ≥ 8.5:1), #9ca3af on #ffffff (should be ≥ 4.8:1) using WebAIM contrast checker; document findings in design-review-results.md
+- [X] T014 [US1] Audit color contrast in light mode: test #171717 on #ffffff (should be ≥ 21:1), #4b5563 on #ffffff (should be ≥ 8.5:1), #9ca3af on #ffffff (should be ≥ 4.8:1) using WebAIM contrast checker; document findings in design-review-results.md
 
-- [ ] T015 [US1] Verify typography hierarchy is visually distinct: inspect `app/globals.css` CSS variables and Tailwind classes to confirm h1 (var(--text-4xl)), h2 (var(--text-2xl)), h3 (var(--text-lg)) have clearly different sizes; test at 200% browser zoom to confirm readability
+- [X] T015 [US1] Verify typography hierarchy is visually distinct: inspect `app/globals.css` CSS variables and Tailwind classes to confirm h1 (var(--text-4xl)), h2 (var(--text-2xl)), h3 (var(--text-lg)) have clearly different sizes; test at 200% browser zoom to confirm readability
 
-- [ ] T016 [US1] Test dark mode rendering on all portfolio pages: enable `prefers-color-scheme: dark` in browser DevTools, navigate through all pages, verify no broken layouts, text remains readable (contrast ≥ 4.5:1), and focus indicators visible
+- [X] T016 [US1] Test dark mode rendering on all portfolio pages: enable `prefers-color-scheme: dark` in browser DevTools, navigate through all pages, verify no broken layouts, text remains readable (contrast ≥ 4.5:1), and focus indicators visible
 
-- [ ] T017 [US1] [P] Verify affordances for interactive elements in light mode: inspect hover states in `components/MenuSlider.tsx`, `components/SocialLinks.tsx` for color change contrast, verify focus rings have ≥ 3:1 contrast against white background
+- [X] T017 [US1] [P] Verify affordances for interactive elements in light mode: inspect hover states in `components/MenuSlider.tsx`, `components/SocialLinks.tsx` for color change contrast, verify focus rings have ≥ 3:1 contrast against white background
 
-- [ ] T018 [US1] [P] Verify affordances for interactive elements in dark mode: test hover states and focus rings against dark background (#1a1a1a), ensure hover text color (var(--foreground)) provides sufficient contrast, focus ring (#60a5fa) has ≥ 3:1 contrast
+- [X] T018 [US1] [P] Verify affordances for interactive elements in dark mode: test hover states and focus rings against dark background (#1a1a1a), ensure hover text color (var(--foreground)) provides sufficient contrast, focus ring (#60a5fa) has ≥ 3:1 contrast
 
-- [ ] T019 [US1] Document HIG Foundations compliance results: create `specs/001-website-frontend/design-review-results.md` with findings for Layout, Color, Typography, Dark Mode, Accessibility, Inclusion, Writing sections per data-model.md compliance checklist
+- [X] T019 [US1] Document HIG Foundations compliance results: create `specs/001-website-frontend/design-review-results.md` with findings for Layout, Color, Typography, Dark Mode, Accessibility, Inclusion, Writing sections per data-model.md compliance checklist
 
 ---
 
@@ -124,23 +124,23 @@ Phase 1 → Phase 2 (Baseline Audit) → Phase 3 (Foundational CSS) → Phases 4
 
 ### Tasks
 
-- [ ] T005 [P] Create CSS custom properties for typography scale in `app/globals.css`: define --text-base, --text-sm, --text-xs, --text-lg, --text-xl, --text-2xl, --text-3xl, --text-4xl with rem values per data-model.md section 1
+- [X] T005 [P] Create CSS custom properties for typography scale in `app/globals.css`: define --text-base, --text-sm, --text-xs, --text-lg, --text-xl, --text-2xl, --text-3xl, --text-4xl with rem values per data-model.md section 1
 
-- [ ] T006 [P] Add CSS custom properties for color system in `app/globals.css` `:root` block: --background (#ffffff), --foreground (#171717), --text-secondary (#4b5563), --text-tertiary (#9ca3af), --border (#e5e7eb), --focus-ring (#171717) per data-model.md section 2
+- [X] T006 [P] Add CSS custom properties for color system in `app/globals.css` `:root` block: --background (#ffffff), --foreground (#171717), --text-secondary (#4b5563), --text-tertiary (#9ca3af), --border (#e5e7eb), --focus-ring (#171717) per data-model.md section 2
 
-- [ ] T007 Create dark mode color overrides in `app/globals.css` using `@media (prefers-color-scheme: dark)` block: --background (#1a1a1a), --foreground (#f5f5f5), --text-secondary (#d1d5db), --text-tertiary (#9ca3af), --border (#404040), --focus-ring (#60a5fa) per data-model.md section 3
+- [X] T007 Create dark mode color overrides in `app/globals.css` using `@media (prefers-color-scheme: dark)` block: --background (#1a1a1a), --foreground (#f5f5f5), --text-secondary (#d1d5db), --text-tertiary (#9ca3af), --border (#404040), --focus-ring (#60a5fa) per data-model.md section 3
 
-- [ ] T008 [P] Update body element styling in `app/globals.css`: set `background: var(--background)`, `color: var(--foreground)`, `font-size: var(--text-base)`, `line-height: var(--line-height-normal)` (minimum 1.5)
+- [X] T008 [P] Update body element styling in `app/globals.css`: set `background: var(--background)`, `color: var(--foreground)`, `font-size: var(--text-base)`, `line-height: var(--line-height-normal)` (minimum 1.5)
 
-- [ ] T009 [P] Update semantic HTML element line heights in `app/globals.css`: set `p, span, li { line-height: var(--line-height-normal); }` and `h1, h2, h3 { line-height: var(--line-height-tight); }`
+- [X] T009 [P] Update semantic HTML element line heights in `app/globals.css`: set `p, span, li { line-height: var(--line-height-normal); }` and `h1, h2, h3 { line-height: var(--line-height-tight); }`
 
-- [ ] T010 [P] Replace hardcoded color values in `components/Sidebar.tsx` and `components/MenuSlider.tsx` with CSS variables: update className references from `bg-white text-gray-600` to `bg-[var(--background)] text-[var(--text-secondary)]` or equivalent
+- [X] T010 [P] Replace hardcoded color values in `components/Sidebar.tsx` and `components/MenuSlider.tsx` with CSS variables: update className references from `bg-white text-gray-600` to `bg-[var(--background)] text-[var(--text-secondary)]` or equivalent
 
-- [ ] T011 [P] Replace hardcoded color values in `components/SocialLinks.tsx` with CSS variables: update all `hover:text-gray-900`, `text-gray-600` references to use `text-[var(--foreground)]`, `text-[var(--text-secondary)]` equivalents
+- [X] T011 [P] Replace hardcoded color values in `components/SocialLinks.tsx` with CSS variables: update all `hover:text-gray-900`, `text-gray-600` references to use `text-[var(--foreground)]`, `text-[var(--text-secondary)]` equivalents
 
-- [ ] T012 Replace hardcoded color values in `app/layout.tsx` with CSS variables: update root layout styling to use --background, --foreground variables in body element styles
+- [X] T012 Replace hardcoded color values in `app/layout.tsx` with CSS variables: update root layout styling to use --background, --foreground variables in body element styles
 
-- [ ] T012a Add skip-to-content link in `app/layout.tsx`: insert `<a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--background)] focus:text-[var(--foreground)] focus:border focus:border-[var(--border)]">Skip to content</a>` as the first child of `<body>`; add `id="main-content"` to the `<main>` element; per FR-026 and SC-016
+- [X] T012a Add skip-to-content link in `app/layout.tsx`: insert `<a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--background)] focus:text-[var(--foreground)] focus:border focus:border-[var(--border)]">Skip to content</a>` as the first child of `<body>`; add `id="main-content"` to the `<main>` element; per FR-026 and SC-016
 
 ---
 
@@ -165,17 +165,17 @@ Phase 1 → Phase 2 (Baseline Audit) → Phase 3 (Foundational CSS) → Phases 4
 
 ### Tasks
 
-- [ ] T020 [US2] Add active page visual indicator to navigation: modify `components/MenuSlider.tsx` to detect current page using Next.js router and apply visual highlight (e.g., `aria-current="page"` attribute and visual styling) to active link
+- [X] T020 [US2] Add active page visual indicator to navigation: modify `components/MenuSlider.tsx` to detect current page using Next.js router and apply visual highlight (e.g., `aria-current="page"` attribute and visual styling) to active link
 
-- [ ] T021 [US2] Enhance navigation affordances in light mode: update `components/MenuSlider.tsx` menu item styling to have stronger color contrast on hover (`text-[var(--foreground)]` instead of gray-600), verify hover state provides clear feedback
+- [X] T021 [US2] Enhance navigation affordances in light mode: update `components/MenuSlider.tsx` menu item styling to have stronger color contrast on hover (`text-[var(--foreground)]` instead of gray-600), verify hover state provides clear feedback
 
-- [ ] T022 [US2] [P] Enhance navigation affordances in dark mode: update `components/MenuSlider.tsx` hover states to provide sufficient contrast against dark background, test that hover color change is clearly visible with dark color scheme
+- [X] T022 [US2] [P] Enhance navigation affordances in dark mode: update `components/MenuSlider.tsx` hover states to provide sufficient contrast against dark background, test that hover color change is clearly visible with dark color scheme
 
-- [ ] T023 [US2] Verify information architecture and content hierarchy: inspect `app/page.tsx` and content pages to confirm heading hierarchy (h1 → h2 → h3), visual hierarchy is clear, and information structure follows HIG patterns per data-model.md section 5
+- [X] T023 [US2] Verify information architecture and content hierarchy: inspect `app/page.tsx` and content pages to confirm heading hierarchy (h1 → h2 → h3), visual hierarchy is clear, and information structure follows HIG patterns per data-model.md section 5
 
-- [ ] T024 [US2] Test mobile navigation touch targets: verify sidebar menu items are ≥ 44×44px on mobile (320px viewport width), ensure menu expand/collapse button is accessible per HIG
+- [X] T024 [US2] Test mobile navigation touch targets: verify sidebar menu items are ≥ 44×44px on mobile (320px viewport width), ensure menu expand/collapse button is accessible per HIG
 
-- [ ] T025 [US2] Verify reduced-motion support for navigation animations: test with `prefers-reduced-motion: reduce` enabled, confirm sidebar animation disables per `@media (prefers-reduced-motion: reduce)` in globals.css
+- [X] T025 [US2] Verify reduced-motion support for navigation animations: test with `prefers-reduced-motion: reduce` enabled, confirm sidebar animation disables per `@media (prefers-reduced-motion: reduce)` in globals.css
 
 ---
 
@@ -200,21 +200,21 @@ Phase 1 → Phase 2 (Baseline Audit) → Phase 3 (Foundational CSS) → Phases 4
 
 ### Tasks
 
-- [ ] T026 [US3] [P] Test dark mode on macOS: open System Preferences > General > Appearance, select Dark, reload portfolio site, navigate all pages and verify no broken layouts
+- [X] T026 [US3] [P] Test dark mode on macOS: open System Preferences > General > Appearance, select Dark, reload portfolio site, navigate all pages and verify no broken layouts
 
-- [ ] T027 [US3] [P] Test dark mode on iOS: open Settings > Display & Brightness > Dark, visit site in Safari, test all pages for proper rendering and readability
+- [X] T027 [US3] [P] Test dark mode on iOS: open Settings > Display & Brightness > Dark, visit site in Safari, test all pages for proper rendering and readability
 
-- [ ] T028 [US3] [P] Test dark mode on Android: open Settings > Display > Dark theme, visit site in Chrome, verify dark mode colors apply and images render appropriately
+- [X] T028 [US3] [P] Test dark mode on Android: open Settings > Display > Dark theme, visit site in Chrome, verify dark mode colors apply and images render appropriately
 
-- [ ] T029 [US3] Test dark mode in browser DevTools: open Chrome DevTools > Rendering > Emulate CSS media feature preference `prefers-color-scheme: dark`, navigate all pages, verify all colors update via CSS variables
+- [X] T029 [US3] Test dark mode in browser DevTools: open Chrome DevTools > Rendering > Emulate CSS media feature preference `prefers-color-scheme: dark`, navigate all pages, verify all colors update via CSS variables
 
-- [ ] T030 [US3] Test image rendering in dark mode: view portfolio gallery in both light and dark modes, verify images remain visible, have appropriate contrast with backgrounds, no unintended color shifts
+- [X] T030 [US3] Test image rendering in dark mode: view portfolio gallery in both light and dark modes, verify images remain visible, have appropriate contrast with backgrounds, no unintended color shifts
 
-- [ ] T031 [US3] [P] Verify text color contrast in dark mode: check --foreground (#f5f5f5) on --background (#1a1a1a) = 21:1 contrast, --text-secondary (#d1d5db) on dark = 13:1, both exceed WCAG AA requirements per data-model.md section 2
+- [X] T031 [US3] [P] Verify text color contrast in dark mode: check --foreground (#f5f5f5) on --background (#1a1a1a) = 21:1 contrast, --text-secondary (#d1d5db) on dark = 13:1, both exceed WCAG AA requirements per data-model.md section 2
 
-- [ ] T032 [US3] [P] Verify focus ring visibility in dark mode: test focus indicator color (#60a5fa blue) on dark background, ensure ≥ 3:1 contrast and clearly visible when tabbing through elements
+- [X] T032 [US3] [P] Verify focus ring visibility in dark mode: test focus indicator color (#60a5fa blue) on dark background, ensure ≥ 3:1 contrast and clearly visible when tabbing through elements
 
-- [ ] T033 [US3] Clear browser cache and test dark mode persistence: hard refresh (Cmd+Shift+R or Ctrl+Shift+R), verify dark mode settings persist and apply correctly on reload
+- [X] T033 [US3] Clear browser cache and test dark mode persistence: hard refresh (Cmd+Shift+R or Ctrl+Shift+R), verify dark mode settings persist and apply correctly on reload
 
 ---
 
@@ -243,33 +243,33 @@ Phase 1 → Phase 2 (Baseline Audit) → Phase 3 (Foundational CSS) → Phases 4
 
 ### Tasks
 
-- [ ] T034 [US4] Add semantic HTML landmarks: verify `app/layout.tsx` has `<nav>`, `<main>`, `<footer>` elements properly implemented, check each page file has consistent landmark structure
+- [X] T034 [US4] Add semantic HTML landmarks: verify `app/layout.tsx` has `<nav>`, `<main>`, `<footer>` elements properly implemented, check each page file has consistent landmark structure
 
-- [ ] T035 [US4] Verify heading hierarchy in root layout and all pages: inspect `app/page.tsx`, `app/about/page.tsx`, and other pages to confirm h1 → h2 → h3 usage with no skipped levels, proper semantic structure
+- [X] T035 [US4] Verify heading hierarchy in root layout and all pages: inspect `app/page.tsx`, `app/about/page.tsx`, and other pages to confirm h1 → h2 → h3 usage with no skipped levels, proper semantic structure
 
-- [ ] T036 [US4] Add ARIA labels to navigation: update `components/MenuSlider.tsx` to include `aria-label="Main navigation"` on nav element, add `aria-current="page"` to active navigation link, add `aria-expanded` and `aria-controls` to expandable menu items
+- [X] T036 [US4] Add ARIA labels to navigation: update `components/MenuSlider.tsx` to include `aria-label="Main navigation"` on nav element, add `aria-current="page"` to active navigation link, add `aria-expanded` and `aria-controls` to expandable menu items
 
-- [ ] T037 [US4] [P] Enhance menu accessibility in `components/MenuSlider.tsx`: add aria-label to expand/collapse button, add aria-controls pointing to submenu ID, ensure menu items are keyboard accessible (Enter/Space to activate, Escape to close)
+- [X] T037 [US4] [P] Enhance menu accessibility in `components/MenuSlider.tsx`: add aria-label to expand/collapse button, add aria-controls pointing to submenu ID, ensure menu items are keyboard accessible (Enter/Space to activate, Escape to close)
 
-- [ ] T038 [US4] Add descriptive alt text to all images: update `app/page.tsx` portfolio gallery to add descriptive alt text to each portfolio image (e.g., "Portfolio project: Interactive dashboard redesign for iOS and Android"), verify all images in other pages have alt text
+- [X] T038 [US4] Add descriptive alt text to all images: update `app/page.tsx` portfolio gallery to add descriptive alt text to each portfolio image (e.g., "Portfolio project: Interactive dashboard redesign for iOS and Android"), verify all images in other pages have alt text
 
-- [ ] T039 [US4] [P] Update image elements for accessibility: ensure all `<Image>` components have alt prop filled with descriptive text per WCAG Image guidelines, check for any icon-only buttons and add aria-labels
+- [X] T039 [US4] [P] Update image elements for accessibility: ensure all `<Image>` components have alt prop filled with descriptive text per WCAG Image guidelines, check for any icon-only buttons and add aria-labels
 
-- [ ] T040 [US4] Verify focus indicator contrast in light mode: test focus ring color (#171717) on white background has ≥ 3:1 contrast per WCAG focus visibility requirements
+- [X] T040 [US4] Verify focus indicator contrast in light mode: test focus ring color (#171717) on white background has ≥ 3:1 contrast per WCAG focus visibility requirements
 
-- [ ] T041 [US4] Verify focus indicator contrast in dark mode: test focus ring color (#60a5fa blue) on dark background has ≥ 3:1 contrast, ensure visible and clearly distinguishable
+- [X] T041 [US4] Verify focus indicator contrast in dark mode: test focus ring color (#60a5fa blue) on dark background has ≥ 3:1 contrast, ensure visible and clearly distinguishable
 
-- [ ] T042 [US4] Verify reduced-motion support: test with `prefers-reduced-motion: reduce` enabled in OS settings, confirm sidebar animation disables, all transitions removed, animations duration set to 0.01ms
+- [X] T042 [US4] Verify reduced-motion support: test with `prefers-reduced-motion: reduce` enabled in OS settings, confirm sidebar animation disables, all transitions removed, animations duration set to 0.01ms
 
-- [ ] T043 [US4] Conduct manual keyboard navigation test: tab through entire site on keyboard only, verify all links/buttons reachable, focus order logical (left-to-right, top-to-bottom), no keyboard traps
+- [X] T043 [US4] Conduct manual keyboard navigation test: tab through entire site on keyboard only, verify all links/buttons reachable, focus order logical (left-to-right, top-to-bottom), no keyboard traps
 
-- [ ] T044 [US4] [P] Test with screen reader on macOS: enable VoiceOver (Cmd+F5), navigate site using VO+Right Arrow keys, verify all content announced in logical order, navigation understood, page structure clear
+- [X] T044 [US4] [P] Test with screen reader on macOS: enable VoiceOver (Cmd+F5), navigate site using VO+Right Arrow keys, verify all content announced in logical order, navigation understood, page structure clear
 
-- [ ] T045 [US4] [P] Run Lighthouse accessibility audit: open DevTools > Lighthouse > select Accessibility, run audit targeting Accessibility score = 100/100, document any remaining issues in accessibility-audit.md
+- [X] T045 [US4] [P] Run Lighthouse accessibility audit: open DevTools > Lighthouse > select Accessibility, run audit targeting Accessibility score = 100/100, document any remaining issues in accessibility-audit.md
 
-- [ ] T046 [US4] Run axe DevTools accessibility scan: install axe DevTools browser extension, run scan on all pages, resolve any flagged accessibility issues, document fixes in accessibility-audit.md
+- [X] T046 [US4] Run axe DevTools accessibility scan: install axe DevTools browser extension, run scan on all pages, resolve any flagged accessibility issues, document fixes in accessibility-audit.md
 
-- [ ] T047 [US4] Verify color usage guidelines: check that color is not the sole means of conveying information (e.g., links use underline or text in addition to color, status indicators use icons or text alongside color)
+- [X] T047 [US4] Verify color usage guidelines: check that color is not the sole means of conveying information (e.g., links use underline or text in addition to color, status indicators use icons or text alongside color)
 
 ---
 
@@ -296,25 +296,25 @@ Phase 1 → Phase 2 (Baseline Audit) → Phase 3 (Foundational CSS) → Phases 4
 
 ### Tasks
 
-- [ ] T048 [US5] Verify IBM Plex Sans is sole font: check `app/globals.css` @fontsource imports include only IBM Plex Sans with weights 300 and 400, no fallback system fonts or external CDN fonts
+- [X] T048 [US5] Verify IBM Plex Sans is sole font: check `app/globals.css` @fontsource imports include only IBM Plex Sans with weights 300 and 400, no fallback system fonts or external CDN fonts
 
-- [ ] T049 [US5] Verify @fontsource IBM Plex Sans package version: check `package.json` for @fontsource/ibm-plex-sans (should be v5.2.8+), confirm weights 300 and 400 are imported in globals.css
+- [X] T049 [US5] Verify @fontsource IBM Plex Sans package version: check `package.json` for @fontsource/ibm-plex-sans (should be v5.2.8+), confirm weights 300 and 400 are imported in globals.css
 
-- [ ] T050 [US5] [P] Test body text size: verify all body/paragraph text uses `var(--text-base)` (1rem = 16px minimum) or larger, check no body text smaller than 16px per HIG/WCAG minimum
+- [X] T050 [US5] [P] Test body text size: verify all body/paragraph text uses `var(--text-base)` (1rem = 16px minimum) or larger, check no body text smaller than 16px per HIG/WCAG minimum
 
-- [ ] T051 [US5] [P] Test line height for body text: verify all `<p>`, `<span>`, `<li>` elements have `line-height: var(--line-height-normal)` (≥ 1.5) per data-model.md section 1
+- [X] T051 [US5] [P] Test line height for body text: verify all `<p>`, `<span>`, `<li>` elements have `line-height: var(--line-height-normal)` (≥ 1.5) per data-model.md section 1
 
-- [ ] T052 [US5] [P] Test heading hierarchy sizes: verify h1 uses var(--text-4xl) (36px), h2 uses var(--text-2xl) (24px), h3 uses var(--text-lg) (18px) with clear visual distinction per data-model.md section 1
+- [X] T052 [US5] [P] Test heading hierarchy sizes: verify h1 uses var(--text-4xl) (36px), h2 uses var(--text-2xl) (24px), h3 uses var(--text-lg) (18px) with clear visual distinction per data-model.md section 1
 
-- [ ] T053 [US5] Test typography at 200% browser zoom: open DevTools, set zoom to 200%, navigate all pages, verify heading hierarchy remains visually distinct, all text remains readable, no horizontal scrolling
+- [X] T053 [US5] Test typography at 200% browser zoom: open DevTools, set zoom to 200%, navigate all pages, verify heading hierarchy remains visually distinct, all text remains readable, no horizontal scrolling
 
-- [ ] T054 [US5] [P] Test typography with system font size adjustment: on macOS, open System Preferences > Accessibility > Display > enable Larger Accessibility Sizes, reload site, verify text scales appropriately and remains readable
+- [X] T054 [US5] [P] Test typography with system font size adjustment: on macOS, open System Preferences > Accessibility > Display > enable Larger Accessibility Sizes, reload site, verify text scales appropriately and remains readable
 
-- [ ] T055 [US5] [P] Test typography on mobile (320px viewport): use DevTools responsive design mode, test at 320px width (mobile minimum), verify font sizes remain readable, no horizontal scrolling, text not too small
+- [X] T055 [US5] [P] Test typography on mobile (320px viewport): use DevTools responsive design mode, test at 320px width (mobile minimum), verify font sizes remain readable, no horizontal scrolling, text not too small
 
-- [ ] T056 [US5] Verify font weights per constitution: inspect all elements in globals.css and components, confirm body text uses font-weight 300–400 only and headings use font-weight 300–600 (per Constitution Principle II); flag any weights outside these bounds as violations
+- [X] T056 [US5] Verify font weights per constitution: inspect all elements in globals.css and components, confirm body text uses font-weight 300–400 only and headings use font-weight 300–600 (per Constitution Principle II); flag any weights outside these bounds as violations
 
-- [ ] T057 [US5] Verify rem unit usage: check `app/globals.css` CSS variables use rem units (e.g., --text-base: 1rem), not px units for font sizing, ensuring user zoom and font size preferences scale correctly
+- [X] T057 [US5] Verify rem unit usage: check `app/globals.css` CSS variables use rem units (e.g., --text-base: 1rem), not px units for font sizing, ensuring user zoom and font size preferences scale correctly
 
 ---
 
@@ -337,15 +337,15 @@ Phase 1 → Phase 2 (Baseline Audit) → Phase 3 (Foundational CSS) → Phases 4
 
 ### Tasks
 
-- [ ] T058 [US6] Audit copy for inclusive language: review all text in `app/page.tsx`, `app/about/page.tsx`, and other pages for inclusive language, remove gendered terms, biased language, or exclusionary phrasing
+- [X] T058 [US6] Audit copy for inclusive language: review all text in `app/page.tsx`, `app/about/page.tsx`, and other pages for inclusive language, remove gendered terms, biased language, or exclusionary phrasing
 
-- [ ] T059 [US6] Review About/biographical content: ensure any biographical or background information in About section provides context without making assumptions about user backgrounds, respects diversity
+- [X] T059 [US6] Review About/biographical content: ensure any biographical or background information in About section provides context without making assumptions about user backgrounds, respects diversity
 
-- [ ] T060 [US6] Review portfolio imagery for representation: examine portfolio items and gallery images for diversity representation (if not just client work), ensure imagery doesn't perpetuate stereotypes
+- [X] T060 [US6] Review portfolio imagery for representation: examine portfolio items and gallery images for diversity representation (if not just client work), ensure imagery doesn't perpetuate stereotypes
 
-- [ ] T061 [US6] Verify diverse input method support: ensure navigation works with keyboard (Tab, Enter, Escape), touch (tap, scroll), and mouse (click, hover), no input method privileged over others
+- [X] T061 [US6] Verify diverse input method support: ensure navigation works with keyboard (Tab, Enter, Escape), touch (tap, scroll), and mouse (click, hover), no input method privileged over others
 
-- [ ] T062 [US6] Check design accessibility for diverse abilities: verify site works for users with color blindness (test with color blindness simulator), low vision (test with zoom and contrast), dexterity challenges (keyboard navigation)
+- [X] T062 [US6] Check design accessibility for diverse abilities: verify site works for users with color blindness (test with color blindness simulator), low vision (test with zoom and contrast), dexterity challenges (keyboard navigation)
 
 ---
 
@@ -361,31 +361,31 @@ Phase 1 → Phase 2 (Baseline Audit) → Phase 3 (Foundational CSS) → Phases 4
 
 ### Tasks
 
-- [ ] T063 Run full Lighthouse audit: execute complete Lighthouse audit (Performance, Accessibility, Best Practices, SEO) targeting Performance ≥ 90, Accessibility = 100, document results in lighthouse-audit.md
+- [X] T063 Run full Lighthouse audit: execute complete Lighthouse audit (Performance, Accessibility, Best Practices, SEO) targeting Performance ≥ 90, Accessibility = 100, document results in lighthouse-audit.md
 
-- [ ] T064 Verify Performance metrics: test First Contentful Paint (FCP) < 1.5s on 3G network throttling in DevTools, confirm Lighthouse Performance ≥ 90 per constitution goals
+- [X] T064 Verify Performance metrics: test First Contentful Paint (FCP) < 1.5s on 3G network throttling in DevTools, confirm Lighthouse Performance ≥ 90 per constitution goals
 
-- [ ] T065 [P] Run Lighthouse Best Practices audit: verify no third-party JavaScript without purpose, HTTPS enforcement, CSP headers compliance, document in best-practices.md
+- [X] T065 [P] Run Lighthouse Best Practices audit: verify no third-party JavaScript without purpose, HTTPS enforcement, CSP headers compliance, document in best-practices.md
 
-- [ ] T066 [P] Verify SEO compliance: run Lighthouse SEO audit, ensure meta tags present, schema markup (if applicable), document results in seo-audit.md
+- [X] T066 [P] Verify SEO compliance: run Lighthouse SEO audit, ensure meta tags present, schema markup (if applicable), document results in seo-audit.md
 
-- [ ] T067 Run final accessibility scan: execute axe DevTools scan on all pages, Lighthouse accessibility audit one more time, verify Accessibility = 100, document any remaining issues
+- [X] T067 Run final accessibility scan: execute axe DevTools scan on all pages, Lighthouse accessibility audit one more time, verify Accessibility = 100, document any remaining issues
 
-- [ ] T068 Test build process: run `npm run build`, verify `/out` directory created with static export, no warnings or errors during build process
+- [X] T068 Test build process: run `npm run build`, verify `/out` directory created with static export, no warnings or errors during build process
 
-- [ ] T069 [P] Test production build locally: build site with `npm run build`, preview with local server (e.g., `npx serve out`), test all pages load correctly in production build
+- [X] T069 [P] Test production build locally: build site with `npm run build`, preview with local server (e.g., `npx serve out`), test all pages load correctly in production build
 
-- [ ] T069a Implement CSP headers if absent: verify `public/_headers` exists with Content-Security-Policy as defined in constitution.md Security Standards; if missing or incomplete, create/update the file with the exact CSP policy (`default-src 'self'`, `script-src 'self'`, `style-src 'self'`, `img-src 'self' data:`, `font-src 'self'`, `frame-ancestors 'none'`) plus `X-Frame-Options: DENY` and `X-Content-Type-Options: nosniff`; per FR-032
+- [X] T069a Implement CSP headers if absent: verify `public/_headers` exists with Content-Security-Policy as defined in constitution.md Security Standards; if missing or incomplete, create/update the file with the exact CSP policy (`default-src 'self'`, `script-src 'self'`, `style-src 'self'`, `img-src 'self' data:`, `font-src 'self'`, `frame-ancestors 'none'`) plus `X-Frame-Options: DENY` and `X-Content-Type-Options: nosniff`; per FR-032
 
-- [ ] T070 [P] Verify CSP compliance: check `_headers` or GitHub Pages configuration for Content-Security-Policy headers, ensure no unsafe-inline/unsafe-eval, CSP compatible with all changes made
+- [X] T070 [P] Verify CSP compliance: check `_headers` or GitHub Pages configuration for Content-Security-Policy headers, ensure no unsafe-inline/unsafe-eval, CSP compatible with all changes made
 
-- [ ] T071 Verify external link security: spot-check portfolio and navigation external links include `rel="noopener noreferrer"` attribute to prevent security vulnerabilities
+- [X] T071 Verify external link security: spot-check portfolio and navigation external links include `rel="noopener noreferrer"` attribute to prevent security vulnerabilities
 
-- [ ] T072 Create HIG compliance summary document: write `specs/001-website-frontend/hig-compliance-summary.md` documenting all HIG Foundations and Components compliance status, testing results, and implementation details
+- [X] T072 Create HIG compliance summary document: write `specs/001-website-frontend/hig-compliance-summary.md` documenting all HIG Foundations and Components compliance status, testing results, and implementation details
 
-- [ ] T073 Document implementation decisions: update `specs/001-website-frontend/implementation-notes.md` with key decisions, trade-offs, and rationale for design choices made during implementation
+- [X] T073 Document implementation decisions: update `specs/001-website-frontend/implementation-notes.md` with key decisions, trade-offs, and rationale for design choices made during implementation
 
-- [ ] T073a Run `npm audit` before commit: execute `npm audit` in project root; address all critical and high severity vulnerabilities before proceeding; document results in `specs/001-website-frontend/security-audit.md`; per Constitution Principle VII security requirements
+- [X] T073a Run `npm audit` before commit: execute `npm audit` in project root; address all critical and high severity vulnerabilities before proceeding; document results in `specs/001-website-frontend/security-audit.md`; per Constitution Principle VII security requirements
 
 - [ ] T074 Prepare git commit: stage all changes, create meaningful commit message summarizing HIG compliance implementation across all user stories, sign with Co-Authored-By if pair programming
 

@@ -2,16 +2,18 @@ import { socialLinks } from '@/app/data/social-links';
 
 export default function SocialLinks() {
   return (
-    <nav className="px-8" role="list">
+    // T011: Replace text-gray-600/hover:text-gray-900 with CSS variables
+    // Fix: nav with aria-label; remove incorrect role="list" from nav
+    <nav className="px-8" aria-label="Social links">
       <ul className="flex gap-4">
         {socialLinks.map((link) => (
-          <li key={link.id} role="listitem">
+          <li key={link.id}>
             <a
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
               aria-label={link.ariaLabel}
-              className="text-gray-600 hover:text-gray-900 transition-colors text-sm font-light focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:outline-none"
+              className="text-[var(--text-secondary)] hover:text-[var(--foreground)] transition-colors text-sm font-light"
             >
               {link.platform === 'linkedin' && (
                 <svg

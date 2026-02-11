@@ -76,17 +76,18 @@ export default function PhotoGallery({ photos }: PhotoGalleryProps) {
         </div>
       ))}
 
-      {/* Arrow indicator */}
+      {/* Arrow indicator — T011: uses CSS variable for color */}
       {showIndicator && (
         <div
           className="fixed bottom-8 left-1/2 transform -translate-x-1/2 transition-opacity duration-300"
           style={{ opacity: showIndicator ? 1 : 0 }}
         >
           <svg
-            className="w-6 h-6 text-gray-600 animate-bounce"
+            className="w-6 h-6 animate-bounce text-[var(--text-secondary)]"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            aria-hidden="true"
           >
             <path
               strokeLinecap="round"

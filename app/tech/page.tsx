@@ -7,7 +7,7 @@ export default function TechPage() {
   return (
     <div>
       <div className="p-12">
-        <h1 className="text-3xl font-light text-gray-900 mb-2">Tech</h1>
+        <h1 className="text-3xl font-light text-[var(--foreground)] mb-2">Tech</h1>
       </div>
       <BlogLayout posts={techPosts} />
     </div>

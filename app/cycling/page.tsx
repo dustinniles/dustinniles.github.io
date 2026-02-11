@@ -7,7 +7,7 @@ export default function CyclingPage() {
   return (
     <div>
       <div className="p-12">
-        <h1 className="text-3xl font-light text-gray-900 mb-2">Cycling</h1>
+        <h1 className="text-3xl font-light text-[var(--foreground)] mb-2">Cycling</h1>
       </div>
       <BlogLayout posts={cyclingPosts} />
     </div>
