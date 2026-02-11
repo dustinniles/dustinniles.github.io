@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import MenuSlider from '@/components/MenuSlider';
 import { useReducedMotion } from '@/app/hooks/useReducedMotion';
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const pathname = usePathname();
+  const [isExpanded, setIsExpanded] = useState(() => pathname !== '/');
   const reducedMotion = useReducedMotion();
 
   const mainStyle: React.CSSProperties = {

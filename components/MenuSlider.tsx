@@ -89,13 +89,19 @@ export default function MenuSlider({ isExpanded, setIsExpanded }: MenuSliderProp
             unoptimized
           />
         </div>
-        <h1
-          className={`font-light tracking-wide text-[var(--foreground)] ${
-            isExpanded ? 'text-xl' : 'text-3xl'
-          }`}
-        >
-          Dustin Niles
-        </h1>
+        {isExpanded ? (
+          <Link
+            href="/"
+            onClick={() => setIsExpanded(false)}
+            className="font-light tracking-wide text-[var(--foreground)] text-xl hover:text-[var(--text-secondary)] transition-colors"
+          >
+            Dustin Niles
+          </Link>
+        ) : (
+          <h1 className="font-light tracking-wide text-[var(--foreground)] text-3xl">
+            Dustin Niles
+          </h1>
+        )}
       </div>
 
       {/* T036: Navigation with aria-label */}
@@ -119,7 +125,7 @@ export default function MenuSlider({ isExpanded, setIsExpanded }: MenuSliderProp
                       tabIndex={0}
                       aria-expanded={expandedParent === item.id}
                       aria-controls={`submenu-${item.id}`}
-                      className={`transition-colors text-sm font-light w-full min-h-[44px] flex items-center ${
+                      className={`transition-colors text-sm font-light w-full min-h-[44px] flex items-center ${!isExpanded ? 'justify-center' : ''} ${
                         active
                           ? 'text-[var(--foreground)] font-normal'
                           : 'text-[var(--text-secondary)] hover:text-[var(--foreground)]'
@@ -161,7 +167,7 @@ export default function MenuSlider({ isExpanded, setIsExpanded }: MenuSliderProp
                     href={item.target}
                     onClick={() => setIsExpanded(true)}
                     aria-current={active ? 'page' : undefined}
-                    className={`transition-colors text-sm font-light min-h-[44px] flex items-center ${
+                    className={`transition-colors text-sm font-light min-h-[44px] flex items-center ${!isExpanded ? 'justify-center' : ''} ${
                       active
                         ? 'text-[var(--foreground)] font-normal'
                         : 'text-[var(--text-secondary)] hover:text-[var(--foreground)]'
