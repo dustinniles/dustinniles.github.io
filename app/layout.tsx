@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
+import MenuSlider from "@/components/MenuSlider";
 
 export const metadata: Metadata = {
   title: "Dustin Niles",
@@ -14,10 +14,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta httpEquiv="Content-Security-Policy" content="form-action 'none'" />
+      </head>
       <body className="antialiased">
-        <div className="flex">
-          <Sidebar />
-          <main className="ml-64 flex-1 min-h-screen">
+        <div className="flex min-h-screen">
+          <MenuSlider />
+          <main className="flex-1 overflow-y-auto">
             {children}
           </main>
         </div>
