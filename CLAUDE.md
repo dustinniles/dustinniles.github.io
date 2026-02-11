@@ -103,6 +103,8 @@ Portfolio items are currently defined as an array in `app/page.tsx`. To add real
 ## Active Technologies
 - TypeScript 5.x with React 19+ (current: 19.2.3) + Next.js 16.1.6 (App Router), Tailwind CSS 4.x via PostCSS, IBM Plex font family (001-website-frontend)
 - Static JSON/array data structures for navigation menus and portfolio items (file-based, no database) (001-website-frontend)
+- TypeScript 5.x with React 19.2.3 and Next.js 16.1.6 (App Router) + Next.js 16.1.6 (App Router, static export), React 19.2.3, Tailwind CSS 4.x (via PostCSS), IBM Plex Sans via @fontsource (001-website-frontend)
+- N/A (static export to GitHub Pages, no database or server-side storage) (001-website-frontend)
 
 ## Recent Changes
 - 001-website-frontend: Added TypeScript 5.x with React 19+ (current: 19.2.3) + Next.js 16.1.6 (App Router), Tailwind CSS 4.x via PostCSS, IBM Plex font family

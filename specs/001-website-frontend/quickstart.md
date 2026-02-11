@@ -1,524 +1,332 @@
-# Quickstart Guide: Interactive Portfolio Website
+# Quick Start: Implementing HIG Compliance
 
-**Feature Branch**: `001-website-frontend`
-**Target Audience**: Developers onboarding to this project
-**Estimated Setup Time**: 15 minutes
+**Purpose**: Rapid reference for developers implementing the HIG compliance feature.
+
+**Prerequisites**: Read specs/001-website-frontend/data-model.md for detailed design specifications.
+
+---
 
 ## Overview
 
-This guide will help you set up the development environment, understand the project structure, and start contributing to the interactive portfolio website frontend.
+Transform the portfolio website to achieve full Apple HIG compliance (Foundations and Components). Work spans 3 main areas:
+
+1. **Typography & Colors**: Add CSS variables, explicit font sizing, dark mode support
+2. **Accessibility**: ARIA labels, screen reader testing, semantic HTML verification
+3. **Navigation**: Add active page indicator, enhance affordances, mobile touch targets
+
+**Timeline**: Estimated 3-5 tasks (see tasks.md for detailed breakdown)
 
 ---
 
-## Prerequisites
+## Quick Reference: Key Changes
 
-- **Node.js**: v20+ (LTS recommended)
-- **npm**: v10+ (comes with Node.js)
-- **Git**: v2.30+
-- **Code Editor**: VS Code recommended (with TypeScript and Tailwind CSS extensions)
-- **Browser**: Chrome 90+, Firefox 88+, or Safari 14+ for testing
+### 1. CSS Variables (globals.css)
+
+**Add to `:root`**:
+```css
+:root {
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  
+  /* Typography scale */
+  --text-base: 1rem;
+  --text-sm: 0.875rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  
+  /* Line heights */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  
+  /* Colors - Light Mode */
+  --background: #ffffff;
+  --foreground: #171717;
+  --text-secondary: #4b5563;
+  --text-tertiary: #9ca3af;
+  --border: #e5e7eb;
+  --focus-ring: #171717;
+}
+
+/* Dark Mode Override */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #1a1a1a;
+    --foreground: #f5f5f5;
+    --text-secondary: #d1d5db;
+    --text-tertiary: #9ca3af;
+    --border: #404040;
+    --focus-ring: #60a5fa;
+  }
+}
+```
+
+### 2. Body Styling (globals.css)
+
+**Update**:
+```css
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--line-height-normal);
+}
+
+/* Ensure explicit line-height for readability */
+p, span, li {
+  line-height: var(--line-height-normal);
+}
+
+h1, h2, h3 {
+  line-height: var(--line-height-tight);
+}
+```
+
+### 3. Component Color Updates
+
+**Before** (hardcoded):
+```tsx
+className="bg-white text-gray-600 hover:text-gray-900"
+```
+
+**After** (using CSS variables):
+```tsx
+className="bg-[var(--background)] text-[var(--text-secondary)] hover:text-[var(--foreground)]"
+```
+
+**For Tailwind arbitrary values**:
+```tsx
+// Use inline styles for CSS variables if Tailwind doesn't support
+style={{ backgroundColor: 'var(--background)' }}
+
+// Or update tailwind.config if available:
+backgroundColor: 'var(--background)'
+```
+
+### 4. Navigation ARIA Enhancements
+
+**MenuSlider.tsx updates**:
+```tsx
+// Add aria-label to nav
+<nav aria-label="Main navigation">
+
+// Add aria-current to active link
+<Link 
+  href={item.target}
+  aria-current={isCurrentPage ? "page" : undefined}
+>
+  {item.label}
+</Link>
+
+// Add aria-expanded to expandable items
+<button
+  aria-expanded={expandedParent === item.id}
+  aria-controls={`submenu-${item.id}`}
+>
+  {item.label}
+</button>
+<ul id={`submenu-${item.id}`} hidden={expandedParent !== item.id}>
+  {/* items */}
+</ul>
+```
+
+### 5. Image Alt Text
+
+**Before**:
+```tsx
+<Image src="/portfolio/project.jpg" alt="project" />
+```
+
+**After**:
+```tsx
+<Image 
+  src="/portfolio/project.jpg" 
+  alt="Portfolio project: Interactive data visualization dashboard redesigned for iOS and Android using React Native"
+/>
+```
+
+### 6. Testing Checklist
+
+Quick verification:
+- [ ] Run `npm run lint` - no ESLint errors
+- [ ] Run `npm run build` - static export succeeds
+- [ ] Open DevTools > Accessibility > Run Lighthouse
+- [ ] Check Accessibility score = 100
+- [ ] Test dark mode: DevTools > Rendering > Emulate CSS media feature preference `prefers-color-scheme: dark`
+- [ ] Tab through page: all interactive elements reachable, focus visible
+- [ ] VoiceOver (Mac): Cmd+F5 to enable; navigate using VO+Right Arrow
+- [ ] Run axe DevTools in DevTools extensions
 
 ---
 
-## Initial Setup
+## Common Issues & Solutions
 
-### 1. Clone Repository
+### Issue 1: Colors Not Updating in Dark Mode
 
-```bash
-git clone https://github.com/dustinniles/dustinniles.github.io.git
-cd dustinniles.github.io
-```
+**Problem**: Dark mode active but colors stay light.
 
-### 2. Checkout Feature Branch
+**Solution**:
+- Verify `@media (prefers-color-scheme: dark)` is in globals.css
+- Check browser supports prefers-color-scheme (>95% do)
+- DevTools: Settings > Rendering > Check `prefers-color-scheme` emulation
+- Clear browser cache (hard refresh: Cmd+Shift+R or Ctrl+Shift+R)
 
-```bash
-git checkout 001-website-frontend
-```
+### Issue 2: Focus Ring Not Visible
 
-### 3. Install Dependencies
+**Problem**: Can't see focus indicator when tabbing.
 
-```bash
-npm install
-```
+**Solution**:
+- Verify `focus-visible:ring-2 focus-visible:ring-gray-900` is applied
+- Ensure ring color has ≥ 3:1 contrast with background
+- Dark mode: update to blue (#60a5fa) for visibility
+- Test with DevTools: Tab to element, check computed styles
 
-**Expected output:**
-```
-added 234 packages in 12s
-```
+### Issue 3: Animations Still Playing with Reduced Motion Enabled
 
-### 4. Start Development Server
+**Problem**: `prefers-reduced-motion` not respected.
 
-```bash
-npm run dev
-```
+**Solution**:
+- Verify `@media (prefers-reduced-motion: reduce)` block in globals.css
+- Ensure all transitions use `transition-duration` (not hardcoded in `@keyframes`)
+- Check any client-side animation libraries (update to respect prefers-reduced-motion)
 
-**Expected output:**
-```
-▲ Next.js 16.1.6
-- Local:        http://localhost:3000
-- Ready in 1.2s
-```
+### Issue 4: Images Look Wrong in Dark Mode
 
-### 5. Open in Browser
+**Problem**: Images have poor contrast or color shift in dark.
 
-Navigate to http://localhost:3000
+**Solution**:
+- Images themselves don't change color (CSS doesn't affect JPG/PNG directly)
+- Consider adding dark mode filter if images are too bright: `filter: brightness(0.8) contrast(1.1)`
+- Or use picture element with dark/light variants if critical
+- Usually not needed; verify with real testing first
 
-**You should see:**
-- Centered landing page menu (if on home page)
-- Profile photo and "Dustin Niles" name
-- Navigation items: Work, Play, Contact, About
+### Issue 5: Lighthouse Accessibility Not 100
 
----
+**Problem**: Still missing points after changes.
 
-## Project Structure
-
-```
-/
-├── app/                      # Next.js App Router pages
-│   ├── layout.tsx           # Root layout with sidebar
-│   ├── page.tsx             # Home page (landing/portfolio grid)
-│   ├── globals.css          # Global styles + Tailwind imports
-│   ├── about/page.tsx       # About section
-│   ├── contact/page.tsx     # Contact form
-│   ├── resume/page.tsx      # Resume
-│   ├── photography/page.tsx # Photography gallery
-│   ├── video/page.tsx       # Video portfolio
-│   ├── cycling/page.tsx     # Cycling blog
-│   ├── tech/page.tsx        # Tech blog
-│   └── volunteering/page.tsx # Volunteering blog
-│
-├── components/              # Reusable React components
-│   ├── Sidebar.tsx          # Fixed navigation sidebar
-│   ├── MenuSlider.tsx       # Sliding menu system
-│   ├── PhotoGallery.tsx     # Scroll-snap photo viewer
-│   ├── BlogLayout.tsx       # Blog post layout
-│   └── SocialLinks.tsx      # Social media icons
-│
-├── app/data/                # Content data files
-│   ├── navigation.ts        # Menu structure
-│   ├── photos.ts            # Photography gallery items
-│   ├── blog-posts.ts        # Blog posts
-│   ├── videos.ts            # Video portfolio items
-│   └── social-links.ts      # Social media links
-│
-├── public/                  # Static assets
-│   ├── images/
-│   │   ├── portfolio/       # Photography images
-│   │   ├── profile/         # Profile photo
-│   │   └── blog/            # Blog featured images
-│   └── fonts/               # IBM Plex fonts (self-hosted)
-│
-├── specs/                   # Feature specifications
-│   └── 001-website-frontend/
-│       ├── spec.md          # Requirements
-│       ├── plan.md          # Implementation plan
-│       ├── research.md      # Technical decisions
-│       ├── data-model.md    # Data structures
-│       ├── contracts/       # API contracts
-│       └── quickstart.md    # This file
-│
-├── .github/workflows/       # CI/CD
-│   └── deploy.yml           # GitHub Pages deployment
-│
-├── next.config.ts           # Next.js configuration
-├── tailwind.config.ts       # Tailwind CSS configuration
-├── tsconfig.json            # TypeScript configuration
-└── package.json             # Dependencies and scripts
-```
+**Common fixes**:
+- Verify all images have alt text (not just portfolio items)
+- Check form labels properly associated (if forms exist)
+- Verify links have discernible text (not empty href or title-only)
+- Run axe DevTools to get detailed error list
+- Check color contrast in DevTools: Elements > Accessibility tab
 
 ---
 
-## Development Workflow
+## Reference: HIG Compliance Checklist
 
-### Running Development Server
+Quick checklist for developers:
 
-```bash
-npm run dev
-```
+**Typography**:
+- [ ] Body text ≥ 16px (1rem)
+- [ ] Line height ≥ 1.5x font size
+- [ ] Heading hierarchy visually distinct (h1 > h2 > h3)
+- [ ] IBM Plex Sans is only font loaded
 
-- Hot reload enabled
-- TypeScript errors shown in terminal
-- Available at http://localhost:3000
+**Colors**:
+- [ ] Light mode text contrast ≥ 4.5:1 (normal), ≥ 3:1 (large)
+- [ ] Dark mode text contrast ≥ 4.5:1 (normal), ≥ 3:1 (large)
+- [ ] Background colors dark gray (#1a1a1a) not pure black
+- [ ] All interactive elements have hover/focus states in both modes
 
-### Building for Production
+**Dark Mode**:
+- [ ] CSS variables updated in @media (prefers-color-scheme: dark)
+- [ ] All colors use --variables, not hardcoded hex/rgb
+- [ ] Images tested in dark (readable, no color shift)
+- [ ] Tested on macOS (System Prefs > Appearance)
+- [ ] Tested on iOS (Settings > Display & Brightness)
 
-```bash
-npm run build
-```
+**Accessibility**:
+- [ ] Keyboard navigation (Tab, Enter, Escape) works throughout
+- [ ] Focus indicator visible in light AND dark modes
+- [ ] All images have descriptive alt text (≠ "image" or "photo")
+- [ ] Heading hierarchy: h1 → h2 → h3 (no skipped levels)
+- [ ] ARIA: nav labels, aria-current on active link, aria-expanded on menu items
+- [ ] Reduced-motion: animations disabled when prefers-reduced-motion enabled
+- [ ] Screen reader testing: VoiceOver or NVDA
+- [ ] Lighthouse Accessibility = 100
 
-- Generates static site in `/out` directory
-- Validates TypeScript compilation
-- Checks for build errors
+**Navigation**:
+- [ ] Active page indicator visible in sidebar
+- [ ] Menu items have hover/focus affordances
+- [ ] Submenu items clearly expandable/collapsible
+- [ ] Touch targets ≥ 44×44px on mobile
+- [ ] Menu accessible with Escape key
 
-### Running Linter
-
-```bash
-npm run lint
-```
-
-- Runs ESLint on all source files
-- Fix automatically: `npm run lint --fix`
-
-### Code Quality Checks (Pre-Commit)
-
-```bash
-npm run lint && npm audit && npm run build
-```
-
-Run this before committing to ensure:
-1. No linting errors
-2. No security vulnerabilities
-3. Build succeeds
-
----
-
-## Common Tasks
-
-### Task 1: Add a New Photo to Gallery
-
-**Steps:**
-
-1. Place image in `/public/images/portfolio/`
-   ```bash
-   cp ~/my-photo.jpg public/images/portfolio/mountain-sunset.jpg
-   ```
-
-2. Edit `app/data/photos.ts`:
-   ```typescript
-   export const photographyGallery: PortfolioPhoto[] = [
-     // ... existing photos
-     {
-       id: 'photo-003',
-       src: '/images/portfolio/mountain-sunset.jpg',
-       srcSet: {
-         avif: '/images/portfolio/mountain-sunset.avif',
-         webp: '/images/portfolio/mountain-sunset.webp'
-       },
-       alt: 'Golden hour sunset over rocky mountain peaks',
-       order: 3,
-       width: 1920,
-       height: 1080,
-       aspectRatio: 'landscape',
-       caption: 'Rocky Mountain National Park',
-       location: 'Colorado, USA',
-       dateTaken: '2026-01-15T17:30:00Z'
-     }
-   ];
-   ```
-
-3. (Optional) Generate optimized formats:
-   ```bash
-   # Using imagemagick or online tools
-   convert mountain-sunset.jpg -quality 90 mountain-sunset.webp
-   ```
-
-4. Test locally:
-   ```bash
-   npm run dev
-   # Navigate to /photography
-   ```
+**Performance**:
+- [ ] Lighthouse Performance ≥ 90
+- [ ] FCP < 1.5s on 3G (test with DevTools throttling)
 
 ---
 
-### Task 2: Add a New Blog Post
+## Files to Modify
 
-**Steps:**
+| File | Purpose | Type |
+|------|---------|------|
+| app/globals.css | Add CSS variables, dark mode, typography | Required |
+| components/MenuSlider.tsx | Add ARIA, active indicator, dark mode colors | Required |
+| app/layout.tsx | Update color references to use CSS variables | Required |
+| app/page.tsx | Verify heading hierarchy, add alt text | Required |
+| components/SocialLinks.tsx | Update colors to use CSS variables | Required |
+| [Any image components] | Add descriptive alt text | Required |
 
-1. Edit `app/data/blog-posts.ts`:
-   ```typescript
-   export const blogPosts: BlogPost[] = [
-     // ... existing posts
-     {
-       id: 'tech-002',
-       title: 'Building Static Sites with Next.js',
-       slug: 'building-static-sites-nextjs',
-       content: `
-# Building Static Sites with Next.js
-
-Next.js is a powerful framework for building static sites...
-
-## Key Benefits
-
-- Fast page loads
-- SEO friendly
-- Easy deployment
-
-## Getting Started
-
-\`\`\`bash
-npx create-next-app@latest
-\`\`\`
-       `,
-       excerpt: 'Learn how to build fast, SEO-friendly static sites with Next.js',
-       category: 'tech',
-       publishDate: '2026-02-09T10:00:00Z',
-       featuredImage: {
-         src: '/images/blog/nextjs-static.jpg',
-         alt: 'Next.js logo'
-       },
-       readingTime: 5,
-       tags: ['next.js', 'static-sites', 'web-development'],
-       status: 'published'
-     }
-   ];
-   ```
-
-2. (Optional) Add featured image to `/public/images/blog/`
-
-3. Test locally:
-   ```bash
-   npm run dev
-   # Navigate to /tech
-   ```
+**Note**: See tasks.md for detailed task breakdown and implementation order.
 
 ---
 
-### Task 3: Update Navigation Menu
+## Testing Workflow
 
-**Steps:**
-
-1. Edit `app/data/navigation.ts`:
-   ```typescript
-   export const mainMenu: NavigationMenuItem[] = [
-     {
-       id: 'work',
-       label: 'Work',
-       target: '/work',
-       level: 0,
-       parentId: null,
-       order: 1,
-       children: [
-         // ... existing children
-         {
-           id: 'work-speaking',
-           label: 'Speaking',
-           target: '/speaking',
-           level: 1,
-           parentId: 'work',
-           children: [],
-           order: 4  // New item
-         }
-       ]
-     },
-     // ... other menu items
-   ];
-   ```
-
-2. Create new page `app/speaking/page.tsx`:
-   ```typescript
-   export default function SpeakingPage() {
-     return (
-       <div className="container mx-auto py-12">
-         <h1 className="text-2xl font-light mb-8">Speaking Engagements</h1>
-         {/* Content */}
-       </div>
-     );
-   }
-   ```
-
-3. Test navigation:
+1. **Local Development**:
    ```bash
    npm run dev
-   # Click Work → Speaking
+   # Open http://localhost:3000
+   # Test light mode, then enable dark mode in browser DevTools
    ```
 
----
-
-### Task 4: Configure Formspree Contact Form
-
-**Steps:**
-
-1. Create Formspree account at https://formspree.io
-
-2. Create new form in dashboard
-
-3. Copy Form ID (format: `xxxxxxxxxxxxxxxx`)
-
-4. Update `app/contact/page.tsx`:
-   ```typescript
-   const FORMSPREE_FORM_ID = 'mqkvrznb';  // Replace with your ID
-
-   const response = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
-     method: 'POST',
-     body: formData,
-     headers: { 'Accept': 'application/json' }
-   });
-   ```
-
-5. Test form submission:
+2. **Accessibility**:
    ```bash
-   npm run dev
-   # Navigate to /contact
-   # Fill out and submit form
-   # Check email for confirmation
+   npm run lint  # Check for obvious issues
+   # Open DevTools > Lighthouse > Run audit
+   # Verify Accessibility = 100
    ```
 
----
+3. **Real Testing**:
+   - macOS: System Preferences > General > Appearance (toggle Light/Dark)
+   - iPhone: Settings > Display & Brightness > Dark
+   - Android: Settings > Display > Dark theme
+   - Screen reader: VoiceOver (Cmd+F5 on Mac)
 
-### Task 5: Deploy to GitHub Pages
-
-**Automatic Deployment (Recommended):**
-
-```bash
-git add .
-git commit -m "Add new feature"
-git push origin 001-website-frontend
-```
-
-When merged to `main` branch, GitHub Actions automatically:
-1. Runs `npm run build`
-2. Deploys `/out` directory to GitHub Pages
-3. Site live at https://dustinniles.github.io
-
-**Manual Deployment (if needed):**
-
-```bash
-npm run build
-# Verify /out directory exists
-# Push to main branch
-```
-
----
-
-## Technology Stack
-
-### Core Technologies
-- **Next.js 16.1.6**: React framework with App Router
-- **React 19.2.3**: UI library
-- **TypeScript 5.x**: Type-safe JavaScript
-- **Tailwind CSS 4.x**: Utility-first CSS framework
-
-### Fonts
-- **IBM Plex Sans**: Self-hosted via @fontsource/ibm-plex-sans
-- Weights: 300 (Light), 400 (Regular)
-
-### External Services
-- **Formspree**: Contact form backend (free tier)
-- **GitHub Pages**: Static site hosting
-- **YouTube/Vimeo**: Video embeds (privacy-enhanced)
-
----
-
-## Environment Variables
-
-**No environment variables required for development.**
-
-For production Formspree integration, the Form ID is hard-coded in `app/contact/page.tsx` (safe to expose publicly).
-
----
-
-## Troubleshooting
-
-### Issue: `npm run dev` fails with port already in use
-
-**Solution:**
-```bash
-# Kill process on port 3000
-lsof -ti:3000 | xargs kill -9
-
-# Or use different port
-npm run dev -- -p 3001
-```
-
-### Issue: TypeScript errors in editor but build succeeds
-
-**Solution:**
-```bash
-# Restart TypeScript server in VS Code
-# Cmd+Shift+P → "TypeScript: Restart TS Server"
-```
-
-### Issue: Images not loading in development
-
-**Solution:**
-- Verify image path starts with `/` (e.g., `/images/portfolio/photo.jpg`)
-- Check file exists in `/public` directory
-- Clear Next.js cache: `rm -rf .next && npm run dev`
-
-### Issue: Tailwind styles not applying
-
-**Solution:**
-```bash
-# Verify Tailwind config includes correct paths
-# Check tailwind.config.ts content array
-
-# Restart dev server
-npm run dev
-```
-
-### Issue: Build fails with "output: 'export' incompatible with..."
-
-**Solution:**
-- Remove Server Components requiring runtime
-- Avoid `getServerSideProps` or `getStaticProps`
-- Use Client Components (`'use client'`) for interactive features
-
----
-
-## Code Style Guidelines
-
-### TypeScript
-- Use interfaces for component props
-- Avoid `any` type
-- Enable strict mode (`tsconfig.json`)
-
-### React
-- Functional components only (no class components)
-- Use hooks (`useState`, `useEffect`, etc.)
-- Mark client components with `'use client'` directive
-
-### Tailwind CSS
-- Use utility classes over custom CSS
-- Follow mobile-first responsive design
-- Use `@apply` sparingly (only for repeated patterns)
-
-### File Naming
-- Components: PascalCase (e.g., `MenuSlider.tsx`)
-- Pages: kebab-case (e.g., `app/contact/page.tsx`)
-- Data files: kebab-case (e.g., `blog-posts.ts`)
-
----
-
-## Testing Checklist
-
-Before submitting changes:
-
-- [ ] Run `npm run lint` (no errors)
-- [ ] Run `npm audit` (no critical vulnerabilities)
-- [ ] Run `npm run build` (succeeds)
-- [ ] Test locally in Chrome, Firefox, Safari
-- [ ] Test on mobile device (iOS or Android)
-- [ ] Verify accessibility (keyboard navigation works)
-- [ ] Check responsive design (resize browser)
-- [ ] Verify animations respect prefers-reduced-motion
-
----
-
-## Getting Help
-
-### Documentation
-- Next.js: https://nextjs.org/docs
-- Tailwind CSS: https://tailwindcss.com/docs
-- Formspree: https://formspree.io/docs
-
-### Project-Specific
-- Feature spec: `specs/001-website-frontend/spec.md`
-- Implementation plan: `specs/001-website-frontend/plan.md`
-- Research decisions: `specs/001-website-frontend/research.md`
-
-### Contact
-- GitHub Issues: https://github.com/dustinniles/dustinniles.github.io/issues
-- Maintainer: Dustin Niles
+4. **Build & Deploy**:
+   ```bash
+   npm run build
+   # Verify /out directory created (static export)
+   # Push to main to trigger GitHub Actions deployment
+   ```
 
 ---
 
 ## Next Steps
 
-1. **Explore codebase**: Read through `app/` and `components/` directories
-2. **Make a small change**: Add a photo or blog post
-3. **Test locally**: Verify changes work as expected
-4. **Review spec**: Read `specs/001-website-frontend/spec.md` for full requirements
-5. **Start contributing**: Pick a task from `specs/001-website-frontend/tasks.md` (when available)
+1. Read data-model.md for detailed design specifications
+2. Generate tasks.md using `/speckit.tasks` command
+3. Implement tasks in order (dependency-aware)
+4. Test after each task
+5. Run full Lighthouse audit when complete
+6. Push to main branch for automatic deployment
 
-Welcome to the project! 🚀
+---
 
+## Resources
+
+- **Apple HIG**: https://developer.apple.com/design/human-interface-guidelines/
+- **WCAG 2.1**: https://www.w3.org/WAI/WCAG21/quickref/
+- **Tailwind CSS**: https://tailwindcss.com/docs
+- **Next.js**: https://nextjs.org/docs
+- **IBM Plex Sans**: https://github.com/IBM/plex
+
+---
+
+**Contact**: See CLAUDE.md for project guidance and constraints.
