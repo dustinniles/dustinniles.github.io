@@ -33,6 +33,20 @@
 
 [Gates determined based on constitution file]
 
+### Design Review Against Apple HIG *(for UI/visual/layout features)*
+
+**Before proceeding with implementation:**
+
+- [ ] Feature design reviewed against relevant HIG sections (Foundations, Components, Patterns)
+- [ ] Color contrast verified per HIG Color and Accessibility guidelines (4.5:1 for normal text, 3:1 for large text)
+- [ ] Spatial design aligns with HIG Layout principles (margins, safe areas, alignment)
+- [ ] Navigation patterns follow HIG Components: Navigation and Search
+- [ ] Interactive elements have proper affordances per HIG Patterns: Feedback
+- [ ] Dark mode support planned per HIG Foundations: Dark Mode
+- [ ] Reduced-motion support planned per HIG Foundations: Accessibility
+- [ ] Typography hierarchy maintains WCAG 2.1 Level AA compliance
+- [ ] All text is clear and concise per HIG Foundations: Writing
+
 ## Project Structure
 
 ### Documentation (this feature)

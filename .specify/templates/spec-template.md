@@ -95,6 +95,24 @@
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
 - **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
 
+### Apple HIG Compliance Requirements *(mandatory for design/UI features)*
+
+<!--
+  ACTION REQUIRED: If this feature involves visual design, layout, or interaction,
+  document how it aligns with Apple Human Interface Guidelines.
+-->\n
+- **HIG-001**: Feature MUST comply with [applicable HIG section, e.g., "HIG Foundations: Layout" for spatial organization]
+- **HIG-002**: Interactive elements MUST follow [applicable HIG pattern, e.g., "HIG Patterns: Feedback" for user feedback]
+- **HIG-003**: [Specific HIG requirement, e.g., "Dark mode support per HIG Foundations: Dark Mode"]
+
+*Design review checklist:*
+- [ ] Spatial conformance with HIG Layout principles
+- [ ] Color contrast per HIG Color and Accessibility guidelines
+- [ ] Navigation patterns align with HIG Components: Navigation and Search
+- [ ] Interactive elements have proper affordances per HIG Patterns: Feedback
+- [ ] Dark mode support per HIG Foundations: Dark Mode
+- [ ] Reduced-motion support per HIG Foundations: Accessibility
+
 ### Key Entities *(include if feature involves data)*
 
 - **[Entity 1]**: [What it represents, key attributes without implementation]
