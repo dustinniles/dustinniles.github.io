@@ -65,7 +65,7 @@ Phase 1 → Phase 2 (Baseline Audit) → Phase 3 (Foundational CSS) → Phases 4
 
 - [X] T002 [P] Verify npm dependencies installed and Next.js 16.1.6, React 19.2.3, Tailwind CSS 4.x are correct versions in `package.json`
 
-- [X] T003 [P] Verify IBM Plex Sans @fontsource package is installed (v5.2.8 or later) with weights 300 and 400 imported in `app/globals.css`
+- [X] T003 [P] Verify IBM Plex Mono @fontsource package is installed (v5.2.7 or later) with weights 300 and 400 imported in `app/globals.css`
 
 - [X] T004 Run `npm run build` to verify static export builds successfully; check `/out` directory is created in project root
 
@@ -296,9 +296,9 @@ Phase 1 → Phase 2 (Baseline Audit) → Phase 3 (Foundational CSS) → Phases 4
 
 ### Tasks
 
-- [X] T048 [US5] Verify IBM Plex Sans is sole font: check `app/globals.css` @fontsource imports include only IBM Plex Sans with weights 300 and 400, no fallback system fonts or external CDN fonts
+- [X] T048 [US5] Verify IBM Plex Mono is primary font: check `app/globals.css` @fontsource imports include IBM Plex Mono with weights 300 and 400, no external CDN fonts
 
-- [X] T049 [US5] Verify @fontsource IBM Plex Sans package version: check `package.json` for @fontsource/ibm-plex-sans (should be v5.2.8+), confirm weights 300 and 400 are imported in globals.css
+- [X] T049 [US5] Verify @fontsource IBM Plex Mono package version: check `package.json` for @fontsource/ibm-plex-mono (should be v5.2.7+), confirm weights 300 and 400 are imported in globals.css
 
 - [X] T050 [US5] [P] Test body text size: verify all body/paragraph text uses `var(--text-base)` (1rem = 16px minimum) or larger, check no body text smaller than 16px per HIG/WCAG minimum
 
@@ -387,11 +387,11 @@ Phase 1 → Phase 2 (Baseline Audit) → Phase 3 (Foundational CSS) → Phases 4
 
 - [X] T073a Run `npm audit` before commit: execute `npm audit` in project root; address all critical and high severity vulnerabilities before proceeding; document results in `specs/001-website-frontend/security-audit.md`; per Constitution Principle VII security requirements
 
-- [ ] T074 Prepare git commit: stage all changes, create meaningful commit message summarizing HIG compliance implementation across all user stories, sign with Co-Authored-By if pair programming
+- [X] T074 Prepare git commit: stage all changes, create meaningful commit message summarizing HIG compliance implementation across all user stories, sign with Co-Authored-By if pair programming
 
-- [ ] T075 Create pull request: push feature branch to remote, create PR against main branch using template, reference spec.md and all design artifacts in PR description, request review
+- [X] T075 Create pull request: push feature branch to remote, create PR against main branch using template, reference spec.md and all design artifacts in PR description, request review
 
-- [ ] T076 Verify deployment: confirm GitHub Actions workflow triggers on PR merge, static export deploys to GitHub Pages successfully, test live site for all changes
+- [X] T076 Verify deployment: confirm GitHub Actions workflow triggers on PR merge, static export deploys to GitHub Pages successfully, test live site for all changes
 
 ---
 
@@ -615,6 +615,33 @@ Phase 4 (US2)   Phase 5 (US3)   Phase 6 (US4)   Phase 7 (US5)  Phase 8 (US6)
 **Target Completion**: 3-5 development days depending on team size and parallel work capability.
 
 **Key Change**: Audit-first approach ensures CSS changes are targeted and justified by specific findings.
+
+---
+
+---
+
+## Phase 10: Post-Implementation Bug Fixes
+
+**Goal**: Address defects found after the initial HIG implementation: layout visibility of content pages, broken parent-item navigation, missing profile photo, and primary font change to IBM Plex Mono.
+
+**Independent Test Criteria**:
+- Landing page heading is visually centred within the content area when the sidebar is expanded
+- Clicking "Work" navigates to `/work`; clicking "Play" navigates to `/play`
+- Clicking "Contact" and "About" shows the respective page content without it being obscured by the sidebar
+- Profile photo (`public/images/profile/DUSTIN HEADSHOT.jpeg`) renders correctly in the sidebar
+- IBM Plex Mono renders as the body typeface (verifiable in DevTools)
+
+### Tasks
+
+- [X] T077 Create `components/SiteLayout.tsx` client component: lifts `isExpanded` state out of MenuSlider, applies `margin-left: 256px` to `<main>` when sidebar is expanded (with transition matching the sidebar's 300ms ease), passes `isExpanded` and `setIsExpanded` props to MenuSlider; replaces the raw `MenuSlider + <main>` pair in `app/layout.tsx`
+
+- [X] T078 Fix Work and Play parent-item navigation: change the `<button>` rendering for parent nav items in `components/MenuSlider.tsx` to `<Link href={item.target}>` so clicking "Work" and "Play" navigates to `/work` and `/play` respectively while still expanding the sidebar and toggling the sub-menu
+
+- [X] T079 Replace profile photo placeholder: remove the "Photo" text placeholder div in `components/MenuSlider.tsx` and insert a Next.js `<Image>` pointing to `/images/profile/DUSTIN HEADSHOT.jpeg` with `alt="Dustin Niles"`, `unoptimized`, and `rounded-full object-cover` classes
+
+- [X] T080 Switch primary font to IBM Plex Mono: replace `@fontsource/ibm-plex-sans` imports in `app/globals.css` with `@fontsource/ibm-plex-mono/300.css` and `/400.css`; update `--font-sans` theme variable to `'IBM Plex Mono', monospace`; remove `@fontsource/ibm-plex-sans` from `package.json` dependencies
+
+- [X] T081 Add `text-center` to landing page heading in `app/page.tsx` to ensure the "Select a section to explore" text is horizontally centred within the content area
 
 ---
 

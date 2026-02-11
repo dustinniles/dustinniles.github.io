@@ -1,9 +1,9 @@
 @import "tailwindcss";
-@import "@fontsource/ibm-plex-sans/300.css";
-@import "@fontsource/ibm-plex-sans/400.css";
+@import "@fontsource/ibm-plex-mono/300.css";
+@import "@fontsource/ibm-plex-mono/400.css";
 
 @theme {
-  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-sans: 'IBM Plex Mono', monospace;
 }
 
 /* T005: Typography scale — T006: Color system */
@@ -44,7 +44,7 @@
   }
 }
 
-/* T008: Body with explicit font-size and line-height */
+/* T008: Body with explicit font-size and line-height — IBM Plex Mono */
 body {
   background: var(--background);
   color: var(--foreground);

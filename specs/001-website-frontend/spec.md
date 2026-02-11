@@ -94,15 +94,15 @@ The portfolio website must meet WCAG 2.1 Level AA accessibility standards as req
 
 ### User Story 5 - IBM Plex Font Implementation and Typography Verification (Priority: P5)
 
-The portfolio website must use IBM Plex Sans (SIL OFL 1.1) as the sole font family per the constitutional font exception, while ensuring all HIG typography hierarchy and readability standards are met. Font sizing, weights, line heights, and letter spacing must follow HIG guidelines. Users should experience clear, readable typography that maintains the minimal aesthetic while being fully accessible.
+The portfolio website must use IBM Plex Mono (SIL OFL 1.1) as the primary font family. Other fonts within the IBM Plex family may supplement where appropriate, but IBM Plex Mono is the standard. All HIG typography hierarchy and readability standards must be met. Font sizing, weights, line heights, and letter spacing must follow HIG guidelines. Users should experience clear, readable typography that maintains the minimal aesthetic while being fully accessible.
 
-**Why this priority**: Typography directly impacts readability and professional presentation. While the font choice is fixed, ensuring HIG-compliant sizing and hierarchy is essential.
+**Why this priority**: Typography directly impacts readability and professional presentation. IBM Plex Mono is the primary typeface, ensuring HIG-compliant sizing and hierarchy is essential.
 
-**Independent Test**: Can be tested by verifying IBM Plex Sans is the only font loaded, checking that font sizes follow HIG sizing standards (using relative units like rem), confirming line heights are ≥ 1.5 for body text per WCAG, and validating that text remains readable across all screen sizes.
+**Independent Test**: Can be tested by verifying IBM Plex Mono is the primary font loaded, checking that font sizes follow HIG sizing standards (using relative units like rem), confirming line heights are ≥ 1.5 for body text per WCAG, and validating that text remains readable across all screen sizes.
 
 **Acceptance Scenarios**:
 
-1. **Given** the site loads, **When** examining network requests, **Then** only IBM Plex Sans fonts must be loaded (no external CDN fonts, no fallback to system fonts)
+1. **Given** the site loads, **When** examining network requests, **Then** IBM Plex Mono must be the primary font loaded (no external CDN fonts)
 2. **Given** body text is displayed, **When** measuring font size, **Then** body text must be ≥ 16px (or equivalent in rem) for readability per HIG
 3. **Given** headings are displayed, **When** examining hierarchy, **Then** heading sizes must use a clear scaling hierarchy (h1 > h2 > h3 with visible size differences)
 4. **Given** line height is measured, **When** examining text readability, **Then** line height must be ≥ 1.5x font size for body text to ensure readability
@@ -145,7 +145,7 @@ The portfolio website must be designed to be inclusive and welcoming to visitors
 - **FR-002**: All spacing and layout MUST conform to HIG spacing standards using 8px base units and multiples thereof
 - **FR-003**: All text MUST have sufficient color contrast per WCAG standards (4.5:1 for normal text, 3:1 for large text) in both light and dark modes
 - **FR-004**: All typography MUST follow HIG typography hierarchy with clearly distinct sizing levels
-- **FR-005**: Typography MUST use IBM Plex Sans exclusively, sourced from @fontsource with no external CDN dependencies
+- **FR-005**: Typography MUST use IBM Plex Mono as the primary typeface, sourced from @fontsource with no external CDN dependencies; other IBM Plex family members may supplement
 - **FR-006**: Body text MUST be ≥ 16px (or equivalent in rem) for core readability
 - **FR-007**: Line height for body text MUST be ≥ 1.5x font size for optimal readability
 
@@ -236,11 +236,29 @@ This specification focuses on design review and compliance documentation rather 
 - **SC-009**: 100% of portfolio pages must maintain usable layout on screens from 320px to 2560px width
 - **SC-010**: Body text must be ≥ 16px (or rem equivalent) for readability
 - **SC-011**: Line height for body text must be ≥ 1.5x font size
-- **SC-012**: IBM Plex Sans must be the only font loaded (verifiable via network inspection)
+- **SC-012**: IBM Plex Mono must be the primary font loaded (verifiable via network inspection)
 - **SC-013**: No third-party JavaScript or external scripts (except for necessary functionality with SRI and constitutional review)
 - **SC-014**: All HIG design review findings must be documented with specific references to HIG sections and compliance status
 - **SC-015**: Focus indicators must have minimum 3:1 contrast ratio and be clearly visible
 - **SC-016**: All skip links or navigation mechanisms must function to bypass repetitive content
+
+## Amendments
+
+### Session 2026-02-11 (Post-Implementation Fixes)
+
+The following defects were identified and resolved after the initial implementation:
+
+1. **Landing page text not centered** — The main content area lacked a left margin to account for the fixed 256px sidebar when expanded. Fixed by lifting sidebar state into a `SiteLayout` client wrapper that applies `margin-left: 256px` to `<main>` when the sidebar is expanded, and adding `text-center` to the landing page heading.
+
+2. **Work and Play links not navigating** — Parent nav items with children were rendered as `<button>` elements that only toggled the sub-menu. Fixed by changing them to `<Link>` elements that navigate to `/work` and `/play` respectively while still expanding the sub-menu.
+
+3. **Contact and About links not showing content** — The fixed sidebar overlapped the main content when collapsed (full-width), so navigated pages were hidden. Resolved by the `SiteLayout` margin fix (see item 1 above).
+
+4. **Profile photo** — The photo placeholder has been replaced with the actual profile image from `public/images/profile/DUSTIN HEADSHOT.jpeg`.
+
+5. **Primary font changed to IBM Plex Mono** — IBM Plex Mono is now the standard typeface. Other IBM Plex family fonts may supplement where appropriate. The `@fontsource/ibm-plex-sans` dependency has been replaced with `@fontsource/ibm-plex-mono`.
+
+6. **SiteLayout client component introduced** — A new `components/SiteLayout.tsx` wraps `MenuSlider` and `<main>`, owning the `isExpanded` state and synchronising the sidebar width with a matching margin-left on the content area.
 
 ## Assumptions
 

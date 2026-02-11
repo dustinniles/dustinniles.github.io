@@ -7,12 +7,12 @@
 
 ## Summary
 
-Conduct a comprehensive design review of the existing portfolio website against Apple's Human Interface Guidelines (HIG) Foundations and Components standards, document compliance gaps, and implement corrections to ensure full HIG alignment. The portfolio uses Next.js 14+ (static export), TypeScript, Tailwind CSS 4.x, and IBM Plex Sans. The review covers Layout, Color, Typography, Dark Mode, Accessibility (WCAG 2.1 Level AA), Inclusion, and Writing principles. Implementations include dark mode color palette design, accessibility audit and fixes, semantic HTML structure verification, keyboard navigation validation, and contrast ratio corrections.
+Conduct a comprehensive design review of the existing portfolio website against Apple's Human Interface Guidelines (HIG) Foundations and Components standards, document compliance gaps, and implement corrections to ensure full HIG alignment. The portfolio uses Next.js 14+ (static export), TypeScript, Tailwind CSS 4.x, and IBM Plex Mono as the primary typeface. The review covers Layout, Color, Typography, Dark Mode, Accessibility (WCAG 2.1 Level AA), Inclusion, and Writing principles. Implementations include dark mode color palette design, accessibility audit and fixes, semantic HTML structure verification, keyboard navigation validation, and contrast ratio corrections.
 
 ## Technical Context
 
 **Language/Version**: TypeScript 5.x with React 19.2.3 and Next.js 16.1.6 (App Router)  
-**Primary Dependencies**: Next.js 16.1.6 (App Router, static export), React 19.2.3, Tailwind CSS 4.x (via PostCSS), IBM Plex Sans via @fontsource  
+**Primary Dependencies**: Next.js 16.1.6 (App Router, static export), React 19.2.3, Tailwind CSS 4.x (via PostCSS), IBM Plex Mono via @fontsource
 **Storage**: N/A (static export to GitHub Pages, no database or server-side storage)  
 **Testing**: Lighthouse (automated), axe DevTools (automated accessibility), manual review (keyboard navigation, screen reader testing, visual inspection)  
 **Target Platform**: Web (static HTML/CSS/JS exported for GitHub Pages)

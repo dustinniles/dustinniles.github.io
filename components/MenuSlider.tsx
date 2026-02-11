@@ -2,14 +2,19 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useReducedMotion } from '@/app/hooks/useReducedMotion';
 import { mainMenu } from '@/app/data/navigation';
 import { NavigationMenuItem } from '@/app/types';
 import SocialLinks from '@/components/SocialLinks';
 
-export default function MenuSlider() {
-  const [isExpanded, setIsExpanded] = useState(false);
+interface MenuSliderProps {
+  isExpanded: boolean;
+  setIsExpanded: (value: boolean) => void;
+}
+
+export default function MenuSlider({ isExpanded, setIsExpanded }: MenuSliderProps) {
   const [expandedParent, setExpandedParent] = useState<string | null>(null);
   const reducedMotion = useReducedMotion();
   const pathname = usePathname();
@@ -33,17 +38,11 @@ export default function MenuSlider() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [expandedParent, isExpanded]);
+  }, [expandedParent, isExpanded, setIsExpanded]);
 
-  const handleMenuItemClick = (item: NavigationMenuItem) => {
-    if (item.children.length === 0) {
-      // Leaf item: expand the sidebar (navigation handled by Link)
-      setIsExpanded(true);
-    } else {
-      // Parent item with children: toggle sub-menu
-      setIsExpanded(true);
-      setExpandedParent(expandedParent === item.id ? null : item.id);
-    }
+  const handleParentItemClick = (item: NavigationMenuItem) => {
+    setIsExpanded(true);
+    setExpandedParent(expandedParent === item.id ? null : item.id);
   };
 
   const transitionStyle = reducedMotion
@@ -75,13 +74,20 @@ export default function MenuSlider() {
             : 'flex flex-col items-center justify-center pt-16 pb-8'
         }`}
       >
-        {/* Profile photo placeholder */}
+        {/* Profile photo */}
         <div
-          className={`rounded-full flex items-center justify-center bg-[var(--border)] text-[var(--text-tertiary)] ${
-            isExpanded ? 'w-12 h-12 text-xs mb-4' : 'w-24 h-24 text-sm mb-6'
+          className={`rounded-full overflow-hidden flex-shrink-0 bg-[var(--border)] ${
+            isExpanded ? 'w-12 h-12 mb-4' : 'w-24 h-24 mb-6'
           }`}
         >
-          Photo
+          <Image
+            src="/images/profile/DUSTIN HEADSHOT.jpeg"
+            alt="Dustin Niles"
+            width={96}
+            height={96}
+            className="w-full h-full object-cover"
+            unoptimized
+          />
         </div>
         <h1
           className={`font-light tracking-wide text-[var(--foreground)] ${
@@ -106,21 +112,21 @@ export default function MenuSlider() {
               <li key={item.id}>
                 {item.children.length > 0 ? (
                   <>
-                    {/* T037: aria-expanded and aria-controls for expandable items */}
-                    <button
-                      type="button"
-                      onClick={() => handleMenuItemClick(item)}
+                    {/* Parent item: navigates to item.target AND expands sub-menu */}
+                    <Link
+                      href={item.target}
+                      onClick={() => handleParentItemClick(item)}
                       tabIndex={0}
                       aria-expanded={expandedParent === item.id}
                       aria-controls={`submenu-${item.id}`}
-                      className={`transition-colors text-sm font-light w-full text-left min-h-[44px] flex items-center ${
+                      className={`transition-colors text-sm font-light w-full min-h-[44px] flex items-center ${
                         active
                           ? 'text-[var(--foreground)] font-normal'
                           : 'text-[var(--text-secondary)] hover:text-[var(--foreground)]'
                       }`}
                     >
                       {item.label}
-                    </button>
+                    </Link>
                     {/* T037: submenu with matching id for aria-controls */}
                     <ul
                       id={`submenu-${item.id}`}

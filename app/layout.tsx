@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import MenuSlider from "@/components/MenuSlider";
+import SiteLayout from "@/components/SiteLayout";
 
 export const metadata: Metadata = {
   title: "Dustin Niles",
@@ -26,11 +26,7 @@ export default function RootLayout({
           Skip to content
         </a>
         <div className="flex min-h-screen">
-          <MenuSlider />
-          {/* T034: main landmark with id for skip link target */}
-          <main id="main-content" className="flex-1 overflow-y-auto">
-            {children}
-          </main>
+          <SiteLayout>{children}</SiteLayout>
         </div>
         {/* T034: footer landmark */}
         <footer className="sr-only" aria-label="Site footer">
