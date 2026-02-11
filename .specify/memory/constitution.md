@@ -1,14 +1,13 @@
 <!--
 Sync Impact Report:
-- Version change: 1.1.0 → 1.2.0
-- Modified principles: None
+- Version change: 1.2.0 → 1.3.0
+- Modified principles: Principle I
 - Added principles: None
 - Modified sections:
-  - Development Workflow updated for solo-developer (no PR reviews required)
-  - Security Standards updated to remove PR review requirement (solo developer context)
+  - Principle I: "System fonts only" rule expanded to permit self-hosted web fonts under SIL OFL 1.1 or equivalent permissive license, served from same origin with no external CDN
 - Removed sections: None
-- Rationale: Solo developer project - PR review overhead removed while maintaining security controls
-- Templates requiring updates: None (workflow change only)
+- Rationale: IBM Plex Sans (SIL OFL 1.1) is self-hosted via @fontsource from same origin — no external CDN, no tracking, no performance cost beyond initial bundle. The spirit of the rule (no external font service dependencies) is preserved. Font files are bundled at build time.
+- Templates requiring updates: None
 - Follow-up TODOs: None
 -->
 
@@ -25,7 +24,7 @@ All design decisions MUST prioritize simplicity, whitespace, and visual clarity 
 - Typography must use light font weights (400 or lighter for body, 300-500 for headings)
 - Color palette restricted to grayscale (gray-600, gray-900) with minimal accent use
 - No animations, transitions, or interactive effects unless explicitly justified for UX
-- System fonts only (no custom web fonts)
+- Web fonts permitted only when: (a) licensed under SIL OFL 1.1 or equivalent permissive open-source license, (b) self-hosted from same origin via @fontsource or equivalent — no external font CDNs or third-party font services (e.g., no Google Fonts without SRI)
 
 **Rationale:** A minimal aesthetic ensures portfolio content remains the focus while maintaining fast load times and professional presentation.
 
@@ -247,4 +246,4 @@ This constitution supersedes all other development practices and documentation f
 3. **Specification artifacts** - Feature-specific details within constitutional bounds
 4. **Code comments** - Implementation notes for specific edge cases
 
-**Version**: 1.2.0 | **Ratified**: 2026-02-09 | **Last Amended**: 2026-02-09
+**Version**: 1.3.0 | **Ratified**: 2026-02-09 | **Last Amended**: 2026-02-10

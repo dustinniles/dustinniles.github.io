@@ -65,19 +65,18 @@ A visitor viewing the Photography section sees large, full-screen photos that th
 
 ### User Story 4 - Content Pages (About, Resume, Contact) (Priority: P4)
 
-Visitors can access information about Dustin through dedicated pages: Resume shows formatted career information, Contact provides a form to send messages, and About displays biographical text and possibly a timeline.
+Visitors can access information about Dustin through dedicated pages: Resume shows formatted career information, Contact provides a mailto: link to send messages, and About displays biographical text and possibly a timeline.
 
 **Why this priority**: Essential for portfolio completeness and visitor engagement, but can be developed after core navigation and gallery are working.
 
-**Independent Test**: Each page can be tested independently—Resume by viewing formatted text, Contact by submitting a form, About by reading bio content. Each delivers standalone value.
+**Independent Test**: Each page can be tested independently—Resume by viewing formatted text, Contact by verifying the mailto: link, About by reading bio content. Each delivers standalone value.
 
 **Acceptance Scenarios**:
 
 1. **Given** I navigate to the Resume section, **When** the content loads, **Then** I see formatted text displaying career information
-2. **Given** I navigate to the Contact section, **When** the page loads, **Then** I see a contact form with fields for visitor information and message
-3. **Given** I complete the contact form, **When** I submit it, **Then** my message is sent successfully and I receive confirmation
-4. **Given** I navigate to the About section, **When** the content loads, **Then** I see biographical text about Dustin
-5. **Given** I'm viewing the About page, **When** scrolling through content, **Then** I may see a timeline visualization of key events or milestones
+2. **Given** I navigate to the Contact section, **When** the page loads, **Then** I see a mailto: link that opens my email client pre-addressed to Dustin
+3. **Given** I navigate to the About section, **When** the content loads, **Then** I see biographical text about Dustin
+4. **Given** I'm viewing the About page, **When** scrolling through content, **Then** I may see a timeline visualization of key events or milestones
 
 ---
 
@@ -188,11 +187,7 @@ At the bottom of the left sidebar, visitors can click icons to visit Dustin's pr
 - **FR-030**: Resume content MUST be readable and well-organized
 
 #### Contact Section
-- **FR-031**: Contact section MUST display a form for visitor messages
-- **FR-032**: Contact form MUST include fields for visitor information and message content
-- **FR-033**: Contact form MUST successfully submit messages
-- **FR-034**: System MUST provide confirmation feedback when message is sent successfully
-- **FR-035**: System MUST display user-friendly error messages if form submission fails
+- **FR-031**: Contact section MUST display a mailto: link that opens the visitor's email client pre-addressed to Dustin's email address
 
 #### About Section
 - **FR-036**: About section MUST display biographical text
@@ -228,15 +223,12 @@ At the bottom of the left sidebar, visitors can click icons to visit Dustin's pr
 **IMPORTANT**: Review Constitution Section VI (Security & Content Integrity) for all projects. The following requirements MUST be verified:
 
 - **SR-001**: Feature MUST NOT introduce third-party JavaScript, CDNs, or external scripts without explicit approval and Subresource Integrity (SRI)
-- **SR-002**: Contact form MUST implement XSS and injection protection for all user input fields
 - **SR-003**: All new dependencies MUST be from trusted sources and pass npm audit security checks
 - **SR-004**: Feature MUST NOT use code evaluation, unsafe HTML injection patterns, or other insecure code practices
 - **SR-005**: External social media links MUST include rel equals noopener noreferrer attributes
 - **SR-006**: Feature MUST maintain Content Security Policy compliance with no unsafe-inline or unsafe-eval directives
-- **SR-007**: Contact form data MUST be transmitted securely using HTTPS if using external form service
 - **SR-008**: Embedded video players MUST be from trusted sources (YouTube, Vimeo) with appropriate iframe sandboxing
 - **SR-009**: Image assets MUST be served from trusted origins with appropriate CORS headers
-- **SR-010**: Any user-generated content (contact form, future comments) MUST be sanitized before display
 
 ### Key Entities *(data involved)*
 
@@ -245,7 +237,6 @@ At the bottom of the left sidebar, visitors can click icons to visit Dustin's pr
 - **Blog Post**: Represents a written article with properties including title, publish date, content body, category (Cycling/Tech/Volunteering), and optional featured image
 - **Video Item**: Represents a portfolio video with properties including title, video source URL (YouTube/Vimeo), embed code, thumbnail image, and duration
 - **Social Media Link**: Represents an external platform profile with properties including platform name, icon image, profile URL, and display order
-- **Contact Form Submission**: Represents a visitor message with properties including sender name, email address, message content, timestamp, and submission status
 
 ## Success Criteria *(mandatory)*
 
@@ -255,8 +246,8 @@ At the bottom of the left sidebar, visitors can click icons to visit Dustin's pr
 - **SC-002**: Menu slide animations complete in 300 milliseconds (±50ms) for smooth perception
 - **SC-003**: Photography gallery displays complete photos with no partial images visible when scrolling stops
 - **SC-004**: Page load time is under 2 seconds on standard broadband connection (10 Mbps)
-- **SC-005**: All interactive elements (menu items, buttons, links, form fields) are keyboard navigable and pass basic accessibility testing
-- **SC-006**: Contact form submissions are successfully processed with confirmation feedback visible within 3 seconds
+- **SC-005**: All interactive elements (menu items, buttons, links) are keyboard navigable and pass basic accessibility testing
+- **SC-006**: Contact mailto: link successfully opens the visitor's email client pre-addressed to Dustin's email address
 - **SC-007**: Site maintains functional layout and navigation on screen widths from 320px to 2560px
 - **SC-008**: Content fade-in/fade-out transitions feel smooth and intentional (no jarring instant changes)
 - **SC-009**: Visitors can identify how to scroll through photography gallery within 5 seconds (via scroll indicator)

@@ -53,7 +53,7 @@ Build an interactive portfolio website frontend featuring a sliding menu navigat
 - ✅ Grayscale color palette (gray-600, gray-900)
 - ⚠️ **REQUIRES JUSTIFICATION**: Menu slide animations and content fade transitions needed for navigation UX (violates "no animations unless justified")
   - **Justification**: Slide animations provide visual continuity during navigation hierarchy changes (main menu ↔ sub-menu). Without animation, instant transitions would be disorienting and users would lose spatial context. Fade transitions prevent jarring content swaps.
-- ✅ System fonts only (IBM Plex via system font stack)
+- ✅ **CONSTITUTION EXCEPTION APPLIED (v1.3.0)**: IBM Plex Sans self-hosted via @fontsource (SIL OFL 1.1 license — permits embedding, bundling, redistribution with software). Fonts served from same origin at build time; no external CDN requests. Compliant with amended Principle I.
 
 ### Principle II: Static-First Architecture
 
@@ -61,9 +61,7 @@ Build an interactive portfolio website frontend featuring a sliding menu navigat
 - ✅ No Server Components requiring runtime
 - ✅ Images unoptimized for static export compatibility
 - ✅ All routes pre-renderable at build time
-- ⚠️ **NEEDS CLARIFICATION**: Contact form implementation strategy (FR-031 to FR-035 require form submission)
-  - Options: (a) Static form with mailto: link, (b) Third-party form service (Formspree, Netlify Forms), (c) Client-side email via external API
-  - **Resolution needed in Phase 0 research**
+- ✅ Contact page uses a static mailto: link (FR-031) — no server-side requirements, no third-party form services
 
 ### Principle III: Performance & Accessibility
 
@@ -90,17 +88,15 @@ Build an interactive portfolio website frontend featuring a sliding menu navigat
 **Security Verification Checklist**:
 
 - ✅ No third-party JavaScript/CDNs (IBM Plex can be self-hosted or use system fonts)
-- ⚠️ **NEEDS CLARIFICATION**: Contact form may require third-party service
-  - If external service used: MUST verify service reputation, implement SRI if loading external scripts, validate service uses HTTPS
+- ✅ No contact form — mailto: link only. No third-party form services, no user input handling
 - ✅ Embedded videos from trusted sources only (YouTube/Vimeo with iframe sandboxing per SR-008)
 - ✅ All dependencies verified trusted (React, Next.js, Tailwind - industry standard)
 - ✅ No code evaluation or unsafe patterns
-- ✅ CSP compliance maintained (no unsafe-inline, no unsafe-eval)
+- ✅ CSP compliance maintained (no unsafe-inline, no unsafe-eval); `form-action 'none'` per constitution template (no form on site)
 - ✅ External social media links use rel="noopener noreferrer" (SR-005)
 - ✅ Build/deployment security via GitHub Actions
-- ⚠️ **NEEDS CLARIFICATION**: Input sanitization strategy for contact form (SR-002, SR-010)
 
-**GATE STATUS**: ⚠️ CONDITIONAL PASS - Proceed to Phase 0 with animation justification accepted. MUST resolve contact form security strategy before Phase 1.
+**GATE STATUS**: ✅ PASS - Animation justification accepted. Contact replaced with mailto: link. IBM Plex OFL exception applied (constitution v1.3.0).
 
 ## Project Structure
 
@@ -175,16 +171,9 @@ public/
 
 ### Research Tasks
 
-1. **Contact Form Implementation Strategy**
-   - **Question**: How to implement contact form (FR-031 to FR-035) while maintaining static-first architecture and security requirements?
-   - **Options to evaluate**:
-     - (a) Static mailto: link (simplest, but poor UX)
-     - (b) Formspree free tier (third-party service, requires external script evaluation)
-     - (c) Netlify Forms (GitHub Pages incompatible - Netlify hosting required)
-     - (d) Google Forms iframe embed (third-party, potential CSP issues)
-     - (e) Custom client-side email API integration (e.g., EmailJS, SendGrid client SDK)
-   - **Decision criteria**: Static export compatibility, CSP compliance, no server required, acceptable security trade-offs
-   - **Outcome**: Document chosen approach with security justification
+1. **Contact Implementation Strategy**
+   - **Decision**: Static mailto: link (FR-031). No form, no third-party service. Fully static, zero security surface area, constitution-compliant.
+   - **Rationale**: Constitution Principle VI prohibits user input mechanisms. A mailto: link delegates message composition to the visitor's email client with no data handled by the site.
 
 2. **IBM Plex Font Loading Strategy**
    - **Question**: Self-host IBM Plex or use system font stack fallback?
@@ -242,7 +231,6 @@ Extract entities from feature spec and document structure, fields, relationships
 
 Document external service integrations and component interfaces:
 
-- Formspree API contract (contact form)
 - YouTube/Vimeo embed specifications
 - Image asset requirements
 - Component prop interfaces
@@ -258,7 +246,6 @@ Run `.specify/scripts/bash/update-agent-context.sh claude` to update agent-speci
 **Deliverables**:
 
 - ✅ `data-model.md` - Data structures and entity definitions
-- ✅ `/contracts/formspree-api.md` - Contact form API contract
 - ✅ `/contracts/video-embeds.md` - YouTube/Vimeo embed specifications
 - ✅ `quickstart.md` - Developer onboarding guide
 - ✅ Updated `CLAUDE.md` - Agent context file with tech stack
@@ -290,8 +277,8 @@ Tasks will be generated based on:
 
 | Area | Decision | Implementation |
 | ------ | ---------- | ---------------- |
-| **Contact Form** | Formspree (free tier) | Client-side fetch to Formspree API |
-| **Fonts** | IBM Plex via @fontsource | Self-hosted woff2 files, 300 & 400 weights |
+| **Contact** | Static mailto: link | `<a href="mailto:...">` — no form, no service |
+| **Fonts** | IBM Plex via @fontsource | Self-hosted woff2 files, 300 & 400 weights (SIL OFL 1.1) |
 | **Video Embeds** | Privacy-enhanced iframes | youtube-nocookie.com, sandbox attributes |
 | **Photo Gallery** | CSS scroll-snap mandatory | scroll-snap-stop: always, 100vh items |
 | **Animations** | CSS transitions 300ms | Transform-based, respects prefers-reduced-motion |
@@ -305,7 +292,7 @@ All principles verified:
 - ✅ **Performance**: FCP < 1.5s, Lighthouse ≥ 90, accessibility = 100
 - ✅ **Content-Centric**: Simple file-based content management
 - ✅ **Deployment**: Automated GitHub Actions workflow
-- ✅ **Security**: No third-party CDNs, strict CSP, input sanitization via Formspree
+- ✅ **Security**: No third-party CDNs, strict CSP (`form-action 'none'`), no user input on site
 
 ### Next Actions
 

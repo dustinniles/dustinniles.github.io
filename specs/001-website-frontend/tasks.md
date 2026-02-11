@@ -44,7 +44,7 @@
 
 **Goal**: Visitor arrives at homepage, sees centered menu with profile photo and name, clicks any item to trigger the menu sliding left into sidebar position while content appears on the right.
 
-**Independent Test**: Load http://localhost:3000 → verify centered menu with profile header and Work/Play/Contact/About items → click "Work" → confirm menu slides left to sidebar and content area appears on the right.
+**Independent Test**: Load [http://localhost:3000](http://localhost:3000) → verify centered menu with profile header and Work/Play/Contact/About items → click "Work" → confirm menu slides left to sidebar and content area appears on the right.
 
 ### Implementation for User Story 1
 
@@ -93,17 +93,17 @@
 
 ## Phase 6: User Story 4 — Content Pages: About, Resume, Contact (Priority: P4)
 
-**Goal**: Visitors can access biographical information, formatted resume, and a working contact form that submits via Formspree with confirmation/error feedback.
+**Goal**: Visitors can access biographical information, formatted resume, and a contact page with a mailto: link.
 
-**Independent Test**: Navigate to /about → verify biographical text visible. Navigate to /resume → verify formatted career content. Navigate to /contact → fill form → submit → verify success message appears.
+**Independent Test**: Navigate to /about → verify biographical text visible. Navigate to /resume → verify formatted career content. Navigate to /contact → verify mailto: link is present and correctly addressed.
 
 ### Implementation for User Story 4
 
 - [ ] T020 [P] [US4] Create app/about/page.tsx replacing the Phase 4 stub, with biographical text content in semantic HTML (article, section elements), placeholder bio text with sections for background and interests, and an optional timeline section using ordered list with time elements
 - [ ] T021 [P] [US4] Create app/resume/page.tsx replacing the Phase 4 stub, with formatted career information sections (Experience, Education, Skills) using semantic HTML (header, section, h2, h3, ul, p elements), IBM Plex font-light class for headings, placeholder content for each section
-- [ ] T022 [P] [US4] Create app/contact/page.tsx replacing the Phase 4 stub as 'use client' component implementing ContactFormSubmission form: name (required, maxLength 100), email (required, type="email"), message (required, maxLength 2000) fields, onSubmit handler using fetch POST to https://formspree.io/f/FORMSPREE_FORM_ID with Accept: application/json header, useState for formStatus ('idle' | 'submitting' | 'success' | 'error'), conditional success message and error message display, button disabled during submission
+- [ ] T022 [P] [US4] Create app/contact/page.tsx replacing the Phase 4 stub, with a simple contact section containing a mailto: anchor element (href="mailto:dustin@dustinniles.com", aria-label="Email Dustin Niles") styled as a minimal text link using IBM Plex font-light, and a brief introductory sentence above the link
 
-**Checkpoint**: All three content pages render independently. Contact form submits to Formspree and displays feedback.
+**Checkpoint**: All three content pages render independently. Contact page shows a mailto: link.
 
 ---
 
@@ -134,7 +134,7 @@
 ### Implementation for User Story 6
 
 - [ ] T028 [P] [US6] Create app/data/videos.ts exporting VideoItem[] array with 1-2 sample YouTube entries (platform: 'youtube', placeholder videoId, title, description, thumbnail with src and alt, order, publishDate)
-- [ ] T029 [US6] Create app/video/page.tsx replacing the Phase 4 stub, importing videoGallery from app/data/videos.ts and rendering each VideoItem as a section with 16:9 aspect ratio container div (relative, pb-[56.25%]) containing iframe (absolute inset-0 w-full h-full) with src derived from platform (youtube: https://www.youtube-nocookie.com/embed/{videoId}, vimeo: https://player.vimeo.com/video/{videoId}), allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture", allowFullScreen, sandbox="allow-scripts allow-same-origin allow-presentation", loading="lazy", and title from VideoItem
+- [ ] T029 [US6] Create app/video/page.tsx replacing the Phase 4 stub, importing videoGallery from app/data/videos.ts and rendering each VideoItem as a section with 16:9 aspect ratio container div (relative, pb-[56.25%]) containing iframe (absolute inset-0 w-full h-full) with src derived from platform (youtube: <https://www.youtube-nocookie.com/embed/{videoId}>, vimeo: <https://player.vimeo.com/video/{videoId}>), allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture", allowFullScreen, sandbox="allow-scripts allow-same-origin allow-presentation", loading="lazy", and title from VideoItem
 
 **Checkpoint**: /video renders embedded privacy-enhanced players that load lazily and play within the page layout.
 
@@ -162,7 +162,7 @@
 
 - [ ] T033 [P] Add keyboard accessibility to components/MenuSlider.tsx: onKeyDown handlers for Escape key to navigate back from sub-menus (sets activeMenu to 'main'), ensure all menu items are focusable (tabIndex=0 on interactive divs or use button elements), add visible focus styles (focus-visible:ring-2 Tailwind class)
 - [ ] T034 [P] Add responsive mobile layout to app/globals.css and app/layout.tsx: media query breakpoint at max-width 640px (sm:) with single-column layout, MenuSlider collapsible or minimal sidebar mode per FR-046 to FR-049 (small back button on left when navigated past landing page)
-- [ ] T035 [P] Update next.config.ts with async headers() function returning Content-Security-Policy header: form-action directive including https://formspree.io, frame-src directive including https://www.youtube-nocookie.com and https://player.vimeo.com
+- [ ] T035 [P] Update next.config.ts with async headers() function returning Content-Security-Policy header: form-action 'none' (no form on site), frame-src directive including <https://www.youtube-nocookie.com> and <https://player.vimeo.com>
 - [ ] T036 [P] Run npm audit to verify no critical or high severity security vulnerabilities in installed dependencies
 - [ ] T037 Run npm run lint && npm run build to validate zero ESLint errors and confirm successful static export generation in /out directory
 
@@ -304,6 +304,5 @@ Each step delivers independently testable, deployable value.
 - **[US#]** label maps each task to its user story for traceability
 - No test tasks generated (TDD not requested; manual browser testing applies per quickstart.md)
 - Stub pages created in US2 (Phase 4) are intentionally replaced in later phases — this is expected
-- The FORMSPREE_FORM_ID placeholder in T022 must be replaced with a real Formspree form ID before contact form goes live
 - Commit after each phase checkpoint to preserve working increments
 - Run `npm run build` after Phase 3 to verify static export compatibility before proceeding
