@@ -1,9 +1,9 @@
-# Feature Specification: Fix Landing Page Nav Alignment and Navigation Links
+# Feature Specification: Fix Landing Page Nav Alignment and Add Full Site Navigation
 
 **Feature Branch**: `002-frontend-iteration`
 **Created**: 2026-02-11
 **Status**: Draft
-**Input**: User description: "Fix landing page nav alignment and broken nav links with mock subpages"
+**Input**: User description: "Fix landing page nav alignment and broken nav links with mock subpages. Add sub-pages per WebsiteFlow.md: Work (Resume, Photography, Video), Play (Cycling, Tech, Volunteering), Contact, About"
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -42,11 +42,50 @@ A visitor on the landing page clicks any of the four navigation links (Work, Pla
 
 ---
 
+### User Story 3 - Navigation to Work Sub-pages (Priority: P3)
+
+A visitor on the Work page sees three clear navigation links — Resume, Photography, and Video — and can access each of those sub-pages. Each sub-page loads successfully with a title and placeholder content that represents its purpose, and provides a clear path back to both the Work section and the landing page.
+
+**Why this priority**: Work is the primary professional showcase section. Its sub-pages (Resume, Photography, Video) represent the core portfolio content. Before adding real content, the routing and layout hierarchy must be established and testable.
+
+**Independent Test**: Can be fully tested by visiting the Work page and confirming three sub-section links are present and each leads to a distinct, accessible page with appropriate placeholder content.
+
+**Acceptance Scenarios**:
+
+1. **Given** a visitor is on the Work page, **When** they view the page, **Then** they see navigation links to Resume, Photography, and Video sub-sections
+2. **Given** a visitor clicks the "Resume" link from the Work page, **When** the page loads, **Then** they see the Resume page with a title and placeholder content
+3. **Given** a visitor clicks the "Photography" link from the Work page, **When** the page loads, **Then** they see the Photography page with a title and placeholder content
+4. **Given** a visitor clicks the "Video" link from the Work page, **When** the page loads, **Then** they see the Video page with a title and placeholder content
+5. **Given** a visitor is on any Work sub-page (Resume, Photography, or Video), **When** they view the page, **Then** there is a clear path back to the Work section page
+6. **Given** a visitor navigates directly to a Work sub-page URL (e.g., `/resume`), **When** the page loads, **Then** it displays correctly without errors
+
+---
+
+### User Story 4 - Navigation to Play Sub-pages (Priority: P4)
+
+A visitor on the Play page sees three navigation links — Cycling, Tech, and Volunteering — and can access each of those sub-pages. Each sub-page loads with a title and placeholder content representing its purpose, with clear navigation back to Play and to the landing page.
+
+**Why this priority**: Play communicates personal interests and character. Its sub-pages need the same routing skeleton as Work sub-pages before real content is authored. Lower priority than Work because professional content typically takes precedence in a portfolio context.
+
+**Independent Test**: Can be fully tested by visiting the Play page and confirming three sub-section links are present and each leads to a distinct, accessible page.
+
+**Acceptance Scenarios**:
+
+1. **Given** a visitor is on the Play page, **When** they view the page, **Then** they see navigation links to Cycling, Tech, and Volunteering sub-sections
+2. **Given** a visitor clicks the "Cycling" link from the Play page, **When** the page loads, **Then** they see the Cycling page with a title and placeholder content
+3. **Given** a visitor clicks the "Tech" link from the Play page, **When** the page loads, **Then** they see the Tech page with a title and placeholder content
+4. **Given** a visitor clicks the "Volunteering" link from the Play page, **When** the page loads, **Then** they see the Volunteering page with a title and placeholder content
+5. **Given** a visitor is on any Play sub-page (Cycling, Tech, or Volunteering), **When** they view the page, **Then** there is a clear path back to the Play section page
+6. **Given** a visitor navigates directly to a Play sub-page URL (e.g., `/cycling`), **When** the page loads, **Then** it displays correctly without errors
+
+---
+
 ### Edge Cases
 
-- What happens when a visitor navigates directly to a subpage URL (e.g., `/about`) by typing it in the browser?
+- What happens when a visitor navigates directly to a sub-page URL (e.g., `/about`, `/resume`) by typing it in the browser?
 - How do the navigation links appear at narrow viewport widths (e.g., 320px mobile)?
 - Does centering remain consistent if the name or photo is replaced with content of a different width?
+- What happens if a visitor navigates to a non-existent route (e.g., `/work/nonexistent`)?
 
 ## Requirements *(mandatory)*
 
@@ -60,12 +99,23 @@ A visitor on the landing page clicks any of the four navigation links (Work, Pla
 - **FR-006**: An About page MUST exist and be accessible via the About navigation link, displaying placeholder content that represents the section's purpose
 - **FR-007**: All mock pages MUST display a page title identifying which section the visitor is viewing
 - **FR-008**: All mock pages MUST provide a navigational path back to the landing page
+- **FR-009**: The Work page MUST display navigation links to its three sub-sections: Resume, Photography, and Video
+- **FR-010**: A Resume page MUST exist under the Work section, accessible from the Work page and via direct URL (e.g., `/resume`), displaying placeholder content
+- **FR-011**: A Photography page MUST exist under the Work section, accessible from the Work page and via direct URL (e.g., `/photography`), displaying placeholder content
+- **FR-012**: A Video page MUST exist under the Work section, accessible from the Work page and via direct URL (e.g., `/video`), displaying placeholder content
+- **FR-013**: The Play page MUST display navigation links to its three sub-sections: Cycling, Tech, and Volunteering
+- **FR-014**: A Cycling page MUST exist under the Play section, accessible from the Play page and via direct URL (e.g., `/cycling`), displaying placeholder content
+- **FR-015**: A Tech page MUST exist under the Play section, accessible from the Play page and via direct URL (e.g., `/tech`), displaying placeholder content
+- **FR-016**: A Volunteering page MUST exist under the Play section, accessible from the Play page and via direct URL (e.g., `/volunteering`), displaying placeholder content
+- **FR-017**: All Work and Play sub-pages MUST provide a navigational path back to their parent section page (Work or Play respectively)
+- **FR-018**: All Work and Play sub-pages MUST provide a navigational path back to the landing page
 
 ### Apple HIG Compliance Requirements *(mandatory for design/UI features)*
 
 - **HIG-001**: Navigation layout MUST comply with HIG Foundations: Layout — spatial organization ensures visual hierarchy with the profile section anchoring the page and navigation links subordinate and centered below it
 - **HIG-002**: Navigation links MUST follow HIG Patterns: Feedback — interactive elements must have clear affordances indicating they are tappable/clickable
 - **HIG-003**: Visual alignment MUST comply with HIG Foundations: Layout — consistent alignment creates a sense of order and reinforces the minimal design aesthetic
+- **HIG-004**: Section and sub-section navigation hierarchy MUST comply with HIG Components: Navigation and Search — breadcrumb or back-navigation patterns must clearly communicate the user's location within the site hierarchy
 
 *Design review checklist:*
 - [ ] Spatial conformance with HIG Layout principles
@@ -80,12 +130,18 @@ A visitor on the landing page clicks any of the four navigation links (Work, Pla
 - **SC-001**: Navigation links (Work, Play, Contact, About) are visually centered under the profile photo and name on the landing page, confirmed on both desktop and mobile viewports
 - **SC-002**: All 4 navigation links successfully route to their respective destination pages with zero navigation errors
 - **SC-003**: All 4 mock pages load without errors and display a section title and placeholder content
-- **SC-004**: A visitor can navigate from the landing page to any subpage and return to the landing page within 2 interactions
+- **SC-004**: A visitor can navigate from the landing page to any top-level page (Work, Play, Contact, About) and return to the landing page within 2 interactions
+- **SC-005**: All 3 Work sub-pages (Resume, Photography, Video) are accessible from the Work page with zero navigation errors
+- **SC-006**: All 3 Play sub-pages (Cycling, Tech, Volunteering) are accessible from the Play page with zero navigation errors
+- **SC-007**: A visitor can navigate from the landing page to any Work or Play sub-page and return to the landing page within 3 interactions
+- **SC-008**: All 8 sub-pages (Resume, Photography, Video, Cycling, Tech, Volunteering, Contact, About) load without errors when accessed directly by URL
 
 ## Assumptions
 
 - "Centered" means horizontally centered relative to the profile/header section of the landing page, not necessarily full-page width centering
-- Mock subpages require only minimal placeholder content (page title, brief description) — no real portfolio content, contact forms, or bio is needed at this stage
-- All four navigation links (Work, Play, Contact, About) currently exist in the implementation but their routes are either missing or not wired correctly
-- The existing site navigation structure will be preserved; no new navigation patterns are introduced
-- Subpage layouts should reflect the existing site's design language (sparse, minimal, consistent with current site chrome)
+- Mock pages require only minimal placeholder content (page title, brief description) — no real portfolio content, contact forms, or bio is needed at this stage
+- All four top-level navigation links (Work, Play, Contact, About) currently exist in the implementation but their routes are either missing or not wired correctly
+- Sub-page URLs follow a flat path convention: `/resume`, `/photography`, `/video`, `/cycling`, `/tech`, `/volunteering` (nested URL assumption superseded by routing decision documented in plan.md)
+- The existing site navigation structure will be preserved; no new global navigation patterns are introduced
+- All page layouts (section pages and sub-pages) should reflect the existing site's design language (sparse, minimal, consistent with current site chrome)
+- Contact and About remain flat pages with no sub-sections (as per WebsiteFlow.md)
