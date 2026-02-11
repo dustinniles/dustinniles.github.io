@@ -17,7 +17,9 @@ Build an interactive portfolio website frontend featuring a sliding menu navigat
 **Testing**: ESLint for code quality, manual browser testing for animations and interactions
 **Target Platform**: Static site hosted on GitHub Pages (ES2020+ browsers), responsive design 320px-2560px
 **Project Type**: Web application (frontend-only, static export)
+
 **Performance Goals**:
+
 - First Contentful Paint < 1.5s on 3G networks
 - Lighthouse Performance score ≥ 90
 - Page load time < 2 seconds on 10 Mbps broadband
@@ -25,6 +27,7 @@ Build an interactive portfolio website frontend featuring a sliding menu navigat
 - Core Web Vitals: LCP < 2.5s, FID < 100ms, CLS < 0.1
 
 **Constraints**:
+
 - MUST maintain `output: 'export'` for static site generation
 - No Server Components requiring runtime
 - Images unoptimized or statically optimized only
@@ -33,6 +36,7 @@ Build an interactive portfolio website frontend featuring a sliding menu navigat
 - Lighthouse Accessibility score = 100 (WCAG 2.1 Level AA)
 
 **Scale/Scope**:
+
 - Personal portfolio site (~10-15 pages/sections)
 - Photography gallery (~20-50 images initially)
 - 3-4 blog post sections with multiple articles each
@@ -43,6 +47,7 @@ Build an interactive portfolio website frontend featuring a sliding menu navigat
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
 ### Principle I: Minimal Design First
+
 - ✅ Design prioritizes simplicity and whitespace for portfolio focus
 - ✅ Typography uses light font weights (IBM Plex)
 - ✅ Grayscale color palette (gray-600, gray-900)
@@ -51,6 +56,7 @@ Build an interactive portfolio website frontend featuring a sliding menu navigat
 - ✅ System fonts only (IBM Plex via system font stack)
 
 ### Principle II: Static-First Architecture
+
 - ✅ Maintains `output: 'export'` for static generation
 - ✅ No Server Components requiring runtime
 - ✅ Images unoptimized for static export compatibility
@@ -60,18 +66,21 @@ Build an interactive portfolio website frontend featuring a sliding menu navigat
   - **Resolution needed in Phase 0 research**
 
 ### Principle III: Performance & Accessibility
+
 - ✅ Performance targets align with FCP < 1.5s, Lighthouse ≥ 90
 - ✅ Accessibility score = 100 target (WCAG 2.1 AA)
 - ✅ Semantic HTML required (FR-050)
 - ✅ Keyboard navigation fully supported (FR-050)
 
 ### Principle IV: Content-Centric Development
+
 - ✅ Portfolio data as editable arrays/JSON (per spec: portfolioItems in page.tsx)
 - ✅ Simple image management (public/ directory)
 - ✅ Navigation reflects content hierarchy 1:1
 - ✅ No premature abstractions (components only when reused 2+ times)
 
 ### Principle V: Deployment Simplicity
+
 - ✅ Uses existing GitHub Actions workflow (.github/workflows/deploy.yml)
 - ✅ Push to main triggers automatic deployment
 - ✅ Build failures block deployment
@@ -156,7 +165,7 @@ public/
 ## Complexity Tracking
 
 | Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
+| ----------- | ------------ | ------------------------------------- |
 | Menu slide animations (violates "no animations unless justified") | Provides visual continuity during navigation hierarchy changes (main menu ↔ sub-menu) | Instant transitions would disorient users and break spatial context. Users need to see where menu items go during hierarchy changes. |
 | Content fade transitions | Prevents jarring instant content swaps when navigating between sections | Instant content replacement creates visual discontinuity and feels broken. Fade communicates "content is changing" to user. |
 
@@ -232,6 +241,7 @@ Extract entities from feature spec and document structure, fields, relationships
 ### 2. API Contracts (/contracts)
 
 Document external service integrations and component interfaces:
+
 - Formspree API contract (contact form)
 - YouTube/Vimeo embed specifications
 - Image asset requirements
@@ -246,6 +256,7 @@ Developer onboarding document with setup steps, development workflow, and common
 Run `.specify/scripts/bash/update-agent-context.sh claude` to update agent-specific context files with new technology decisions from this plan.
 
 **Deliverables**:
+
 - ✅ `data-model.md` - Data structures and entity definitions
 - ✅ `/contracts/formspree-api.md` - Contact form API contract
 - ✅ `/contracts/video-embeds.md` - YouTube/Vimeo embed specifications
@@ -265,6 +276,7 @@ Run `.specify/scripts/bash/update-agent-context.sh claude` to update agent-speci
 ```
 
 Tasks will be generated based on:
+
 - Feature specification requirements
 - Research decisions
 - Data model entities
@@ -277,7 +289,7 @@ Tasks will be generated based on:
 ### Technical Decisions Made
 
 | Area | Decision | Implementation |
-|------|----------|----------------|
+| ------ | ---------- | ---------------- |
 | **Contact Form** | Formspree (free tier) | Client-side fetch to Formspree API |
 | **Fonts** | IBM Plex via @fontsource | Self-hosted woff2 files, 300 & 400 weights |
 | **Video Embeds** | Privacy-enhanced iframes | youtube-nocookie.com, sandbox attributes |
@@ -287,6 +299,7 @@ Tasks will be generated based on:
 ### Constitution Compliance
 
 All principles verified:
+
 - ✅ **Minimal Design**: Sparse aesthetic, light fonts, grayscale palette
 - ✅ **Static-First**: Full static export, no server components
 - ✅ **Performance**: FCP < 1.5s, Lighthouse ≥ 90, accessibility = 100

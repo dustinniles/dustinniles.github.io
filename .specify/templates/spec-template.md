@@ -85,7 +85,7 @@
 ### Functional Requirements
 
 - **FR-001**: System MUST [specific capability, e.g., "allow users to create accounts"]
-- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]
+- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]  
 - **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
 - **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
 - **FR-005**: System MUST [behavior, e.g., "log all security events"]
@@ -94,18 +94,6 @@
 
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
 - **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
-
-### Security Requirements
-
-**IMPORTANT**: Review Constitution Section VI (Security & Content Integrity) for all projects. The following requirements MUST be verified:
-
-- **SR-001**: Feature MUST NOT introduce third-party JavaScript, CDNs, or external scripts without explicit approval and SRI
-- **SR-002**: Feature MUST NOT create user input mechanisms without XSS/injection protection plan
-- **SR-003**: All new dependencies MUST be from trusted sources and pass `npm audit`
-- **SR-004**: Feature MUST NOT use code evaluation, unsafe HTML injection, or insecure patterns
-- **SR-005**: External links MUST include `rel="noopener noreferrer"`
-- **SR-006**: Feature MUST maintain CSP compliance (no unsafe-inline, no unsafe-eval)
-- **SR-007**: [Add feature-specific security requirements as needed]
 
 ### Key Entities *(include if feature involves data)*
 

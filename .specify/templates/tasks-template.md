@@ -154,22 +154,8 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] TXXX Code cleanup and refactoring
 - [ ] TXXX Performance optimization across all stories
 - [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
+- [ ] TXXX Security hardening
 - [ ] TXXX Run quickstart.md validation
-
-## Phase N+1: Security Review (MANDATORY)
-
-**Purpose**: Verify Constitution VI (Security & Content Integrity) compliance
-
-**CRITICAL**: These checks are NON-NEGOTIABLE before merge
-
-- [ ] TXXX Run `npm audit` and verify no critical/high vulnerabilities
-- [ ] TXXX Verify no third-party scripts introduced (or SRI implemented)
-- [ ] TXXX Verify no user input mechanisms (or XSS protection implemented)
-- [ ] TXXX Review all external links for proper `rel="noopener noreferrer"`
-- [ ] TXXX Verify CSP compliance (no unsafe-inline, no unsafe-eval)
-- [ ] TXXX Verify no code evaluation or unsafe HTML injection
-- [ ] TXXX Review build artifacts match source (no tampering)
-- [ ] TXXX Verify GitHub Actions workflow security (pinned versions)
 
 ---
 

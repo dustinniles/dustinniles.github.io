@@ -33,18 +33,6 @@
 
 [Gates determined based on constitution file]
 
-### Security Verification (Constitution VI)
-
-**CRITICAL**: All features MUST pass security review:
-
-- [ ] No third-party JavaScript/CDNs introduced (or SRI implemented)
-- [ ] No user input mechanisms (or XSS/injection protection planned)
-- [ ] All dependencies verified trusted and audit-clean
-- [ ] No code evaluation or unsafe patterns
-- [ ] CSP compliance maintained
-- [ ] External links properly secured
-- [ ] Build/deployment security maintained
-
 ## Project Structure
 
 ### Documentation (this feature)
