@@ -1,7 +1,7 @@
 # Implementation Plan: Fix Landing Page Nav Alignment and Navigation Links
 
-**Branch**: `002-fix-landing-nav` | **Date**: 2026-02-11 | **Spec**: [spec.md](./spec.md)
-**Input**: Feature specification from `/specs/002-fix-landing-nav/spec.md`
+**Branch**: `002-frontend-iteration` | **Date**: 2026-02-11 | **Spec**: [spec.md](./spec.md)
+**Input**: Feature specification from `/specs/002-frontend-iteration/spec.md`
 
 ## Summary
 
@@ -56,7 +56,7 @@ All four mock subpages (Work, Play, Contact, About) already exist with adequate 
 ### Documentation (this feature)
 
 ```text
-specs/002-fix-landing-nav/
+specs/002-frontend-iteration/
 ├── plan.md              # This file
 ├── research.md          # Root cause analysis and fix rationale
 ├── quickstart.md        # Dev setup and test steps

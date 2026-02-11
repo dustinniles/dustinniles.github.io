@@ -1,6 +1,6 @@
 # Research: Fix Landing Page Nav Alignment and Navigation Links
 
-**Branch**: `002-fix-landing-nav` | **Date**: 2026-02-11
+**Branch**: `002-frontend-iteration` | **Date**: 2026-02-11
 
 ---
 

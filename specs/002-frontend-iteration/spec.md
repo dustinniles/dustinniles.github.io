@@ -1,6 +1,6 @@
 # Feature Specification: Fix Landing Page Nav Alignment and Navigation Links
 
-**Feature Branch**: `002-fix-landing-nav`
+**Feature Branch**: `002-frontend-iteration`
 **Created**: 2026-02-11
 **Status**: Draft
 **Input**: User description: "Fix landing page nav alignment and broken nav links with mock subpages"

@@ -1,6 +1,6 @@
 # Tasks: Fix Landing Page Nav Alignment and Navigation Links
 
-**Input**: Design documents from `/specs/002-fix-landing-nav/`
+**Input**: Design documents from `/specs/002-frontend-iteration/`
 **Prerequisites**: plan.md ✓, spec.md ✓, research.md ✓
 
 **Organization**: Tasks are grouped by user story. No tests requested — no test tasks generated.
