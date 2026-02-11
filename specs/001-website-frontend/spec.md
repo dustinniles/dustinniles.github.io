@@ -1,8 +1,8 @@
 # Feature Specification: Apply Apple HIG Amendments to Portfolio Website Frontend
 
-**Feature Branch**: `002-apply-hig-amendments`  
+**Feature Branch**: `001-website-frontend`  
 **Created**: 2026-02-11  
-**Status**: Draft  
+**Status**: In Progress  
 **Input**: User description: "Revise specification to reflect Apple HIG amendments to constitution"
 
 **Context**: The project constitution was amended on 2026-02-11 to establish Apple Human Interface Guidelines (HIG) as the primary design authority for the portfolio website. This specification defines how the existing 001-website-frontend feature must be revised to comply with HIG Principle I and ensures all current and future design decisions align with HIG standards.

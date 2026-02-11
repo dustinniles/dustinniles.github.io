@@ -92,6 +92,19 @@ styles/ or CSS modules/  # Tailwind CSS configuration and theme files
 
 **Structure Decision**: Single web application (Next.js App Router with static export). All design changes happen within `/app`, `/components`, `/public/`, and `/styles/` directories. No new backend or API code introduced by this feature—changes are purely design/styling/semantic HTML and dark mode support via CSS variables and media queries.
 
+## Phase 0: Baseline Design Audit (NEW - Moved Forward)
+
+**Status**: Pending (2026-02-11)
+
+**Purpose**: Conduct comprehensive baseline audit of current design state to identify HIG compliance gaps BEFORE implementing CSS fixes. This ensures all CSS changes (Phase 3) are targeted and justified by audit findings.
+
+**Artifacts Generated**:
+- Baseline design audit findings documented in design-review-results.md
+- Identified HIG compliance gaps (FR-001) before proceeding to CSS changes
+- Prioritized fix list informing Phase 3 implementation
+
+---
+
 ## Phase 1: Design & Contracts Completion
 
 **Status**: ✓ COMPLETE (2026-02-11)
@@ -104,6 +117,11 @@ styles/ or CSS modules/  # Tailwind CSS configuration and theme files
 | data-model.md | specs/001-website-frontend/data-model.md | Design specifications: typography scale, color system (light/dark), accessibility | ✓ Complete |
 | quickstart.md | specs/001-website-frontend/quickstart.md | Implementation guide with code snippets, testing checklist | ✓ Complete |
 | contracts/ | N/A | Not applicable for design-only feature | — |
+| design-review-results.md | specs/001-website-frontend/design-review-results.md | Phase 2 audit output: HIG compliance gaps per section | Created during impl |
+| accessibility-audit.md | specs/001-website-frontend/accessibility-audit.md | Lighthouse + axe DevTools audit results (T045, T046) | Created during impl |
+| lighthouse-audit.md | specs/001-website-frontend/lighthouse-audit.md | Full Lighthouse audit results (T063) | Created during impl |
+| hig-compliance-summary.md | specs/001-website-frontend/hig-compliance-summary.md | Final HIG compliance status for all Foundations and Components (T072) | Created during impl |
+| security-audit.md | specs/001-website-frontend/security-audit.md | npm audit results before deployment (T073a) | Created during impl |
 
 ### Constitution Check - Phase 1 Re-evaluation
 
@@ -133,14 +151,14 @@ This will generate tasks.md with:
 3. Testing requirements per task
 4. Acceptance criteria (based on data-model.md)
 
-**Estimated Tasks**:
-- Task 1: CSS variables and typography system (globals.css)
-- Task 2: Color system with dark mode support (globals.css)
-- Task 3: Component color updates (MenuSlider, SocialLinks, etc.)
-- Task 4: ARIA labels and semantic HTML (MenuSlider, layout)
-- Task 5: Image alt text and accessibility review
-- Task 6: Testing and Lighthouse audit
-- Task 7: Documentation and deployment
+**Actual Task Count**: 80 tasks across 9 phases (Phase 1: Setup, Phase 2: Baseline Audit, Phase 3: Foundational CSS, Phases 4-8: User Stories P2-P6, Phase 9: Polish & Deployment)
+
+**Task Distribution**:
+- Phase 1 (Setup): 5 tasks (T001-T004, T004a) — includes component file existence check
+- Phase 2 (Baseline Audit): 7 tasks (T013-T019) — runs BEFORE Phase 3; audit findings drive CSS changes
+- Phase 3 (Foundational CSS): 9 tasks (T005-T012, T012a) — includes skip link implementation (FR-026)
+- Phases 4-8 (User Stories): 53 tasks (T020-T062) — implementation across 5 user stories (P2-P6)
+- Phase 9 (Polish): 16 tasks (T063-T076, T069a, T073a) — includes CSP implementation and npm audit
 
 ---
 
