@@ -49,21 +49,12 @@ export default function PhotoGallery({ photos }: PhotoGalleryProps) {
   return (
     <div
       ref={containerRef}
-      className="h-full overflow-y-scroll"
-      style={{
-        scrollSnapType: 'y mandatory',
-        overscrollBehavior: 'contain',
-      }}
+      className="h-full overflow-y-scroll [scroll-snap-type:y_mandatory] [overscroll-behavior:contain]"
     >
       {photos.map((photo, index) => (
         <div
           key={photo.id}
-          className="relative w-full flex-shrink-0"
-          style={{
-            height: '100vh',
-            scrollSnapAlign: 'start',
-            scrollSnapStop: 'always',
-          }}
+          className="relative w-full flex-shrink-0 h-screen [scroll-snap-align:start] [scroll-snap-stop:always]"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -78,10 +69,7 @@ export default function PhotoGallery({ photos }: PhotoGalleryProps) {
 
       {/* Arrow indicator — T011: uses CSS variable for color */}
       {showIndicator && (
-        <div
-          className="fixed bottom-8 left-1/2 transform -translate-x-1/2 transition-opacity duration-300"
-          style={{ opacity: showIndicator ? 1 : 0 }}
-        >
+        <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 transition-opacity duration-300 opacity-100">
           <svg
             className="w-6 h-6 animate-bounce text-[var(--text-secondary)]"
             fill="none"

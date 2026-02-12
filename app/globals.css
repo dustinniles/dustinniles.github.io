@@ -94,10 +94,6 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Responsive mobile layout */
 @media (max-width: 640px) {
-  body {
-    font-size: 0.9375rem;
-  }
-
   .p-12 {
     @apply p-6;
   }

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder urban architecture</title>
+  <desc id="desc">Abstract city skyline with geometric building blocks and warm evening gradient.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="45%" stop-color="#e2e8f0" />
+      <stop offset="100%" stop-color="#cbd5e1" />
+    </linearGradient>
+    <linearGradient id="sunset" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fde68a" />
+      <stop offset="100%" stop-color="#f97316" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)" />
+  <circle cx="1320" cy="180" r="120" fill="url(#sunset)" opacity="0.85" />
+
+  <rect x="120" y="360" width="180" height="420" fill="#334155" />
+  <rect x="330" y="300" width="220" height="480" fill="#1e293b" />
+  <rect x="580" y="250" width="200" height="530" fill="#0f172a" />
+  <rect x="810" y="320" width="170" height="460" fill="#334155" />
+  <rect x="1010" y="280" width="210" height="500" fill="#1e293b" />
+  <rect x="1250" y="340" width="190" height="440" fill="#0f172a" />
+
+  <g fill="#e2e8f0" opacity="0.65">
+    <rect x="365" y="340" width="30" height="24" />
+    <rect x="420" y="340" width="30" height="24" />
+    <rect x="365" y="380" width="30" height="24" />
+    <rect x="420" y="380" width="30" height="24" />
+    <rect x="620" y="290" width="28" height="22" />
+    <rect x="668" y="290" width="28" height="22" />
+    <rect x="620" y="330" width="28" height="22" />
+    <rect x="668" y="330" width="28" height="22" />
+    <rect x="1060" y="325" width="32" height="24" />
+    <rect x="1115" y="325" width="32" height="24" />
+    <rect x="1060" y="366" width="32" height="24" />
+    <rect x="1115" y="366" width="32" height="24" />
+  </g>
+
+  <rect y="780" width="1600" height="120" fill="#020617" opacity="0.25" />
+  <text x="50%" y="850" text-anchor="middle" fill="#f8fafc" font-family="monospace" font-size="36">
+    Portfolio Placeholder 02
+  </text>
+</svg>

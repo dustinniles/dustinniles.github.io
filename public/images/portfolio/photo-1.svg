@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder mountain landscape</title>
+  <desc id="desc">Gradient sky above layered mountain shapes and a lake reflection.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#dbeafe" />
+      <stop offset="60%" stop-color="#bfdbfe" />
+      <stop offset="100%" stop-color="#93c5fd" />
+    </linearGradient>
+    <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#60a5fa" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#sky)" />
+  <rect y="520" width="1600" height="380" fill="url(#lake)" />
+
+  <path d="M0 560 L210 390 L430 560 Z" fill="#475569" />
+  <path d="M260 560 L560 300 L860 560 Z" fill="#334155" />
+  <path d="M700 560 L970 340 L1260 560 Z" fill="#1e293b" />
+  <path d="M1120 560 L1370 410 L1600 560 Z" fill="#0f172a" />
+
+  <rect y="515" width="1600" height="8" fill="#e2e8f0" opacity="0.35" />
+  <text x="50%" y="850" text-anchor="middle" fill="#e2e8f0" font-family="monospace" font-size="36">
+    Portfolio Placeholder 01
+  </text>
+</svg>

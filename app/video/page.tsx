@@ -22,7 +22,7 @@ export default function VideoPage() {
               </div>
 
               {/* bg-gray-900 kept intentionally for video player background (dark by design) */}
-              <div className="relative w-full bg-gray-900 rounded" style={{ paddingBottom: '56.25%' }}>
+              <div className="relative w-full bg-gray-900 rounded aspect-video">
                 <iframe
                   src={iframeSrc}
                   title={video.title}

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useReducedMotion } from '@/app/hooks/useReducedMotion';
+import { useMediaQuery } from '@/app/hooks/useMediaQuery';
 import { mainMenu } from '@/app/data/navigation';
 import { NavigationMenuItem } from '@/app/types';
 import SocialLinks from '@/components/SocialLinks';
@@ -17,6 +18,7 @@ interface MenuSliderProps {
 export default function MenuSlider({ isExpanded, setIsExpanded }: MenuSliderProps) {
   const pathname = usePathname();
   const reducedMotion = useReducedMotion();
+  const isDesktop = useMediaQuery('(min-width: 641px)');
 
   // T012: Derive initial expandedParent from pathname (lazy initializer)
   const [expandedParent, setExpandedParent] = useState<string | null>(() => {
@@ -66,32 +68,21 @@ export default function MenuSlider({ isExpanded, setIsExpanded }: MenuSliderProp
     setExpandedParent(expandedParent === item.id ? null : item.id);
   };
 
-  const transitionStyle = reducedMotion
-    ? {}
-    : { transition: 'width 300ms cubic-bezier(0.4, 0, 0.2, 1), left 300ms cubic-bezier(0.4, 0, 0.2, 1)' };
-
-  const containerStyle: React.CSSProperties = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    height: '100vh',
-    width: isExpanded ? '256px' : '100vw',
-    zIndex: 50,
-    willChange: 'width',
-    ...transitionStyle,
-  };
+  const containerClassName = [
+    'border-r overflow-hidden flex flex-col bg-[var(--background)] border-[var(--border)]',
+    'fixed top-0 left-0 h-screen z-50 will-change-[width]',
+    isExpanded ? (isDesktop ? 'w-64' : 'w-28') : 'w-screen',
+    reducedMotion ? '' : 'transition-[width,left] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]',
+  ].join(' ');
 
   return (
     // T010: Replace bg-white/border-gray-100 with CSS variables
-    <aside
-      style={containerStyle}
-      className="border-r overflow-hidden flex flex-col bg-[var(--background)] border-[var(--border)]"
-    >
+    <aside className={containerClassName}>
       {/* Profile header — always visible */}
       <div
         className={`flex-shrink-0 ${
           isExpanded
-            ? 'p-8 mb-4'
+            ? isDesktop ? 'p-8 mb-4' : 'px-3 pt-4 pb-3 mb-2'
             : 'flex flex-col items-center justify-center pt-16 pb-8'
         }`}
       >
@@ -114,7 +105,9 @@ export default function MenuSlider({ isExpanded, setIsExpanded }: MenuSliderProp
           <Link
             href="/"
             onClick={() => setIsExpanded(false)}
-            className="font-light tracking-wide text-[var(--foreground)] text-xl hover:text-[var(--text-secondary)] transition-colors"
+            className={`font-light tracking-wide text-[var(--foreground)] hover:text-[var(--text-secondary)] transition-colors ${
+              isDesktop ? 'text-xl' : 'text-sm'
+            }`}
           >
             Dustin Niles
           </Link>
@@ -129,7 +122,7 @@ export default function MenuSlider({ isExpanded, setIsExpanded }: MenuSliderProp
       <nav
         aria-label="Main navigation"
         className={`flex-1 overflow-y-auto ${
-          isExpanded ? 'px-8' : 'flex flex-col items-center'
+          isExpanded ? (isDesktop ? 'px-8' : 'px-3') : 'flex flex-col items-center'
         }`}
       >
         <ul className={`space-y-4 ${!isExpanded ? 'w-48' : ''}`}>
@@ -204,14 +197,14 @@ export default function MenuSlider({ isExpanded, setIsExpanded }: MenuSliderProp
       </nav>
 
       {/* Social Links */}
-      {isExpanded && (
+      {isExpanded && isDesktop && (
         <div className="flex-shrink-0 py-6 border-t border-[var(--border)]">
           <SocialLinks />
         </div>
       )}
 
       {/* Footer */}
-      {isExpanded && (
+      {isExpanded && isDesktop && (
         <div className="px-8 pb-8 text-xs text-[var(--text-tertiary)] font-light">
           © {new Date().getFullYear()}
         </div>

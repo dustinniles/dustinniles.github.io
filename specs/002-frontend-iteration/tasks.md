@@ -1,133 +1,120 @@
-# Tasks: Fix Landing Page Nav Alignment and Add Full Site Navigation
+---
+description: "Task list for 002 remediation implementation"
+---
 
-**Input**: Design documents from `/specs/002-frontend-iteration/`
-**Prerequisites**: plan.md ✓, spec.md ✓, research.md ✓
+# Tasks: Remediate Mobile Layout, Security Policy, and Delivery Compliance Gaps
 
-**Organization**: Tasks are grouped by user story. No tests requested — no test tasks generated.
+**Input**: Design documents from `/specs/002-frontend-iteration/`  
+**Prerequisites**: `plan.md` (required), `spec.md` (required)
+
+**Tests**: No new automated test suite requested; verification tasks use lint/build/audit plus targeted manual route checks.
+
+**Organization**: Tasks are grouped by user story so each story can be implemented and verified independently.
 
 ## Format: `[ID] [P?] [Story] Description`
 
 - **[P]**: Can run in parallel (different files, no dependencies)
-- **[Story]**: Which user story this task belongs to (US1, US2, US3, US4)
+- **[Story]**: Which user story this task belongs to (`US1`, `US2`, `US3`, `US4`)
 - Include exact file paths in descriptions
 
----
+## Phase 1: Setup (Shared Context)
 
-## Phase 1: Setup
+**Purpose**: Capture baseline and ensure current branch context before edits.
 
-**Purpose**: Verify development environment and reproduce bugs before modifying any code
-
-- [X] T001 Confirm dev environment — run `npm run dev`, load `http://localhost:3000`, and reproduce both bugs: (1) nav links appear left-justified on landing page, (2) refreshing `/work` or any subpage shows the full-screen overlay instead of page content
-
----
-
-## Phase 2: Foundational
-
-**Purpose**: No shared infrastructure needed. US3 and US4 both reuse the existing `MenuSlider.tsx` via the pathname-driven `expandedParent` effect added in T012 — no new shared components are created. `SubNav.tsx` (a prior implementation artifact) is deleted in T013.
-
-> No Phase 2 tasks. All user story phases can begin after Phase 1.
+- [X] T001 Confirm working branch is `002-frontend-iteration` and capture current gate status with `npm run lint`, `npm run build`, `npm audit --audit-level=high`
+- [X] T002 Review current mobile layout/CSP/workflow/dependabot state in `components/SiteLayout.tsx`, `components/MenuSlider.tsx`, `app/layout.tsx`, `public/_headers`, `.github/workflows/*.yml`, and `.github/`
 
 ---
 
-## Phase 3: User Story 1 — Centered Navigation Links (Priority: P1) ✅ Complete
+## Phase 2: Foundational (Blocking Prerequisites)
 
-**Goal**: Work, Play, Contact, and About links appear horizontally centered under the profile photo and name on the landing page.
+**Purpose**: Shared infrastructure needed by multiple stories.
 
-**Independent Test**: Load `http://localhost:3000`. All four nav links must be visually centered with equal margins on both sides relative to the profile photo above them — verified on desktop and mobile (320px) viewports.
+- [X] T003 Create reusable viewport hook in `app/hooks/useMediaQuery.ts` for responsive behavior in client components
+- [X] T004 [P] Add local placeholder assets `public/images/portfolio/photo-1.svg` and `public/images/portfolio/photo-2.svg`
+
+**Checkpoint**: Foundational utilities/assets are in place; user story implementation can begin.
+
+---
+
+## Phase 3: User Story 1 - Usable Mobile Navigation and Content Layout (Priority: P1) 🎯 MVP
+
+**Goal**: Prevent mobile content collapse and keep layout state synchronized with route changes.
+
+**Independent Test**: At 320px width, `/work`, `/play`, `/resume`, `/cycling` remain readable; navigating between `/` and subpages keeps correct layout mode.
 
 ### Implementation for User Story 1
 
-- [X] T002 [US1] In `components/MenuSlider.tsx` ~line 122, add `${!isExpanded ? 'justify-center' : ''}` to the parent item `<Link>` className (applies to Work and Play which have sub-items)
-- [X] T003 [US1] In `components/MenuSlider.tsx` ~line 160, add `${!isExpanded ? 'justify-center' : ''}` to the leaf item `<Link>` className (applies to Contact and About which have no sub-items)
-- [X] T004 [US1] Run `npm run lint && npm run build` to confirm no TypeScript or lint errors from T002–T003
+- [X] T005 [US1] Update `components/SiteLayout.tsx` to use `useMediaQuery` and apply desktop left margin (`256px`) with reduced mobile offset for readability
+- [X] T006 [US1] Update `components/SiteLayout.tsx` to synchronize `isExpanded` state on pathname and viewport changes (desktop: expanded off-root, collapsed on root; mobile: content-friendly reduced rail)
+- [X] T007 [US1] Update `components/MenuSlider.tsx` container width logic for responsive behavior (avoid fixed 256px sidebar takeover on mobile)
+- [X] T008 [US1] Preserve landing page centered navigation behavior while applying responsive updates in `components/MenuSlider.tsx` and `app/page.tsx`
+- [X] T009 [US1] Verification: confirm route-driven responsive class logic in source and successful static build for `/`, `/work`, `/play`, `/resume`, `/cycling`
 
-**Checkpoint**: Load landing page — confirm Work, Play, Contact, About are center-aligned. US1 is fully testable and independently verifiable at this point.
+**Checkpoint**: Mobile layout is usable and route-driven layout state is stable.
 
 ---
 
-## Phase 4: User Story 2 — Functional Navigation to Mock Subpages (Priority: P2) ✅ Complete
+## Phase 4: User Story 2 - Secure CSP That Still Allows Intended Media (Priority: P1)
 
-**Goal**: All four nav links navigate to their destination pages; subpages display correctly on direct URL access or refresh; the profile name in the expanded sidebar returns to the landing page.
+**Goal**: Enforce strict CSP without unsafe directives while allowing approved video embeds.
 
-**Independent Test**: (1) Click each nav link from landing page and confirm the destination page loads with visible content. (2) Refresh `/work` — page content must be visible, not blocked by the full-screen overlay. (3) From any subpage, click "Dustin Niles" in the sidebar and confirm it navigates to `/` and resets to the full-screen landing state.
+**Independent Test**: `/video` renders embeds and policy strings include strict directives + approved frame sources.
 
 ### Implementation for User Story 2
 
-- [X] T005 [P] [US2] In `components/SiteLayout.tsx`, import `usePathname` from `next/navigation` and replace `useState(false)` with `useState(() => pathname !== '/')` — use a lazy initializer so `isExpanded` initializes as `true` for any non-root pathname, preventing the full-screen overlay from covering subpage content on direct URL access or refresh
-- [X] T006 [P] [US2] In `components/MenuSlider.tsx`, replace the unconditional `<h1>Dustin Niles</h1>` heading with a conditional: when `isExpanded`, render `<Link href="/" onClick={() => setIsExpanded(false)} className="font-light tracking-wide text-[var(--foreground)] text-xl hover:text-[var(--text-secondary)] transition-colors">Dustin Niles</Link>`; when `!isExpanded`, retain the original `<h1>` element unchanged
-- [X] T007 [US2] Run `npm run lint && npm run build` to confirm no TypeScript or lint errors from T005–T006
+- [X] T010 [US2] Update CSP meta policy in `app/layout.tsx` to remove `unsafe-inline` and include required restrictive directives plus `frame-src` for approved providers
+- [X] T011 [US2] Fix `public/_headers` format and align CSP/security headers with strict policy and approved frame sources
+- [X] T012 [US2] Ensure video provider list in `app/video/page.tsx` remains limited to approved domains expected by CSP
+- [X] T013 [US2] Verification: confirm `/video` is statically generated and iframe domains match `frame-src` whitelist by source inspection
 
-**Checkpoint**: Navigate from landing to each subpage; refresh each subpage URL; click "Dustin Niles" from a subpage. All scenarios must work correctly. US2 is independently verifiable at this point.
-
----
-
-## Phase 5: User Story 3 — Navigation to Work Sub-pages (Priority: P3)
-
-**Goal**: When on `/work` or any Work sub-page, the sidebar auto-expands and displays links to Resume, Photography, and Video. Each sub-page loads with placeholder content (title + description only — no inline navigation). The sidebar provides the path back to `/work` from any Work sub-page.
-
-**Design change note**: Prior implementation added `components/SubNav.tsx` rendered inside `app/work/page.tsx` and inline `← Work` back-links in each Work sub-page. These are being removed. All navigation moves to the sidebar via context-aware `expandedParent` auto-derivation in `components/MenuSlider.tsx`.
-
-**Independent Test**: Visit `/work` — sidebar must show Resume, Photography, Video links expanded under Work (no sub-nav in main content). Visit `/resume`, `/photography`, `/video` directly by URL — sidebar must show the Work sub-menu expanded with the current page highlighted; Work parent link must be clickable and navigate to `/work`. Main content of each page shows title and description only.
-
-### Cleanup: Remove Work Content-Area Navigation
-
-- [X] T008 [P] [US3] In `app/work/page.tsx`, remove the `SubNav` import and `<SubNav>` usage — retain only the page `<h1>` and description paragraph
-- [X] T009 [P] [US3] In `app/resume/page.tsx`, remove the inline `← Work` back-link above the `<h1>`
-- [X] T010 [P] [US3] In `app/photography/page.tsx`, remove the inline `← Work` back-link above the `<h1>`
-- [X] T011 [P] [US3] In `app/video/page.tsx`, remove the inline `← Work` back-link above the `<h1>`
-
-### Implementation: Sidebar Context-aware Sub-navigation
-
-- [X] T012 [US3] In `components/MenuSlider.tsx`, add pathname-derived `expandedParent` using lazy initializer + render-time sync pattern (satisfies `react-hooks/set-state-in-effect` ESLint rule from Next.js config)
-- [X] T013 [US3] Delete `components/SubNav.tsx` (no longer used after T008 cleanup)
-- [X] T014 [US3] Run `npm run lint && npm run build` to confirm no TypeScript or lint errors from T008–T013
-
-**Checkpoint**: Visit `/work` — sidebar shows Work sub-menu expanded with Resume, Photography, Video links; main content shows title/description only. Visit `/resume` directly — sidebar still shows Work sub-menu expanded with Resume highlighted. Work parent link navigates to `/work`. US3 is fully testable and independently verifiable at this point.
+**Checkpoint**: Security policy and video rendering requirements are both satisfied.
 
 ---
 
-## Phase 6: User Story 4 — Navigation to Play Sub-pages (Priority: P4)
+## Phase 5: User Story 3 - Accessible Typography and Placeholder Content Integrity (Priority: P2)
 
-**Goal**: When on `/play` or any Play sub-page, the sidebar auto-expands and displays links to Cycling, Tech, and Volunteering. Each sub-page loads with placeholder content (title + description only). The sidebar provides the path back to `/play` from any Play sub-page.
+**Goal**: Keep mobile text readable and eliminate broken photography image references.
 
-**Design change note**: Same pattern as US3. Prior implementation added `<SubNav>` in `app/play/page.tsx` and inline `← Play` back-links in each Play sub-page. These are being removed. The `useEffect` added in T012 already handles Play sub-pages — no additional `MenuSlider.tsx` changes are needed.
+**Independent Test**: Mobile body text remains >=16px; `/photography` loads placeholder assets successfully.
 
-**Independent Test**: Visit `/play` — sidebar must show Cycling, Tech, Volunteering links expanded under Play (no sub-nav in main content). Visit `/cycling`, `/tech`, `/volunteering` directly by URL — sidebar must show the Play sub-menu expanded with the current page highlighted; Play parent link navigates to `/play`. Main content shows title and description only.
+### Implementation for User Story 3
 
-### Cleanup: Remove Play Content-Area Navigation
+- [X] T014 [US3] Remove sub-16px mobile body override in `app/globals.css`
+- [X] T015 [US3] Point `app/data/photos.ts` references to existing placeholder assets (or keep names aligned with newly added placeholders)
+- [X] T016 [US3] Verify `components/PhotoGallery.tsx` renders placeholders correctly with existing alt text data
+- [X] T017 [US3] Verification: confirm `/photography` route is generated and placeholder asset paths exist in `public/images/portfolio`
 
-- [X] T015 [P] [US4] In `app/play/page.tsx`, remove the `SubNav` import and `<SubNav>` usage — retain only the page `<h1>` and description paragraph
-- [X] T016 [P] [US4] In `app/cycling/page.tsx`, remove the inline `← Play` back-link above the `<h1>`
-- [X] T017 [P] [US4] In `app/tech/page.tsx`, remove the inline `← Play` back-link above the `<h1>`
-- [X] T018 [P] [US4] In `app/volunteering/page.tsx`, remove the inline `← Play` back-link above the `<h1>`
-- [X] T019 [US4] Run `npm run lint && npm run build` to confirm no TypeScript or lint errors from T015–T018
+**Checkpoint**: Typography and placeholder integrity meet baseline accessibility/content requirements.
 
-**Checkpoint**: Visit `/play` — sidebar shows Play sub-menu expanded; main content shows title/description only. Visit `/cycling` directly — sidebar shows Play sub-menu expanded with Cycling highlighted. Play parent link navigates to `/play`. US4 is fully testable and independently verifiable at this point.
+---
+
+## Phase 6: User Story 4 - Delivery Pipeline Governance and Clean Quality Gates (Priority: P2)
+
+**Goal**: Align repository governance with constitution and ensure quality gates pass cleanly.
+
+**Independent Test**: Workflows pinned to SHAs, Dependabot config present, lint/build/audit pass.
+
+### Implementation for User Story 4
+
+- [X] T018 [US4] Resolve lint warning in `app/global-error.tsx` so lint can pass with zero warnings
+- [X] T019 [US4] Pin all GitHub Action `uses:` entries in `.github/workflows/deploy.yml`, `.github/workflows/claude.yml`, and `.github/workflows/claude-code-review.yml` to commit SHAs
+- [X] T020 [US4] Add `.github/dependabot.yml` for npm and GitHub Actions update monitoring
+- [X] T021 [US4] Verify no unintended workflow behavior changes after pinning (workflow keys and steps preserved; only `uses:` refs changed)
+
+**Checkpoint**: Governance controls are in place and lint gate is clean.
 
 ---
 
 ## Phase 7: Polish & Cross-Cutting Concerns
 
-**Purpose**: Full acceptance criteria validation across all four user stories
+**Purpose**: Final validation across all stories.
 
-- [ ] T020 [P] Verify FR-001: nav links are centered on landing page at desktop viewport (visual inspection)
-- [ ] T021 [P] Verify FR-001: nav links remain centered at mobile viewport 320px (DevTools responsive mode)
-- [ ] T022 [P] Verify FR-002–FR-006: click Work, Play, Contact, About from landing page — each routes to the correct destination page without errors
-- [ ] T023 [P] Verify FR-007: each of `/work`, `/play`, `/about`, `/contact` displays a page title identifying the section
-- [ ] T024 [P] Verify FR-008: clicking "Dustin Niles" in the sidebar from each subpage navigates back to `/` and restores the full-screen landing state
-- [ ] T025 [P] Verify FR-009/FR-013: visiting `/work` and `/play` causes the sidebar to show the three sub-section links expanded; main content area has no navigation links
-- [ ] T026 [P] Verify FR-010–FR-012: click Resume, Photography, Video from the sidebar on `/work` — each routes to the correct sub-page without errors
-- [ ] T027 [P] Verify FR-014–FR-016: click Cycling, Tech, Volunteering from the sidebar on `/play` — each routes to the correct sub-page without errors
-- [ ] T028 [P] Verify FR-017: visiting `/resume`, `/photography`, `/video` directly — sidebar shows Work sub-menu expanded; clicking the Work parent link navigates to `/work`
-- [ ] T029 [P] Verify FR-017: visiting `/cycling`, `/tech`, `/volunteering` directly — sidebar shows Play sub-menu expanded; clicking the Play parent link navigates to `/play`
-- [ ] T030 [P] Verify SC-008: all 6 sub-pages (`/resume`, `/photography`, `/video`, `/cycling`, `/tech`, `/volunteering`) load correctly when accessed directly by URL
-- [X] T031 Run `npm run build` for final static export validation — confirm `/out` directory is generated cleanly with no build errors
-- [ ] T032 [P] Verify color contrast: use browser DevTools color picker to confirm sidebar sub-nav child link colors (`var(--text-tertiary)`, `var(--text-secondary)`) on `var(--background)` meet ≥ 4.5:1 ratio in both light and dark mode — required by constitution Principle IV and HIG Foundations: Color
-- [ ] T033 [P] Verify keyboard navigation and hover affordances: tab through `/work` and `/play` pages to confirm sidebar sub-menu links (a) receive visible focus outlines and are keyboard-reachable, and (b) display a visible hover state when moused over — required by constitution Principle IV and HIG Patterns: Feedback (HIG-002)
-- [ ] T034 [P] Verify dark mode: toggle OS to dark mode and load `/work`, `/resume`, `/play`, `/cycling` — confirm sidebar sub-nav links render legibly with no hardcoded colors — required by constitution Principle I and HIG Foundations: Dark Mode
-- [ ] T035 [P] Verify reduced-motion: confirm the `useEffect` in `MenuSlider.tsx` does not introduce any CSS transition or animation without a `@media (prefers-reduced-motion: reduce)` guard — required by constitution Principle I and HIG Foundations: Accessibility
-- [X] T036 Run `npm audit --audit-level=high` — confirm zero high or critical vulnerabilities before merge — required by constitution Security Standards
-- [ ] T037 Run Lighthouse on `http://localhost:3000` (and at least one subpage, e.g. `/work`) — confirm Performance ≥ 90 and Accessibility = 100 on both pages before merge — required by constitution Principle IV (use `npx lighthouse <url> --only-categories=performance,accessibility --output=json` or Chrome DevTools Lighthouse panel)
+- [X] T022 Run `npm run lint -- --max-warnings=0`
+- [X] T023 Run `npm run build`
+- [X] T024 Run `npm audit --audit-level=high`
+- [X] T025 Validate static routes include `/video`, `/photography`, `/work`, `/play`, `/resume`, `/cycling`, `/tech`, `/volunteering`
+- [X] T026 Update task checkboxes to reflect completed work and summarize verification evidence in `specs/002-frontend-iteration/tasks.md`
 
 ---
 
@@ -135,88 +122,56 @@
 
 ### Phase Dependencies
 
-- **Setup (Phase 1)**: No dependencies — start immediately
-- **Foundational (Phase 2)**: N/A
-- **User Story 1 (Phase 3)**: Depends on Phase 1 completion only ✅
-- **User Story 2 (Phase 4)**: Depends on Phase 1; US1 must complete first because both US1 (T002–T003) and US2 (T006) modify `components/MenuSlider.tsx` — implement sequentially to avoid conflicts ✅
-- **User Story 3 (Phase 5)**: Depends on Phase 1; no functional dependency on US1/US2; T012 (`MenuSlider.tsx` pathname effect) covers both US3 and US4 — implement before starting US4
-- **User Story 4 (Phase 6)**: Depends on T012 (sidebar pathname effect from Phase 5); cleanup tasks T015–T018 are independent of each other
-- **Polish (Phase 7)**: Depends on all four user stories being complete
+- **Phase 1 (Setup)**: Start immediately
+- **Phase 2 (Foundational)**: Depends on Phase 1
+- **Phase 3 (US1)**: Depends on Phase 2
+- **Phase 4 (US2)**: Can start after Phase 2; independent from US1 logic except shared files
+- **Phase 5 (US3)**: Depends on placeholder assets from Phase 2
+- **Phase 6 (US4)**: Independent from UI stories, can run in parallel after Phase 1
+- **Phase 7 (Polish)**: Depends on completion of Phases 3–6
 
 ### User Story Dependencies
 
-- **US1 (P1)**: No dependency on other stories — independently testable ✅
-- **US2 (P2)**: No functional dependency on US1; implement after US1 to avoid file conflicts on `components/MenuSlider.tsx` ✅
-- **US3 (P3)**: No functional dependency on US1/US2; T012 (`MenuSlider.tsx` pathname effect) is shared with US4 — must complete before US4 begins
-- **US4 (P4)**: Depends on T012 from US3; all cleanup tasks (T015–T018) are independent of each other
-
-### Within Each User Story
-
-- **US1**: T002 before T003 (same file, sequential edits); T004 (build) after both
-- **US2**: T005 and T006 can run in parallel [P] (different files); T007 (build) after both
-- **US3**: T008–T011 (cleanup, different files) can run in parallel [P]; T012 (`MenuSlider.tsx` pathname effect) can run in parallel with T008–T011; T013 (delete SubNav.tsx) after T008–T011 confirm no remaining imports; T014 (build) after all
-- **US4**: T015–T018 (cleanup, different files) can run in parallel [P] after T012 is done; T019 (build) after all
+- **US1 (P1)**: Primary MVP for mobile usability
+- **US2 (P1)**: Security parity with functional embeds; also critical
+- **US3 (P2)**: Relies on placeholder assets and typography cleanup
+- **US4 (P2)**: Governance hardening and gate cleanup
 
 ### Parallel Opportunities
 
-- **US2 implementation**: T005 (`SiteLayout.tsx`) and T006 (`MenuSlider.tsx`) are in different files
-- **US3 cleanup**: T008–T011 are in different files and can all run in parallel
-- **US4 cleanup**: T015–T018 are in different files and can all run in parallel
-- **Phase 7 Polish**: T020–T030 are all independent visual checks and can be validated in parallel
-
----
-
-## Parallel Example: User Story 3
-
-```bash
-# T008–T012 can all run in parallel (different files, no shared dependencies):
-Task A: "Remove SubNav from app/work/page.tsx"         # T008
-Task B: "Remove back-link from app/resume/page.tsx"    # T009
-Task C: "Remove back-link from app/photography/page.tsx" # T010
-Task D: "Remove back-link from app/video/page.tsx"     # T011
-Task E: "Add pathname useEffect to MenuSlider.tsx"     # T012
-# Then T013 (delete SubNav.tsx) after all above confirm no remaining SubNav imports
-```
-
-## Parallel Example: User Story 4
-
-```bash
-# After T012 is done, T015–T018 can run in parallel (different files):
-Task A: "Remove SubNav from app/play/page.tsx"           # T015
-Task B: "Remove back-link from app/cycling/page.tsx"     # T016
-Task C: "Remove back-link from app/tech/page.tsx"        # T017
-Task D: "Remove back-link from app/volunteering/page.tsx" # T018
-```
+- T004 (placeholder assets) can run in parallel with T003
+- US2 (T010–T013) and US4 (T018–T021) can proceed in parallel with US1/US3 where files do not overlap
 
 ---
 
 ## Implementation Strategy
 
-### MVP First (User Story 1 Only)
+### MVP First
 
-User Story 1 is complete. ✅
+1. Complete US1 (mobile usability) and US2 (CSP + video compatibility)
+2. Validate usability/security baseline
 
 ### Incremental Delivery
 
-1. Phase 1 → verify dev environment ✅
-2. Phase 3 (US1) → centered nav links ✅
-3. Phase 4 (US2) → functional navigation + back nav ✅
-4. Phase 5 (US3) → remove content-area nav + add sidebar pathname effect → validate sidebar shows Work sub-nav contextually
-5. Phase 6 (US4) → remove Play content-area nav → validate sidebar shows Play sub-nav contextually
-6. Phase 7 (Polish) → run full acceptance criteria checklist → ready for merge to `main`
+1. Add US3 (typography + placeholders)
+2. Add US4 (workflow pinning + dependabot + lint cleanup)
+3. Run final polish validation
 
 ---
 
 ## Notes
 
-- [P] tasks = different files, no merge conflicts
-- [Story] label maps task to specific user story for traceability
-- **No new files to create** — all nav moves into the existing `MenuSlider.tsx`
-- **File to delete**: `components/SubNav.tsx`
-- **File to modify (implementation)**: `components/MenuSlider.tsx` (T012 — pathname-driven `expandedParent` effect)
-- **Files to clean up (US3)**: `app/work/page.tsx`, `app/resume/page.tsx`, `app/photography/page.tsx`, `app/video/page.tsx`
-- **Files to clean up (US4)**: `app/play/page.tsx`, `app/cycling/page.tsx`, `app/tech/page.tsx`, `app/volunteering/page.tsx`
-- **No tests requested** in spec — no test tasks generated
-- **HIG review completed** in plan.md — all changes confirmed compliant; no additional design review tasks required
-- **US1 and US2 are complete** — T001–T007 all verified; US3 (T008–T014) is the next implementation target
-- **T032–T036** added to Phase 7 per analysis: color contrast, keyboard nav, dark mode, reduced-motion, and `npm audit` — required by constitution Principles I, IV, and Security Standards
+- Keep changes minimal and targeted to accepted review findings.
+- Preserve static export architecture and existing route structure.
+- Do not introduce new external runtime dependencies.
+
+## Verification Evidence
+
+- `npm run lint -- --max-warnings=0` passed.
+- `npm run build` passed and generated static routes including `/video`, `/photography`, `/work`, `/play`, `/resume`, `/cycling`, `/tech`, `/volunteering`.
+- `npm audit --audit-level=high` returned `found 0 vulnerabilities`.
+- Source-level checks confirm:
+  - No remaining inline `style={...}` usage in `app/` and `components/`.
+  - CSP in `app/layout.tsx` and `public/_headers` excludes `unsafe-inline`/`unsafe-eval` and includes approved `frame-src` origins.
+  - Workflow `uses:` entries are pinned to commit SHAs.
+  - Placeholder assets exist at `public/images/portfolio/photo-1.svg` and `public/images/portfolio/photo-2.svg`.

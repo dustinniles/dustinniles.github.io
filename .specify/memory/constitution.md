@@ -1,14 +1,13 @@
 <!--
 Sync Impact Report:
-- Version change: 1.3.0 → 1.4.0 (MINOR)
-- Modified principles: All existing principles reordered and updated to align with Apple HIG
-- Added principles: Principle I - Apple Human Interface Guidelines Compliance (primary)
-- New rationale: Apple HIG now serves as the primary design authority, with IBM Plex as the only font exception. Existing minimal design principles now operate within HIG guidelines.
-- Key exception: IBM Plex Sans (SIL OFL 1.1) continues as standard font, superseding Apple's SF Pro typography recommendations
+- Version change: 1.4.0 → 1.5.0 (MINOR)
+- Modified principles: Principle I (font exception), Principle II (font rule), Technical Standards (font constraint)
+- Added principles: None
+- New rationale: Allow IBM Plex family flexibility while standardizing IBM Plex Mono as primary typeface
 - Templates requiring updates:
-  - `.specify/templates/spec-template.md` (add HIG compliance checklist to requirements)
-  - `.specify/templates/plan-template.md` (add HIG review step to design phase)
-  - `.specify/templates/tasks-template.md` (add HIG reference for design/layout tasks)
+  - `.specify/templates/spec-template.md` (no required changes)
+  - `.specify/templates/plan-template.md` (no required changes)
+  - `.specify/templates/tasks-template.md` (no required changes)
 - Follow-up TODOs: None
 -->
 
@@ -24,7 +23,7 @@ All design decisions MUST align with Apple's Human Interface Guidelines (HIG) to
 - **Foundations** (HIG Foundations section):
   - Layout: Spatial organization, margins, safe areas, alignment (https://developer.apple.com/design/human-interface-guidelines/foundations/layout)
   - Color: Color usage, contrast, semantic colors (https://developer.apple.com/design/human-interface-guidelines/foundations/color)
-  - Typography: Font sizing, hierarchy, readability (reference only; IBM Plex overrides font choice)
+  - Typography: Font sizing, hierarchy, readability (reference only; IBM Plex family overrides font choice)
   - Dark Mode: Support for light and dark appearances (https://developer.apple.com/design/human-interface-guidelines/foundations/dark-mode)
   - Accessibility: Inclusive design for all users (https://developer.apple.com/design/human-interface-guidelines/foundations/accessibility)
   - Inclusion: Diverse and accessible experiences (https://developer.apple.com/design/human-interface-guidelines/foundations/inclusion)
@@ -47,7 +46,7 @@ All design decisions MUST align with Apple's Human Interface Guidelines (HIG) to
 - Error messages and feedback must be helpful and non-technical per HIG writing principles
 - Layout must respect safe areas and consistent margins per HIG layout principles
 
-**Font exception**: IBM Plex Sans (SIL OFL 1.1) is the required font family for this website. This is the only override to Apple's typography recommendations (which recommend SF Pro/SF Compact). All other typography rules from HIG (sizing, hierarchy, contrast) still apply.
+**Font exception**: The IBM Plex font family (SIL OFL 1.1) is the required font family for this website, with IBM Plex Mono as the primary/default typeface. This is the only override to Apple's typography recommendations (which recommend SF Pro/SF Compact). All other typography rules from HIG (sizing, hierarchy, contrast) still apply.
 
 **Rationale:** Apple's HIG represents decades of research into human-computer interaction and accessibility. Adopting HIG principles ensures your website feels native and intuitive to Apple device users while maintaining professional standards that benefit all visitors.
 
@@ -60,7 +59,7 @@ Within Apple HIG's guidelines, design decisions MUST prioritize simplicity, whit
 - Typography must use light font weights (300-400 for body, 300-600 for headings) per HIG hierarchy
 - Color palette restricted to grayscale (gray-600, gray-900) with minimal accent use, respecting HIG color guidance
 - No animations, transitions, or interactive effects unless justified for UX and aligned with HIG motion principles
-- Web fonts: Only IBM Plex Sans (SIL OFL 1.1), self-hosted from same origin via @fontsource—no external font CDNs
+- Web fonts: Only IBM Plex family (SIL OFL 1.1), self-hosted from same origin via @fontsource—no external font CDNs. IBM Plex Mono is the primary/default typeface.
 
 **Rationale:** A minimal aesthetic ensures portfolio content remains the focus while maintaining fast load times and professional presentation, complementing HIG's emphasis on clarity and focus.
 
@@ -144,7 +143,7 @@ This site displays personal views and content that MUST be protected against una
 - **Framework:** Next.js 14+ with App Router (current: 16.1.6)
 - **Language:** TypeScript for all source files
 - **Styling:** Tailwind CSS 4.x via PostCSS
-- **Font:** IBM Plex Sans (SIL OFL 1.1) self-hosted via @fontsource
+- **Font:** IBM Plex family (SIL OFL 1.1), self-hosted via @fontsource; IBM Plex Mono is primary
 - **Runtime:** React 19+ (current: 19.2.3)
 - **Build target:** ES2020+ for modern browsers
 
@@ -258,16 +257,17 @@ Content-Security-Policy:
 ### Adding Portfolio Content
 
 1. Place images in `/public/images` (or appropriate subdirectory)
-2. Update portfolio data structure in `/app/page.tsx`
-3. Test locally to verify image loading and layout
-4. Follow standard workflow above
+2. Update data files in `/app/data` with new paths and metadata
+3. Verify image alt text is descriptive and context-relevant
+4. Run `npm run build` and preview generated output in `/out`
 
-### Navigation Updates
+### Emergency Fix Procedure
 
-1. Create new page in `/app/<page-name>/page.tsx`
-2. Update `/components/MenuSlider.tsx` navigation data in `app/data/navigation.ts` (verify HIG navigation patterns)
-3. Test navigation locally
-4. Follow standard workflow above
+1. Create hotfix branch from current `main`
+2. Apply minimal scoped fix
+3. Run `npm run lint`, `npm audit`, and `npm run build`
+4. Merge and deploy via normal workflow
+5. Document root cause and prevention in specs or notes
 
 ## Governance
 
@@ -299,4 +299,4 @@ This constitution supersedes all other development practices and documentation f
 3. **Specification artifacts** - Feature-specific details within constitutional bounds
 4. **Code comments** - Implementation notes for specific edge cases
 
-**Version**: 1.4.0 | **Ratified**: 2026-02-09 | **Last Amended**: 2026-02-11
+**Version**: 1.5.0 | **Ratified**: 2026-02-09 | **Last Amended**: 2026-02-11
