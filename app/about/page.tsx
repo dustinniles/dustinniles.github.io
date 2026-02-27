@@ -6,13 +6,12 @@ export default function AboutPage() {
       <section className="mb-8">
         <h2 className="text-xl font-light text-[var(--foreground)] mb-4">Background</h2>
         <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
-          I am a creative professional with a passion for visual storytelling and design.
-          My background spans photography, videography, and digital design, with a focus on
-          capturing authentic moments and crafting meaningful visual experiences.
+          I am a photographer and editor with nearly 10 years of experience, 
+          available for commissioned work based in Brooklyn, New York.
         </p>
         <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-          Over the years, I&rsquo;ve worked with diverse clients and on personal projects that
-          challenge me to grow and innovate in my craft.
+          I received a BA in Journalism and Media Studies with a minor 
+          in Digital Communication and Information Media from Rutgers University in 2020.
         </p>
       </section>
 
