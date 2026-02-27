@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "LS",
+      "Task",
+      "Bash(git:*)",
+      "Bash(gh:*)",
+      "Bash(xcodebuild:*)",
+      "Bash(swift:*)",
+      "Bash(swiftlint:*)",
+      "Bash(uv:*)",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(bun:*)",
+      "Bash(npm:*)",
+      "Bash(node:*)",
+      "mcp__*"
+    ]
+  }
+}
