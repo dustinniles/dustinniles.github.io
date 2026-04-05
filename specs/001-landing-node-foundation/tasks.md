@@ -58,7 +58,7 @@
 - [X] T010 [US1] Rewrite `app/page.tsx` — Server Component showing: name ("Dustin Niles"), professional role and one-line value statement as header, and a 2×2 grid of `NavigationSectionCard` items (Portfolio, Lab, Activity, Links) each with label, one-line description, and link; inline `NavigationSectionCard[]` constant defined in same file
 - [X] T011 [US1] Add per-page `metadata` export to `app/page.tsx` with title `'Dustin Niles'`, description (professional positioning statement), OG tags (`og:type: 'website'`, `og:url: '/'`), and `alternates.canonical: '/'`
 - [X] T012 [US1] Verify home page is a Server Component (no `'use client'`), passes `npm run lint`, and `npm run build` succeeds with updated home page
-- [ ] T013 [US1] Verify on mobile (375px): open DevTools, set viewport to 375px, confirm no horizontal scroll and all four section cards are reachable by vertical scroll only
+- [X] T013 [US1] Verify on mobile (375px): open DevTools, set viewport to 375px, confirm no horizontal scroll and all four section cards are reachable by vertical scroll only
 
 **Checkpoint**: Home page independently deployable and communicates identity within 5 seconds.
 
@@ -101,7 +101,7 @@
 - [X] T024 [P] [US3] Create `app/activity/cycling/page.tsx` — move content from `app/cycling/page.tsx` (BlogLayout with cycling posts); update metadata title to `'Cycling | Activity'`
 - [X] T025 [P] [US3] Create `app/activity/volunteering/page.tsx` — move content from `app/volunteering/page.tsx` (BlogLayout with volunteering posts); update metadata title to `'Volunteering | Activity'`
 - [X] T026 [US3] Verify `npm run build` passes with all new routes; confirm `/out/lab/`, `/out/activity/`, `/out/activity/cycling/`, `/out/activity/volunteering/`, `/out/portfolio/photography/`, `/out/portfolio/video/` directories exist in build output
-- [ ] T027 [US3] Manually test sidebar: navigate to each new section; confirm active state highlights in sidebar, parent section expands sub-navigation, and Escape key still closes expanded menus
+- [X] T027 [US3] Manually test sidebar: navigate to each new section; confirm active state highlights in sidebar, parent section expands sub-navigation, and Escape key still closes expanded menus
 
 **Checkpoint**: All new routes render, navigation hierarchy is correct, build passes.
 
@@ -140,7 +140,7 @@
 - [X] T034 [US5] Add animation keyframes to `@theme` block in `app/globals.css`: `--animate-fade-up` (opacity 0→1, translateY 0.5rem→0, 0.4s ease-out) and `--animate-blink` (cursor blink, 0.75s step-start infinite); both are automatically gated by the existing global `prefers-reduced-motion: reduce` rule
 - [X] T035 [US5] Apply `motion-safe:animate-fade-up` entrance animation to the main heading on `app/page.tsx` (home) and the `<h1>` on `app/portfolio/page.tsx` — verify reduced-motion users see text immediately without layout shift
 - [X] T036 [US5] Verify all `ProjectCard` instances use border-highlight hover (`transition: border-color 300ms ease`, hover `border-color: var(--color-accent)`) per CSS design contract in `components/ProjectCard.tsx`; run manual hover test
-- [ ] T037 [US5] Audit all new pages for dark mode: switch OS to Dark Mode and verify `--color-accent` renders, borders are visible against `--background` dark, and no text falls below 4.5:1 contrast ratio; fix any issues in `app/globals.css` or component inline styles
+- [X] T037 [US5] Audit all new pages for dark mode: switch OS to Dark Mode and verify `--color-accent` renders, borders are visible against `--background` dark, and no text falls below 4.5:1 contrast ratio; fix any issues in `app/globals.css` or component inline styles
 
 **Checkpoint**: Reduce Motion disables all motion. Hover affordance works. Dark mode intact. Lighthouse Accessibility = 100.
 
@@ -171,10 +171,10 @@
 - [X] T043 Remove old route directories that have been superseded by new routes: `app/photography/`, `app/video/`, `app/cycling/`, `app/volunteering/` — confirm no remaining imports reference these paths before deleting
 - [X] T044 [P] Update `app/work/page.tsx` and `app/play/page.tsx` to redirect visitors: replace content with a note and a link to the new Portfolio/Activity sections respectively (do not delete yet — leave for final cleanup after confirming no external links)
 - [X] T045 Run `npm run build` — verify zero TypeScript errors, zero ESLint errors (`npm run lint`), and `/out` contains all expected directories
-- [ ] T046 [P] Run Lighthouse audit on built site (`npx serve out -p 3000`): Performance ≥ 90, Accessibility = 100; document any score below target and fix before marking done
+- [X] T046 [P] Run Lighthouse audit on built site (`npx serve out -p 3000`): Performance ≥ 90, Accessibility = 100; document any score below target and fix before marking done
 - [ ] T047 [P] Re-check constitution gate: complete the HIG Design Review checklist in `specs/001-landing-node-foundation/plan.md` (check all 9 items); resolve any unchecked items
 - [X] T048 [P] Verify `out/sitemap.xml` contains all 11 route categories from contracts/component-interfaces.md sitemap contract; verify `out/robots.txt` is correct
-- [ ] T049 Final manual walkthrough: home page (5-second test), portfolio list + one detail, lab stub, activity + cycling + volunteering, links (new-tab test), privacy, terms, about — all render with correct navigation active state; verify at least one page from `/out` renders correctly with JavaScript disabled in the browser (SC-007)
+- [X] T049 Final manual walkthrough: home page (5-second test), portfolio list + one detail, lab stub, activity + cycling + volunteering, links (new-tab test), privacy, terms, about — all render with correct navigation active state; verify at least one page from `/out` renders correctly with JavaScript disabled in the browser (SC-007)
 
 **Checkpoint**: All constitution gates pass. Build clean. Lighthouse scores met. Ready to merge to `main`.
 
