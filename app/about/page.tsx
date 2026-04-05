@@ -1,6 +1,31 @@
+import type { Metadata } from 'next';
+import JsonLd from '@/components/JsonLd';
+
+export const metadata: Metadata = {
+  title: 'About',
+  description:
+    'Dustin Niles — photographer, editor, and multimedia producer based in Brooklyn, New York.',
+  openGraph: {
+    type: 'website',
+    url: '/about',
+  },
+  alternates: { canonical: '/about' },
+};
+
+const profilePageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: {
+    '@type': 'Person',
+    name: 'Dustin Niles',
+    url: 'https://dustinniles.github.io',
+  },
+};
+
 export default function AboutPage() {
   return (
     <article className="p-12 max-w-2xl">
+      <JsonLd data={profilePageSchema} />
       <h1 className="text-3xl font-light text-[var(--foreground)] mb-8">About</h1>
 
       <section className="mb-8">

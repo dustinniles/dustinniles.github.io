@@ -59,6 +59,8 @@ export interface VideoItem {
   publishDate: string;
 }
 
+export type SocialLinkCategory = 'professional' | 'code' | 'social' | 'publications';
+
 export interface SocialMediaLink {
   id: string;
   platform: string;
@@ -66,4 +68,35 @@ export interface SocialMediaLink {
   url: string;
   order: number;
   ariaLabel: string;
+  category: SocialLinkCategory;
+}
+
+export interface ProjectMedia {
+  type: 'image' | 'video';
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+export interface ProjectEntry {
+  id: string;
+  title: string;
+  slug: string;
+  tags: string[];
+  dateRange: string;
+  featured: boolean;
+  status: 'draft' | 'published';
+  context: string;
+  objective: string;
+  approach: string;
+  outcome: string;
+  lessons: string;
+  media?: ProjectMedia[];
+}
+
+export interface NavigationSectionCard {
+  id: string;
+  label: string;
+  target: string;
+  description: string;
 }
