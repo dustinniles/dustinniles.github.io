@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Architecture docs and decisions in BM project `developer` (under `dustinniles-github-io/`).
 
 ## Project Overview
 
@@ -9,28 +9,18 @@ Personal website and portfolio for Dustin Niles, hosted on GitHub Pages at https
 ## Getting Started
 
 ```bash
-# Clone the repository
 git clone https://github.com/dustinniles/dustinniles.github.io.git
 cd dustinniles.github.io
-
-# Install dependencies
 npm install
-
-# Start development server
 npm run dev
 ```
 
 ## Commands
 
 ```bash
-# Development
 npm run dev          # Start development server at http://localhost:3000
-
-# Build & Deploy
 npm run build        # Build static site to /out directory
 npm run start        # Start production server (not used for GitHub Pages)
-
-# Code Quality
 npm run lint         # Run ESLint
 ```
 
@@ -43,7 +33,6 @@ The site uses a two-column layout defined in `app/layout.tsx`:
 - **Scrolling content area** (right): Takes remaining width, contains page content
 
 The sidebar layout consists of two components rendered via `app/layout.tsx`:
-
 - **`components/SiteLayout.tsx`** — manages layout state (sidebar expanded/collapsed), initializes `isExpanded` from the current pathname
 - **`components/MenuSlider.tsx`** — renders the fixed sidebar: branding, navigation links, and context-aware sub-navigation
 
@@ -52,7 +41,7 @@ The sidebar layout consists of two components rendered via `app/layout.tsx`:
 - **Next.js 14+** with App Router and static export (`output: 'export'`)
 - **TypeScript** for type safety
 - **Tailwind CSS 4** for styling (configured via postcss)
-- **System fonts** for fast loading and minimal aesthetic
+- **IBM Plex Sans** via @fontsource
 
 ### Directory Structure
 
@@ -75,10 +64,6 @@ The site is configured for static export to GitHub Pages:
 - **Deployment**: Automatic via GitHub Actions on push to `main` branch
 - **Workflow**: `.github/workflows/deploy.yml` builds and deploys using GitHub Pages actions
 - **Images**: Unoptimized to support static export
-
-To deploy manually:
-1. Run `npm run build` to generate static files
-2. Push to `main` branch to trigger automatic deployment
 
 ## Adding Content
 
@@ -103,12 +88,3 @@ Portfolio items are currently defined as an array in `app/page.tsx`. To add real
 - **Fixed sidebar**: Navigation remains accessible while scrolling content
 - **Typography**: Light font weights, subtle colors (gray-600, gray-900)
 - **Grid layout**: Single-column layout for portfolio items
-
-## Active Technologies
-- TypeScript 5.x with React 19+ (current: 19.2.3) + Next.js 16.1.6 (App Router), Tailwind CSS 4.x via PostCSS, IBM Plex font family (001-website-frontend)
-- Static JSON/array data structures for navigation menus and portfolio items (file-based, no database) (001-website-frontend)
-- TypeScript 5.x with React 19.2.3 and Next.js 16.1.6 (App Router) + Next.js 16.1.6 (App Router, static export), React 19.2.3, Tailwind CSS 4.x (via PostCSS), IBM Plex Sans via @fontsource (001-website-frontend)
-- N/A (static export to GitHub Pages, no database or server-side storage) (001-website-frontend)
-
-## Recent Changes
-- 001-website-frontend: Added TypeScript 5.x with React 19+ (current: 19.2.3) + Next.js 16.1.6 (App Router), Tailwind CSS 4.x via PostCSS, IBM Plex font family
