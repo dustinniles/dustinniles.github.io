@@ -60,7 +60,7 @@ TypeScript stack with static export to GitHub Pages.
 
 ### Principle IV — Performance & Accessibility
 
-- [x] JSON-LD structured data planned for Person (home) and CreativeWork (portfolio details)
+- [x] JSON-LD structured data planned for Person (home), WebSite (root layout), ProfilePage (about), and CreativeWork (portfolio details)
 - [x] All animations wrapped in `prefers-reduced-motion: no-preference`
 - [x] Per-page metadata with `metadataBase` set in root layout
 - [x] Canonical URLs via `alternates.canonical` in each page's metadata export
@@ -127,7 +127,7 @@ specs/001-landing-node-foundation/
 ```text
 app/
 ├── page.tsx                    MODIFY — home page decision environment
-├── layout.tsx                  MODIFY — metadataBase, JSON-LD Person schema
+├── layout.tsx                  MODIFY — metadataBase, JSON-LD Person + WebSite schemas
 ├── globals.css                 MODIFY — --color-accent variable, animation keyframes
 ├── types/index.ts              MODIFY — add ProjectEntry, NavigationSectionCard, extend SocialMediaLink
 ├── sitemap.ts                  CREATE — static sitemap generation

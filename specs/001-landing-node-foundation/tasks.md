@@ -35,7 +35,7 @@
 - [ ] T003 Add `ProjectMedia`, `ProjectEntry`, `NavigationSectionCard`, and `SocialLinkCategory` type to `app/types/index.ts`; extend `SocialMediaLink` with `category: SocialLinkCategory` field — per data-model.md
 - [ ] T004 [P] Create `app/data/projects.ts` exporting `projects: ProjectEntry[]` array with at least one draft placeholder entry (slug: `'placeholder-project'`, status: `'draft'`) so downstream pages compile
 - [ ] T005 [P] Update `app/data/social-links.ts` — add `category` field to all existing entries (LinkedIn → `'professional'`, GitHub → `'code'`); add additional entries for social/publications categories as stubs
-- [ ] T006 [P] Restructure `app/data/navigation.ts` — replace Work/Play/Contact/About hierarchy with four-section structure: Portfolio (children: projects, photography, video), Lab (leaf), Activity (children: cycling, volunteering), Links (leaf), About (leaf) — per contracts/component-interfaces.md FR-001–FR-004
+- [ ] T006 [P] Restructure `app/data/navigation.ts` — replace Work/Play/Contact/About hierarchy with four-section structure: Portfolio (children: projects, photography, video), Lab (leaf), Activity (children: cycling, volunteering), Links (leaf) — per contracts/component-interfaces.md FR-001–FR-004
 - [ ] T007 [P] Add `--color-accent` CSS custom property to `app/globals.css` `:root` block (`#2563eb` light, `#60a5fa` dark-mode override) — per contracts/component-interfaces.md CSS design contract
 - [ ] T008 Create `components/JsonLd.tsx` — Server Component that accepts `data: Record<string, unknown>` and renders `<script type="application/ld+json">` tag with `JSON.stringify(data)` — per contracts/component-interfaces.md
 
@@ -115,8 +115,8 @@
 
 ### Implementation for User Story 4
 
-- [ ] T028 [US4] Update `app/layout.tsx` — set `metadataBase: new URL('https://dustinniles.github.io')`, update `title` to `{ default: 'Dustin Niles', template: '%s | Dustin Niles' }`, update description to professional positioning statement; add `JsonLd` component to `<head>` with `Person` schema (name, url, sameAs array with LinkedIn/GitHub, jobTitle, location)
-- [ ] T029 [P] [US4] Add `metadata` export with unique title, description, OG tags, and `alternates.canonical` to each page that is missing it: `app/lab/page.tsx`, `app/activity/page.tsx`, `app/activity/cycling/page.tsx`, `app/activity/volunteering/page.tsx`, `app/portfolio/photography/page.tsx`, `app/portfolio/video/page.tsx`, `app/about/page.tsx`
+- [ ] T028 [US4] Update `app/layout.tsx` — set `metadataBase: new URL('https://dustinniles.github.io')`, update `title` to `{ default: 'Dustin Niles', template: '%s | Dustin Niles' }`, update description to professional positioning statement; add `JsonLd` component to `<head>` with `Person` schema (name, url, sameAs array with LinkedIn/GitHub, jobTitle, location) and `WebSite` schema (name, url, description) — per FR-020, FR-025
+- [ ] T029 [P] [US4] Add `metadata` export with unique title, description, OG tags, and `alternates.canonical` to each page that is missing it: `app/lab/page.tsx`, `app/activity/page.tsx`, `app/activity/cycling/page.tsx`, `app/activity/volunteering/page.tsx`, `app/portfolio/photography/page.tsx`, `app/portfolio/video/page.tsx`, `app/about/page.tsx` (legacy route — not part of four-section nav, brought to metadata standards); add `JsonLd` with `ProfilePage` schema (mainEntity: Person reference) to `app/about/page.tsx` — per FR-026
 - [ ] T030 [P] [US4] Create `app/sitemap.ts` — returns `MetadataRoute.Sitemap` array covering all routes listed in contracts/component-interfaces.md sitemap contract; imports `projects` from `app/data/projects.ts` to generate `/portfolio/[slug]` entries for published projects only
 - [ ] T031 [P] [US4] Create `app/robots.ts` — returns `MetadataRoute.Robots` with `rules: { userAgent: '*', allow: '/' }` and `sitemap: 'https://dustinniles.github.io/sitemap.xml'`
 - [ ] T032 [US4] Run `npm run build`; verify `out/sitemap.xml` lists all expected routes including portfolio detail slugs; verify `out/robots.txt` contains `Allow: /` and correct sitemap URL; spot-check `out/index.html` for JSON-LD script tag and correct `<title>`
@@ -174,7 +174,7 @@
 - [ ] T046 [P] Run Lighthouse audit on built site (`npx serve out -p 3000`): Performance ≥ 90, Accessibility = 100; document any score below target and fix before marking done
 - [ ] T047 [P] Re-check constitution gate: complete the HIG Design Review checklist in `specs/001-landing-node-foundation/plan.md` (check all 9 items); resolve any unchecked items
 - [ ] T048 [P] Verify `out/sitemap.xml` contains all 11 route categories from contracts/component-interfaces.md sitemap contract; verify `out/robots.txt` is correct
-- [ ] T049 Final manual walkthrough: home page (5-second test), portfolio list + one detail, lab stub, activity + cycling + volunteering, links (new-tab test), privacy, terms, about — all render with correct navigation active state
+- [ ] T049 Final manual walkthrough: home page (5-second test), portfolio list + one detail, lab stub, activity + cycling + volunteering, links (new-tab test), privacy, terms, about — all render with correct navigation active state; verify at least one page from `/out` renders correctly with JavaScript disabled in the browser (SC-007)
 
 **Checkpoint**: All constitution gates pass. Build clean. Lighthouse scores met. Ready to merge to `main`.
 

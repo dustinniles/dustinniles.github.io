@@ -260,6 +260,10 @@ explanations of data practices.
 - **FR-023**: A `robots.txt` MUST be generated at build time permitting all crawlers on
   all public content and referencing the sitemap URL.
 - **FR-024**: Every page MUST include a canonical URL `<link>` tag.
+- **FR-025**: The root layout MUST include JSON-LD structured data for `WebSite` schema
+  (name, url, description).
+- **FR-026**: The `/about` page MUST include JSON-LD structured data for `ProfilePage`
+  schema (mainEntity referencing the Person schema).
 
 ### Apple HIG Compliance Requirements
 
@@ -295,7 +299,7 @@ explanations of data practices.
   Links). Each has a label, a route, an optional set of child items, and a short
   description used on the home page decision cards.
 
-- **SocialLink**: An external authority link. Has a platform name, URL, category
+- **SocialMediaLink**: An external authority link. Has a platform name, URL, category
   (Professional, Code, Social, Publications), display label, and ARIA label.
 
 - **SiteMetadata**: Per-page SEO configuration. Has title, description, canonical URL,
