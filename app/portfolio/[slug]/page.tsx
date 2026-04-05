@@ -41,9 +41,9 @@ export default async function ProjectDetailPage({
 
   if (!project) {
     return (
-      <main id="main-content" className="p-12">
+      <div className="p-12">
         <p className="text-sm text-[var(--text-secondary)]">Project not found.</p>
-      </main>
+      </div>
     );
   }
 

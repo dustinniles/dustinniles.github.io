@@ -20,7 +20,7 @@ export default function PortfolioPage() {
     .sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
 
   return (
-    <main id="main-content" className="p-12">
+    <div className="p-12">
       <h1 className="motion-safe:animate-fade-up text-3xl font-light text-[var(--foreground)] mb-10">
         Portfolio
       </h1>
@@ -36,6 +36,6 @@ export default function PortfolioPage() {
           ))}
         </div>
       )}
-    </main>
+    </div>
   );
 }

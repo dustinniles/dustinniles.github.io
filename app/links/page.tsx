@@ -22,7 +22,7 @@ const categoryOrder: { category: SocialLinkCategory; label: string }[] = [
 
 export default function LinksPage() {
   return (
-    <main id="main-content" className="p-12">
+    <div className="p-12">
       <h1 className="text-3xl font-light text-[var(--foreground)] mb-10">Links</h1>
       {categoryOrder.map(({ category, label }) => {
         const links = socialLinks.filter((l) => l.category === category);
@@ -30,6 +30,6 @@ export default function LinksPage() {
           <LinkGroup key={category} category={category} label={label} links={links} />
         );
       })}
-    </main>
+    </div>
   );
 }

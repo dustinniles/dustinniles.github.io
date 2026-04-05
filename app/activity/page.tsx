@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function ActivityPage() {
   return (
-    <main id="main-content" className="p-12">
+    <div className="p-12">
       <h1 className="text-3xl font-light text-[var(--foreground)] mb-10">Activity</h1>
       <ul className="space-y-4">
         <li>
@@ -35,6 +35,6 @@ export default function ActivityPage() {
           </Link>
         </li>
       </ul>
-    </main>
+    </div>
   );
 }

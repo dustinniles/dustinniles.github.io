@@ -45,7 +45,7 @@ const sections: NavigationSectionCard[] = [
 
 export default function Home() {
   return (
-    <main id="main-content" className="p-12">
+    <div className="p-12">
       <header className="mb-12">
         <h1 className="motion-safe:animate-fade-up text-3xl font-light text-[var(--foreground)] mb-2">
           Dustin Niles
@@ -77,6 +77,6 @@ export default function Home() {
           ))}
         </ul>
       </nav>
-    </main>
+    </div>
   );
 }

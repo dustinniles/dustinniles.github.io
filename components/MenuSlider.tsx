@@ -4,20 +4,13 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useReducedMotion } from '@/app/hooks/useReducedMotion';
 import { useMediaQuery } from '@/app/hooks/useMediaQuery';
 import { mainMenu } from '@/app/data/navigation';
 import { NavigationMenuItem } from '@/app/types';
 import SocialLinks from '@/components/SocialLinks';
 
-interface MenuSliderProps {
-  isExpanded: boolean;
-  setIsExpanded: (value: boolean) => void;
-}
-
-export default function MenuSlider({ isExpanded, setIsExpanded }: MenuSliderProps) {
+export default function MenuSlider() {
   const pathname = usePathname();
-  const reducedMotion = useReducedMotion();
   const isDesktop = useMediaQuery('(min-width: 641px)');
 
   // T012: Derive initial expandedParent from pathname (lazy initializer)
@@ -50,29 +43,23 @@ export default function MenuSlider({ isExpanded, setIsExpanded }: MenuSliderProp
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        if (expandedParent) {
-          setExpandedParent(null);
-        } else if (isExpanded) {
-          setIsExpanded(false);
-        }
+      if (e.key === 'Escape' && expandedParent) {
+        setExpandedParent(null);
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [expandedParent, isExpanded, setIsExpanded]);
+  }, [expandedParent]);
 
   const handleParentItemClick = (item: NavigationMenuItem) => {
-    setIsExpanded(true);
     setExpandedParent(expandedParent === item.id ? null : item.id);
   };
 
   const containerClassName = [
     'border-r overflow-hidden flex flex-col bg-[var(--background)] border-[var(--border)]',
-    'fixed top-0 left-0 h-screen z-50 will-change-[width]',
-    isExpanded ? (isDesktop ? 'w-64' : 'w-28') : 'w-screen',
-    reducedMotion ? '' : 'transition-[width,left] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]',
+    'fixed top-0 left-0 h-screen z-50',
+    isDesktop ? 'w-64' : 'w-28',
   ].join(' ');
 
   return (
@@ -80,18 +67,10 @@ export default function MenuSlider({ isExpanded, setIsExpanded }: MenuSliderProp
     <aside className={containerClassName}>
       {/* Profile header — always visible */}
       <div
-        className={`flex-shrink-0 ${
-          isExpanded
-            ? isDesktop ? 'p-8 mb-4' : 'px-3 pt-4 pb-3 mb-2'
-            : 'flex flex-col items-center justify-center pt-16 pb-8'
-        }`}
+        className={`flex-shrink-0 ${isDesktop ? 'p-8 mb-4' : 'px-3 pt-4 pb-3 mb-2'}`}
       >
         {/* Profile photo */}
-        <div
-          className={`rounded-full overflow-hidden flex-shrink-0 bg-[var(--border)] ${
-            isExpanded ? 'w-12 h-12 mb-4' : 'w-24 h-24 mb-6'
-          }`}
-        >
+        <div className="rounded-full overflow-hidden flex-shrink-0 bg-[var(--border)] w-12 h-12 mb-4">
           <Image
             src="/images/profile/DUSTIN HEADSHOT.jpeg"
             alt="Dustin Niles"
@@ -101,31 +80,22 @@ export default function MenuSlider({ isExpanded, setIsExpanded }: MenuSliderProp
             unoptimized
           />
         </div>
-        {isExpanded ? (
-          <Link
-            href="/"
-            onClick={() => setIsExpanded(false)}
-            className={`font-light tracking-wide text-[var(--foreground)] hover:text-[var(--text-secondary)] transition-colors ${
-              isDesktop ? 'text-xl' : 'text-sm'
-            }`}
-          >
-            Dustin Niles
-          </Link>
-        ) : (
-          <h1 className="font-light tracking-wide text-[var(--foreground)] text-3xl">
-            Dustin Niles
-          </h1>
-        )}
+        <Link
+          href="/"
+          className={`font-light tracking-wide text-[var(--foreground)] hover:text-[var(--text-secondary)] transition-colors ${
+            isDesktop ? 'text-xl' : 'text-sm'
+          }`}
+        >
+          Dustin Niles
+        </Link>
       </div>
 
       {/* T036: Navigation with aria-label */}
       <nav
         aria-label="Main navigation"
-        className={`flex-1 overflow-y-auto ${
-          isExpanded ? (isDesktop ? 'px-8' : 'px-3') : 'flex flex-col items-center'
-        }`}
+        className={`flex-1 overflow-y-auto ${isDesktop ? 'px-8' : 'px-3'}`}
       >
-        <ul className={`space-y-4 ${!isExpanded ? 'w-48' : ''}`}>
+        <ul className="space-y-4">
           {mainMenu.map((item) => {
             const active = isActivePath(item.target);
             return (
@@ -139,7 +109,7 @@ export default function MenuSlider({ isExpanded, setIsExpanded }: MenuSliderProp
                       tabIndex={0}
                       aria-expanded={expandedParent === item.id}
                       aria-controls={`submenu-${item.id}`}
-                      className={`transition-colors text-sm font-light w-full min-h-[44px] flex items-center ${!isExpanded ? 'justify-center' : ''} ${
+                      className={`transition-colors text-sm font-light w-full min-h-[44px] flex items-center ${
                         active
                           ? 'text-[var(--foreground)] font-normal'
                           : 'text-[var(--text-secondary)] hover:text-[var(--foreground)]'
@@ -151,7 +121,7 @@ export default function MenuSlider({ isExpanded, setIsExpanded }: MenuSliderProp
                     <ul
                       id={`submenu-${item.id}`}
                       className={`mt-3 pl-4 space-y-2 border-l border-[var(--border)] ${
-                        isExpanded && expandedParent === item.id ? '' : 'hidden'
+                        expandedParent === item.id ? '' : 'hidden'
                       }`}
                     >
                       {item.children.map((child) => {
@@ -179,9 +149,8 @@ export default function MenuSlider({ isExpanded, setIsExpanded }: MenuSliderProp
                   // T020: aria-current="page" for active top-level links
                   <Link
                     href={item.target}
-                    onClick={() => setIsExpanded(true)}
                     aria-current={active ? 'page' : undefined}
-                    className={`transition-colors text-sm font-light min-h-[44px] flex items-center ${!isExpanded ? 'justify-center' : ''} ${
+                    className={`transition-colors text-sm font-light min-h-[44px] flex items-center ${
                       active
                         ? 'text-[var(--foreground)] font-normal'
                         : 'text-[var(--text-secondary)] hover:text-[var(--foreground)]'
@@ -197,14 +166,14 @@ export default function MenuSlider({ isExpanded, setIsExpanded }: MenuSliderProp
       </nav>
 
       {/* Social Links */}
-      {isExpanded && isDesktop && (
+      {isDesktop && (
         <div className="flex-shrink-0 py-6 border-t border-[var(--border)]">
           <SocialLinks />
         </div>
       )}
 
       {/* Footer */}
-      {isExpanded && isDesktop && (
+      {isDesktop && (
         <div className="px-8 pb-8 text-xs text-[var(--text-tertiary)] font-light">
           © {new Date().getFullYear()}
         </div>
